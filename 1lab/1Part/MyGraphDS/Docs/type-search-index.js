@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"MyGraphDS"},{"p":"<Unnamed>","l":"MyGraphFrame"},{"p":"<Unnamed>","l":"Test"}];updateSearchResults();
