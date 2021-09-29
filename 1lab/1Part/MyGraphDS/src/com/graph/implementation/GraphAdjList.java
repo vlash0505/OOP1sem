@@ -1,3 +1,5 @@
+package com.graph.implementation;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -12,10 +14,19 @@ import java.util.*;
  * in a graph's vertices.
  */
 
-public class MyGraphDS<T> {
+public class GraphAdjList<T> implements Graph{
     private int V;
     private int E;
     private List<ArrayList<Integer>> adj;
+
+    /**
+     * Constructor without parameters for a Graph
+     * data structure.
+     */
+
+    public GraphAdjList() {
+        this.adj = new ArrayList<>();
+    }
 
     /**
      * Constructor for a Graph data structure.
@@ -23,11 +34,11 @@ public class MyGraphDS<T> {
      * @param V - initial number of vertices.
      */
 
-    public MyGraphDS(int V) {
+    public GraphAdjList(int V) {
         this.V = V;
-        this.adj = new ArrayList<ArrayList<Integer>>(V);
+        this.adj = new ArrayList<>(V);
         for(int i = 0; i < V; i++) {
-            adj.add(new ArrayList<Integer>(1));
+            adj.add(new ArrayList<>(1));
         }
     }
 
@@ -41,7 +52,7 @@ public class MyGraphDS<T> {
      * found.
      */
 
-    public MyGraphDS(File f) throws FileNotFoundException {
+    public GraphAdjList(File f) throws FileNotFoundException {
         // to be implemented
         throw new FileNotFoundException("File not found.");
     }
@@ -75,7 +86,8 @@ public class MyGraphDS<T> {
      */
 
     public void addVertex(int data) {
-        adj.add(new ArrayList<Integer>(V++));
+        adj.add(new ArrayList<>());
+        adj.get(++V).add(data);
     }
 
     /**
@@ -99,12 +111,12 @@ public class MyGraphDS<T> {
      * @return degree of a given vertex.
      */
 
-    public int vertexDegree(int v) throws IllegalArgumentException {
-        if(!adj.contains(v)) {
-            throw new IllegalArgumentException("No such vertex in a graph.");
-        }
+    public int vertexDegree(int v) {
+        //using iterator to go through the list.
         Iterator<Integer> i = adjacent(v);
         int degree = 0;
+        //iterating through each vertex while counting
+        //number of connected vertices.
         while(i.hasNext()) {
             degree++;
             i.next();
@@ -125,80 +137,6 @@ public class MyGraphDS<T> {
     }
 
     /**
-     * Method that implements Breadth First search on a
-     * graph instance.
-     *
-     * @param s - starting vertex.
-     * @throws IllegalArgumentException if the given vertex does not
-     * exist.
-     */
-
-    public void BFS(int s) throws IllegalArgumentException {
-        boolean[] marked = new boolean[V];
-        marked[s] = true;
-
-        Queue<Integer> inspect = new LinkedList<Integer>();
-        inspect.offer(s);
-
-        while(!inspect.isEmpty()) {
-            Iterator<Integer> neighbours = adjacent(s);
-            while(neighbours.hasNext()) {
-                int inspectingNow = neighbours.next();
-                if(!marked[inspectingNow]) {
-                    marked[inspectingNow] = true;
-                    inspect.offer(inspectingNow);
-                }
-            }
-        }
-    }
-
-    /**
-     * Method that implements Depth First Search.
-     * Uses method DFSUtil as an utility method.
-     *
-     * @param s - starting vertex.
-     */
-
-    public void DFS(int s) {
-        boolean[] visited = new boolean[V];
-        DFSUtil(s, visited);
-    }
-
-    /**
-     * Utility method for DFS.
-     *
-     * @param v - starting vertex.
-     * @param visited - array of boolean values
-     */
-
-    public void DFSUtil(int v, boolean[] visited) {
-        visited[v] = true;
-        Iterator<Integer> i = adjacent(v);
-        while(i.hasNext()) {
-            int n = i.next();
-            if(!visited[n]) {
-                DFSUtil(n, visited);
-            }
-        }
-    }
-
-    /**
-     * Method that checks whether 2 vertices are connected.
-     *
-     * @param v - first vertex.
-     * @param w - second vertex.
-     * @return true if there is a path, false - if not.
-     */
-
-    public boolean hasPathTo(int v, int w) {
-        return adj.get(v).contains(w);
-    }
-
-    public void path(int v, int w) {
-        //to be implemented.
-    }
-
-    /**
      * Overridden toString method from the global superclass
      * Object that gives representation of a graph in a String.
      *
@@ -207,12 +145,13 @@ public class MyGraphDS<T> {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder((V + "Vertices and " + E + "Edges"));
+        StringBuilder result = new StringBuilder((V + "Vertices and " + E + "Edges \n"));
         for(int v = 0; v < V; v++) {
             result.append(v).append(": ");
             Iterator<Integer> i = adjacent(v);
             while(i.hasNext()) {
                 result.append(i).append(" ");
+                i.next();
             }
             result.append("\n");
         }
