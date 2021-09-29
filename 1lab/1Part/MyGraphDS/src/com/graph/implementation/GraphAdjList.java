@@ -9,13 +9,12 @@ import java.util.*;
  * and implements basic operations on graph
  * data structure.
  * Class uses generic data types.
- *
- * @param <T> - any object that will be stored
- * in a graph's vertices.
  */
 
-public class GraphAdjList<T> implements Graph {
-    private List<ArrayList<Integer>> adj;
+// add parametrisation
+
+public class GraphAdjList implements Graph {
+    public List<ArrayList<Integer>> adj;
     private int V;
     private int E;
 
