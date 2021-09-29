@@ -8,15 +8,14 @@ import java.util.Stack;
  * in a graph using DFS.
  */
 
-//add parametrisation.
-
 public class DepthFirstPath {
     private boolean[] isVisited;
     private int[] edgeTo;
     private final int s;
 
     /**
-     * Constructor for
+     * Constructor for pathfinding using DFS.
+     *
      * @param G - given graph.
      * @param s - starting point
      */
@@ -29,7 +28,7 @@ public class DepthFirstPath {
     }
 
     /**
-     * DFS method to traverse the array.
+     * Recursive DFS method to traverse the graph.
      *
      * @param G - given graph
      * @param v - vertex that is being inspected.
@@ -49,16 +48,20 @@ public class DepthFirstPath {
      * vertex exists.
      *
      * @param v - vertex to check
+     *
      * @return true if the path exists, otherwise - false.
      */
 
     public boolean hasPathTo(int v) { return isVisited[v]; }
 
     /**
-     * Method that puts path to the specified vertex to the stack
+     * Method that researches traversed graph and
+     * builds a path to the given vertex(if it exists).
      *
      * @param v - vertex to be reached.
-     * @return path to the vertex as the Iterable.
+     *
+     * @return path to the vertex v from the source vertex
+     * as the Iterable.
      */
 
     public Iterable<Integer> pathTo(int v) {
