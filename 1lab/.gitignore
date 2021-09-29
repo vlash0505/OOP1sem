@@ -1,0 +1,7 @@
+.idea/*
+../.idea/
+1Part/MyGraphDS/Docs/*
+
+*.css
+*.html
+*.js

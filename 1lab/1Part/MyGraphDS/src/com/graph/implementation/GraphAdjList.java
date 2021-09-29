@@ -14,19 +14,17 @@ import java.util.*;
  * in a graph's vertices.
  */
 
-public class GraphAdjList<T> implements Graph{
+public class GraphAdjList<T> implements Graph {
+    private List<ArrayList<Integer>> adj;
     private int V;
     private int E;
-    private List<ArrayList<Integer>> adj;
 
     /**
      * Constructor without parameters for a Graph
      * data structure.
      */
 
-    public GraphAdjList() {
-        this.adj = new ArrayList<>();
-    }
+    public GraphAdjList() { this.adj = new ArrayList<>(); }
 
     /**
      * Constructor for a Graph data structure.
@@ -54,7 +52,7 @@ public class GraphAdjList<T> implements Graph{
 
     public GraphAdjList(File f) throws FileNotFoundException {
         // to be implemented
-        throw new FileNotFoundException("File not found.");
+        //throw new FileNotFoundException("File not found.");
     }
 
     /**
@@ -64,9 +62,7 @@ public class GraphAdjList<T> implements Graph{
      * @return number of vertices in a Graph.
      */
 
-    public int V() {
-        return V;
-    }
+    public int V() { return V; }
 
     /**
      * Method that returns number vertices in an
@@ -75,9 +71,7 @@ public class GraphAdjList<T> implements Graph{
      * @return number of edges in a graph instance.
      */
 
-    public int E() {
-        return E;
-    }
+    public int E() { return E; }
 
     /**
      * Method that adds vertex to the graph.
@@ -91,7 +85,18 @@ public class GraphAdjList<T> implements Graph{
     }
 
     /**
-     * Method that adds edge to a graph (e.g connects
+     * Method that removes vertex from the graph.
+     *
+     * @param w - vertex to be removed.
+     */
+
+    public void removeVertex(int w) {
+        adj.remove(w);
+        V--;
+    }
+
+    /**
+     * Method that adds edge to a graph (e.g. connects
      * two vertices).
      *
      * @param v - first vertex.
@@ -102,6 +107,20 @@ public class GraphAdjList<T> implements Graph{
         adj.get(v).add(w);
         adj.get(w).add(v);
         E++;
+    }
+
+    /**
+     * Method that deletes an edge in a graph.(deletes
+     * connection between two vertices)
+     *
+     * @param v - first vertex.
+     * @param w - second vertex.
+     */
+
+    public void removeEdge(int v, int w) {
+        adj.get(v).remove(w);
+        adj.get(w).remove(v);
+        E--;
     }
 
     /**
@@ -132,9 +151,7 @@ public class GraphAdjList<T> implements Graph{
      * @return all the adjacent vertices to v.
      */
 
-    public Iterator<Integer> adjacent(int v) {
-        return adj.get(v).iterator();
-    }
+    public Iterator<Integer> adjacent(int v) { return adj.get(v).iterator(); }
 
     /**
      * Overridden toString method from the global superclass

@@ -1,6 +1,12 @@
+package com.graph.frame;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+/**
+ *
+ */
 
 public class MyGraphFrame extends JFrame implements ActionListener {
     JButton button1;
@@ -30,12 +36,20 @@ public class MyGraphFrame extends JFrame implements ActionListener {
         this.add(button2);
     }
 
+    /**
+     * Method that performs action in GUI after user
+     * presses the button. The action depends on which
+     * button did the user choose.
+     *
+     * @param e -
+     */
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == button1) {
+        if (button1.equals(e.getSource())) {
             System.out.println("It works!");
-        } else if(e.getSource() == button2) {
-            System.out.println("It works too!");
+        } else {
+            System.out.println("Good Bye!");
         }
     }
 }

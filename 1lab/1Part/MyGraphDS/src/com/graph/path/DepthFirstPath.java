@@ -4,6 +4,11 @@ import com.graph.implementation.GraphAdjList;
 
 import java.util.Stack;
 
+/**
+ * Class that finds a path between two vertices in a
+ * graph using DFS.
+ */
+
 public class DepthFirstPath {
     private boolean[] marked; // Has dfs() been called for this vertex?
     private int[] edgeTo; // last vertex on known path to this vertex
