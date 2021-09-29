@@ -4,9 +4,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- *
- */
+//GUI is not yet implemented, what
+//you see here is just a playground.
 
 public class MyGraphFrame extends JFrame implements ActionListener {
     JButton button1;
@@ -39,9 +38,10 @@ public class MyGraphFrame extends JFrame implements ActionListener {
     /**
      * Method that performs action in GUI after user
      * presses the button. The action depends on which
-     * button did the user choose.
+     * button the user press.
      *
-     * @param e -
+     * @param e - action that happens when user presses
+     *            the specific button.
      */
 
     @Override
