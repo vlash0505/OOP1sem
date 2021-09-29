@@ -5,7 +5,7 @@
         named BreadthFirstPath and DepthFirstPath(that use BFS and DFS 
         respectfuly).
         
-        GRAPH API: 
+        GRAPH API(for adjacencyList): 
         _____________________
         Graph() -                   constructor that creates an empty graph.
         int V()-                    method that returns number of vertices;
@@ -15,11 +15,18 @@
         String toString() -         representing as string.
         
         Comments are generated with the help of JavaDoc.
-        Unit tests are provided with the help of JUnit 5.
+        
+        ToDo: debug, add unit tests, add generics, add a constructor to initialise 
+        a graph from the .txt file, try to implement and visualise Djkistra's algorithm.
+        
+        
        
 2 part: Database that operates on books.
         Implemented a simple C.R.U.D application using Spring Framework.
         Project is built with Maven, to operate on database we use SQL and 
         JDBC.
+        
+        ToDo: add more features, try to implement users that can share their 
+        comments on a book, play with Bootstrap to get beautiful design.
         
  More features: to be done.
