@@ -5,6 +5,9 @@
         named BreadthFirstPath and DepthFirstPath(that use BFS and DFS 
         respectfuly).
         
+        I use Sedjewick's courses (Algorithms part 1,2) as the main study 
+        reference.
+        
         GRAPH API(for adjacencyList): 
         _____________________
         Graph() -                   constructor that creates an empty graph.
