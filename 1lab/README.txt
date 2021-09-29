@@ -25,7 +25,7 @@
         
        
 2 part: Database that operates on books.
-        Implemented a simple C.R.U.D application using Spring Framework.
+        In progress(not yet implemented): Implemented a simple C.R.U.D application using Spring Framework.
         Project is built with Maven, to operate on database we use SQL and 
         JDBC.
         
