@@ -8,7 +8,7 @@ import java.util.Stack;
  * in a graph using DFS.
  */
 
-public class DepthFirstPath {
+public class DepthFirstPath implements Path{
     private boolean[] isVisited;
     private int[] edgeTo;
     private final int s;
@@ -24,7 +24,7 @@ public class DepthFirstPath {
         this.isVisited = new boolean[G.V()];
         this.edgeTo = new int[G.V()];
         this.s = s;
-        dfs(G, s);
+        traverse(G, s);
     }
 
     /**
@@ -34,12 +34,12 @@ public class DepthFirstPath {
      * @param v - vertex that is being inspected.
      */
 
-    private void dfs(GraphAdjList G, int v) {
+    public void traverse(GraphAdjList G, int v) {
         isVisited[v] = true;
         for (int w : G.adj.get(v))
             if (!isVisited[w]) {
                 edgeTo[w] = v;
-                dfs(G, w);
+                traverse(G, w);
             }
     }
 

@@ -11,7 +11,7 @@ import java.util.Stack;
  * graph using BFS.
  */
 
-public class BreadthFirstPath {
+public class BreadthFirstPath implements Path{
     private boolean[] isVisited;
     private int[] edgeTo;
     private final int s;
@@ -27,7 +27,7 @@ public class BreadthFirstPath {
         isVisited = new boolean[G.V()];
         edgeTo = new int[G.V()];
         this.s = s;
-        bfs(G, s);
+        traverse(G, s);
     }
 
     /**
@@ -37,7 +37,7 @@ public class BreadthFirstPath {
      * @param s - starting vertex.
      */
 
-    private void bfs(GraphAdjList G, int s) {
+    public void traverse(GraphAdjList G, int s) {
         //Using Queue interface and Linked List class
         //to implement queue.
         Queue<Integer> queue = new LinkedList<>();
