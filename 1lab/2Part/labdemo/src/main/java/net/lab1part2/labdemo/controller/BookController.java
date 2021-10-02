@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -21,7 +22,6 @@ public class BookController {
 
     @GetMapping("/books")
     public String findAll(Model model) {
-
         List<Book> books = bookService.findAll();
         model.addAttribute("books", books);
         return "book-list";
@@ -34,6 +34,25 @@ public class BookController {
 
     @PostMapping("/book-create")
     public String createBook(Book book) {
+        bookService.saveBook(book);
+        return "redirect:/books";
+    }
+
+    @GetMapping("book-delete/{id}")
+    public String deleteBook(@PathVariable("id") Long id) {
+        bookService.deleteById(id);
+        return "redirect:/books";
+    }
+
+    @GetMapping("/book-update/{id}")
+    public String updateBookForm(@PathVariable("id") Long id, Model model) {
+        Book book = bookService.findById(id);
+        model.addAttribute("book", book);
+        return "/book-update";
+    }
+
+    @PostMapping("/book-update")
+    public String updateBook(Book book) {
         bookService.saveBook(book);
         return "redirect:/books";
     }

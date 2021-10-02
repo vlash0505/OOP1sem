@@ -18,8 +18,8 @@ public class Book {
     private String name;
     @Column(name = "author")
     private String author;
-    @Column(name = "appearence")
-    private Date appearence;
+    @Column(name = "date")
+    private Date date;
     @Column(name = "pages")
     private int pages;
     @Column(name = "annotation")

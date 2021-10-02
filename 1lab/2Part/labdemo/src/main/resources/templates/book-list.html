@@ -15,7 +15,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Author</th>
-                <th>Appearence</th>
+                <th>Date</th>
                 <th>Pages</th>
                 <th>Annotation</th>
             </tr>
@@ -25,7 +25,7 @@
                 <td th:text="${book.id}"></td>
                 <td th:text="${book.name}"></td>
                 <td th:text="${book.author}"></td>
-                <td th:text="${book.appearence}"></td>
+                <td th:text="${book.date}"></td>
                 <td th:text="${book.pages}"></td>
                 <td th:text="${book.annotation}"></td>
                 <td><a th:href="@{book-update/{id}(id=${book.id})}">Edit</a></td>
