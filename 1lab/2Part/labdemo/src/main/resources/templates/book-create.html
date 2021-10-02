@@ -5,15 +5,27 @@
     <title>Create new book</title>
 </head>
 <body>
-<form action="#" th:action="${/user-create}"
-                 th:object="&{user}"
+<form action="#" th:action="@{/book-create}"
+                 th:object="${book}"
                  th:method="post">
-    <label for="firstName">Name</label>
-    <input type="text" th:field="*{name}" id="firstName" placeholder="First Name">
-    <label for="lastName">Last name</label>
-    <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
-    <input type="submit" value="Create User">
-</form>
 
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Book name">
+
+    <label for="author">Author</label>
+    <input type="text" th:field="*{author}" id="author" placeholder="Author's name">
+
+    <label for="appearence">Date</label>
+    <input type="date" th:field="*{appearence}" id="appearence" placeholder="Book date">
+
+    <label for="pages">Pages</label>
+    <input type="number" th:field="*{pages}" id="pages" placeholder="Pages">
+
+    <label for="annotation">Annotation</label>
+    <input type="text" th:field="*{annotation}" id="annotation" placeholder="Annotation">
+
+
+    <input type="submit" value="Create Book">
+</form>
 </body>
 </html>

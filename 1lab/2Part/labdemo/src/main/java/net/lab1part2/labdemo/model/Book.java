@@ -1,5 +1,6 @@
 package net.lab1part2.labdemo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class Book {
     @Column(name = "author")
     private String author;
     @Column(name = "appearence")
-    private Date date;
+    private Date appearence;
     @Column(name = "pages")
     private int pages;
     @Column(name = "annotation")
