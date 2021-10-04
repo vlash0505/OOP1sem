@@ -1,7 +1,4 @@
 package com.graph.implementation;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
@@ -11,10 +8,10 @@ import java.util.*;
  * Class uses generic data types.
  */
 
-// add parametrisation
-
-public class GraphAdjList<T> implements Graph {
-    public List<ArrayList<T>> adj;
+public class GraphAdjList<T> {
+    //using map to store information about vertices
+    //therefore graph cannot contain duplicate objects.
+    private Map<T, List<T>> vertices;
     private int V;
     private int E;
 
@@ -23,7 +20,7 @@ public class GraphAdjList<T> implements Graph {
      * data structure.
      */
 
-    public GraphAdjList() { this.adj = new ArrayList<>(); }
+    public GraphAdjList() { this.vertices = new HashMap<>(); }
 
     /**
      * Constructor for a Graph data structure.
@@ -31,27 +28,17 @@ public class GraphAdjList<T> implements Graph {
      * @param V - initial number of vertices.
      */
 
-    public GraphAdjList(int V) {
-        this.V = V;
-        this.adj = new ArrayList<>(V);
-        for(int i = 0; i < V; i++) {
-            adj.add(new ArrayList<>(1));
+    public GraphAdjList(int V, List<T> elements) {
+        //checking parameters for validity.
+        if(V <= 0 || elements.size() != V) {
+            System.out.println("Input values aren't validated, Graph is not initialized.\n");
+            return;
         }
-    }
-
-    /**
-     * Constructor for a graph instance that read information
-     * from file.
-     *
-     * @param f - file with information about connected vertices.
-     *
-     * @throws FileNotFoundException if the file with data not
-     * found.
-     */
-
-    public GraphAdjList(File f) throws FileNotFoundException {
-        // to be implemented
-        //throw new FileNotFoundException("File not found.");
+        this.V = V;
+        this.vertices = new HashMap<>(V);
+        for(int i = 0; i < V; i++) {
+            vertices.put(elements.get(i), new ArrayList<>());
+        }
     }
 
     /**
@@ -64,7 +51,7 @@ public class GraphAdjList<T> implements Graph {
     public int V() { return V; }
 
     /**
-     * Method that returns number vertices in an
+     * Method that returns number of edges in an
      * instance of a graph.
      *
      * @return number of edges in a graph instance.
@@ -79,8 +66,13 @@ public class GraphAdjList<T> implements Graph {
      */
 
     public void addVertex(T data) {
-        adj.add(new ArrayList<>());
-        adj.get(++V).add(data);
+        //checking parameters for validity.
+        if(!vertices.containsKey(data)) {
+            System.out.println("Graph already contains element you are trying to add.");
+            return;
+        }
+        vertices.put(data, new ArrayList<>());
+        V++;
     }
 
     /**
@@ -90,7 +82,18 @@ public class GraphAdjList<T> implements Graph {
      */
 
     public void removeVertex(T w) {
-        adj.remove(w);
+        //parameter validation
+        if(!vertices.containsKey(w)) {
+            System.out.println("No such vertex found in the graph.\n");
+            return;
+        }
+        //removing the actual vertex.
+        vertices.remove(w);
+        //iterating throw each vertex and deleting w vertex from
+        //the list of connected vertices of other vertices
+        for (Map.Entry<T, List<T>> entry : vertices.entrySet()) {
+            entry.getValue().remove(w);
+        }
         V--;
     }
 
@@ -103,8 +106,13 @@ public class GraphAdjList<T> implements Graph {
      */
 
     public void addEdge(T v, T w) {
-        adj.get(v).add(w);
-        adj.get(w).add(v);
+        //checking parameters for validity.
+        if(!vertices.containsKey(v) || !vertices.containsKey(w)) {
+            System.out.println("Can't add edge because one of the vertices or both of them do not exist.");
+            return;
+        }
+        vertices.get(v).add(w);
+        vertices.get(w).add(v);
         E++;
     }
 
@@ -116,9 +124,14 @@ public class GraphAdjList<T> implements Graph {
      * @param w - second vertex.
      */
 
-    public void removeEdge(int v, int w) {
-        adj.get(v).remove(w);
-        adj.get(w).remove(v);
+    public void removeEdge(T v, T w) {
+        //checking parameters for validity.
+        if(!vertices.containsKey(v) || !vertices.containsKey(w)) {
+            System.out.println("Can't add edge because one of the vertices or both of them do not exist.");
+            return;
+        }
+        vertices.get(v).remove(w);
+        vertices.get(v).remove(w);
         E--;
     }
 
@@ -126,20 +139,16 @@ public class GraphAdjList<T> implements Graph {
      * Method that calculates the degree of a vertex.
      *
      * @param v - vertex to be inspected.
+     *
      * @return degree of a given vertex.
      */
 
-    public int vertexDegree(int v) {
-        //using iterator to go through the list.
-        Iterator<Integer> i = adjacent(v);
-        int degree = 0;
-        //iterating through each vertex while counting
-        //number of connected vertices.
-        while(i.hasNext()) {
-            degree++;
-            i.next();
+    public int vertexDegree(T v) {
+        if(!vertices.containsKey(v)) {
+            System.out.println("No such vertex found in the graph.\n");
+            return -1;
         }
-        return degree;
+        return (vertices.get(v).size());
     }
 
     /**
@@ -150,7 +159,13 @@ public class GraphAdjList<T> implements Graph {
      * @return all the adjacent vertices to v.
      */
 
-    public Iterator<Integer> adjacent(int v) { return adj.get(v).iterator(); }
+    public List<T> adjacent(T v) {
+        if(!vertices.containsKey(v)) {
+            System.out.println("No such vertex found.");
+            return null;
+        }
+        return vertices.get(v);
+    }
 
     /**
      * Overridden toString method from the global superclass
@@ -162,13 +177,12 @@ public class GraphAdjList<T> implements Graph {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder((V + "Vertices and " + E + "Edges \n"));
-        for(int v = 0; v < V; v++) {
-            result.append(v).append(": ");
-            Iterator<Integer> i = adjacent(v);
-            while(i.hasNext()) {
-                result.append(i).append(" ");
-                i.next();
-            }
+        //iterating through the map and appending each entry
+        //to the resulting graph string representation.
+        for (Map.Entry<T, List<T>> entry : vertices.entrySet()) {
+            result.append(entry.getKey().toString());
+            result.append(": ");
+            result.append(entry.getValue().toString());
             result.append("\n");
         }
         return (result.toString());
