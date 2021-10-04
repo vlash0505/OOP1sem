@@ -5,6 +5,7 @@
     <title>Books</title>
 </head>
 <body>
+<!--- Using "books" table --->
 <div th:switch="${books}">
     <h2 th:case="null">No books found!</h2>
     <div th:case="*">
@@ -21,6 +22,8 @@
             </tr>
             </thead>
             <tbody>
+            <!--- going through each record in the database and
+            displaying it on the main page --->
             <tr th:each="book : ${books}">
                 <td th:text="${book.id}"></td>
                 <td th:text="${book.name}"></td>
@@ -28,12 +31,15 @@
                 <td th:text="${book.date}"></td>
                 <td th:text="${book.pages}"></td>
                 <td th:text="${book.annotation}"></td>
+                <!--- action that redirects user to the update page --->
                 <td><a th:href="@{book-update/{id}(id=${book.id})}">Edit</a></td>
+                <!--- action that deletes record from the database --->
                 <td><a th:href="@{book-delete/{id}(id=${book.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
+    <!--- action that redirects user to the book creation page --->
     <p><a href="/book-create">Create a new book</a></p>
 </div>
 </body>

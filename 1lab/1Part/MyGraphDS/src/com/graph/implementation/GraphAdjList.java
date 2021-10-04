@@ -13,8 +13,8 @@ import java.util.*;
 
 // add parametrisation
 
-public class GraphAdjList implements Graph {
-    public List<ArrayList<Integer>> adj;
+public class GraphAdjList<T> implements Graph {
+    public List<ArrayList<T>> adj;
     private int V;
     private int E;
 
@@ -78,7 +78,7 @@ public class GraphAdjList implements Graph {
      * @param data - data to be stored in a new vertex.
      */
 
-    public void addVertex(int data) {
+    public void addVertex(T data) {
         adj.add(new ArrayList<>());
         adj.get(++V).add(data);
     }
@@ -89,20 +89,20 @@ public class GraphAdjList implements Graph {
      * @param w - vertex to be removed.
      */
 
-    public void removeVertex(int w) {
+    public void removeVertex(T w) {
         adj.remove(w);
         V--;
     }
 
     /**
-     * Method that adds edge to a graph (e.g. connects
+     * Method that adds edge to a graph (connects
      * two vertices).
      *
      * @param v - first vertex.
      * @param w - second vertex.
      */
 
-    public void addEdge(int v, int w) {
+    public void addEdge(T v, T w) {
         adj.get(v).add(w);
         adj.get(w).add(v);
         E++;

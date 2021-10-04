@@ -8,7 +8,7 @@
 <form action="#" th:action="@{/book-create}"
                  th:object="${book}"
                  th:method="post">
-
+    <!--- getting information from the user. --->
     <label for="name">Name</label>
     <input type="text" th:field="*{name}" id="name" placeholder="Book name">
 
@@ -23,8 +23,7 @@
 
     <label for="annotation">Annotation</label>
     <input type="text" th:field="*{annotation}" id="annotation" placeholder="Annotation">
-
-
+    <!--- submitting action and creating new record in the database --->
     <input type="submit" value="Create Book">
 </form>
 </body>

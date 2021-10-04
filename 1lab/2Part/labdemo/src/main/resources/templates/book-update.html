@@ -7,7 +7,7 @@
 <form action="#" th:action="@{/book-update}"
                  th:object="${book}"
                  th:method="post">
-
+    <!--- getting information from the user. --->
     <label for="id">ID</label>
     <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
     <br/>
@@ -26,6 +26,7 @@
     <label for="annotation">Pages</label>
     <input type="text" th:field="*{annotation}" id="annotation" placeholder="Annotation">
     <br/>
+    <!--- submitting change and writing updated date to the DB --->
     <input type="submit" value="Update Book">
 </form>
 </body>
