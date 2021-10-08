@@ -1,7 +1,6 @@
 package com.graph.implementation;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
+
+import java.util.*;
 
 /**
  * Class that creates an instance of a graph
@@ -10,8 +9,11 @@ import java.util.Arrays;
  * adjacency matrix.
  */
 
-public class GraphAdjMatrix {
+public class GraphAdjMatrix<T> {
     private int[][] adj;
+    //map that stores values in a way each value
+    //corresponds to its index.
+    private Map<Integer, T> indexedValues;
     private int V;
     private int E;
 
@@ -20,7 +22,10 @@ public class GraphAdjMatrix {
      * data structure represented as adjacency matrix.
      */
 
-    public GraphAdjMatrix() { adj = new int[1][1]; }
+    public GraphAdjMatrix() {
+        this.adj = new int[1][1];
+        this.indexedValues = new HashMap<>();
+    }
 
     /**
      * Constructor without parameters for a Graph
@@ -29,21 +34,19 @@ public class GraphAdjMatrix {
      * @param V - initial number of vertices
      */
 
-    public GraphAdjMatrix(int V) { adj = new int[V][V]; }
-
-    /**
-     * Constructor for a graph instance that read information
-     * from file.
-     *
-     * @param f - file with information about connected vertices.
-     *
-     * @throws FileNotFoundException if the file with data not
-     * found.
-     */
-
-    public GraphAdjMatrix(File f) throws FileNotFoundException {
-        // to be implemented
-        //throw new FileNotFoundException("File not found.");
+    public GraphAdjMatrix(int V, List<T> values) {
+        //checking parameter for validity
+        if(V <= 0 || values.size() != V) {
+            System.out.println("Input values aren't validated, Graph instance is not initialized.\n");
+            return;
+        }
+        this.V = V;
+        this.adj = new int[V][V];
+        this.indexedValues = new HashMap<>();
+        //filling the map with the values.
+        for(int i = 0; i < V; i++) {
+            this.indexedValues.put(i,values.get(i));
+        }
     }
 
     /**
@@ -84,24 +87,26 @@ public class GraphAdjMatrix {
 
     /**
      * Method that adds vertex to the graph.
+     *
+     * @param data - data to be stored in a new
+     *             vertex.
      */
 
-    public void addVertex() {
+    public void addVertex(T data) {
         if(V == adj.length) { resize(V * 2); }
-        V++;
+        indexedValues.put(V++, data);
     }
 
     /**
-     * Method that removes vertex the graph.
+     * Method that removes vertex from the graph.
      */
 
-    public void removeVertex(int toBeRemoved) {
+    public void removeVertex(T toBeRemoved) {
         if(V == (adj.length / 4)) { resize(V / 2); }
-        for(int i = 0; i < V; i++) {
-            adj[toBeRemoved][i] = 0;
-            adj[i][toBeRemoved] = 0;
+        indexedValues.remove(toBeRemoved);
+        for (Map.Entry<Integer, T> entry : indexedValues.entrySet()) {
+            entry.getKey()--;
         }
-        V--;
     }
 
     /**
@@ -139,11 +144,7 @@ public class GraphAdjMatrix {
      * @return degree of a given vertex.
      */
 
-    public int vertexDegree(int v) {
-        int degree = 0;
-        for(int i = 0; i < V; i++) {
-            if(adj[v][i] == 1)  { degree++; }
-        }
+    public int vertexDegree(T v) {
         return degree;
     }
 

@@ -6,12 +6,15 @@ import java.util.*;
  * and implements basic operations on graph
  * data structure.
  * Class uses generic data types.
+ *
+ * @param <T>   Elements to be stored in the
+ *              graph's edges.
  */
 
 public class GraphAdjList<T> {
     //using map to store information about vertices
     //therefore graph cannot contain duplicate objects.
-    private Map<T, List<T>> vertices;
+    private Map<T, List<? extends T>> vertices;
     private int V;
     private int E;
 
@@ -28,7 +31,7 @@ public class GraphAdjList<T> {
      * @param V - initial number of vertices.
      */
 
-    public GraphAdjList(int V, List<T> elements) {
+    public GraphAdjList(int V, List<? extends T> elements) {
         //checking parameters for validity.
         if(V <= 0 || elements.size() != V) {
             System.out.println("Input values aren't validated, Graph is not initialized.\n");
@@ -39,6 +42,10 @@ public class GraphAdjList<T> {
         for(int i = 0; i < V; i++) {
             vertices.put(elements.get(i), new ArrayList<>());
         }
+    }
+
+    public Map<T, List<? extends T>> getVertices() {
+        return vertices;
     }
 
     /**
@@ -91,7 +98,7 @@ public class GraphAdjList<T> {
         vertices.remove(w);
         //iterating throw each vertex and deleting w vertex from
         //the list of connected vertices of other vertices
-        for (Map.Entry<T, List<T>> entry : vertices.entrySet()) {
+        for (Map.Entry<T, List<? extends T>> entry : vertices.entrySet()) {
             entry.getValue().remove(w);
         }
         V--;
@@ -159,10 +166,11 @@ public class GraphAdjList<T> {
      * @return all the adjacent vertices to v.
      */
 
-    public List<T> adjacent(T v) {
+    public List<? extends T> adjacent(T v) {
         if(!vertices.containsKey(v)) {
             System.out.println("No such vertex found.");
-            return null;
+            //returning empty List.
+            return new ArrayList<>();
         }
         return vertices.get(v);
     }
@@ -179,7 +187,7 @@ public class GraphAdjList<T> {
         StringBuilder result = new StringBuilder((V + "Vertices and " + E + "Edges \n"));
         //iterating through the map and appending each entry
         //to the resulting graph string representation.
-        for (Map.Entry<T, List<T>> entry : vertices.entrySet()) {
+        for (Map.Entry<T, List<? extends T>> entry : vertices.entrySet()) {
             result.append(entry.getKey().toString());
             result.append(": ");
             result.append(entry.getValue().toString());

@@ -8,7 +8,7 @@ import java.util.Stack;
  * in a graph using DFS.
  */
 
-public class DepthFirstPath implements Path{
+public class DepthFirstPath<T> {
     private boolean[] isVisited;
     private int[] edgeTo;
     private final int s;
@@ -20,7 +20,7 @@ public class DepthFirstPath implements Path{
      * @param s - starting point
      */
 
-    public DepthFirstPath(GraphAdjList G, int s) {
+    public DepthFirstPath(GraphAdjList<T> G, int s) {
         this.isVisited = new boolean[G.V()];
         this.edgeTo = new int[G.V()];
         this.s = s;
@@ -34,9 +34,9 @@ public class DepthFirstPath implements Path{
      * @param v - vertex that is being inspected.
      */
 
-    public void traverse(GraphAdjList G, int v) {
+    public void traverse(GraphAdjList<T> G, int v) {
         isVisited[v] = true;
-        for (int w : G.adj.get(v))
+        for (int w : G.getVertices().get(v))
             if (!isVisited[w]) {
                 edgeTo[w] = v;
                 traverse(G, w);
@@ -44,8 +44,8 @@ public class DepthFirstPath implements Path{
     }
 
     /**
-     * Method that checks whether the path to the given
-     * vertex exists.
+     * Method that checks whether the path from source to
+     * the given vertex exists.
      *
      * @param v - vertex to check
      *
