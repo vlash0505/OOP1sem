@@ -190,7 +190,6 @@ public class GraphAdjList<T> {
         //iterating through the map and appending each entry
         //to the resulting graph string representation.
         for (Map.Entry<T, List<T>> entry : vertices.entrySet()) {
-            //for eevrey vertex appending it;s adjacet vertoces
             result.append(entry.getKey().toString());
             result.append(": ");
             result.append(entry.getValue().toString());
