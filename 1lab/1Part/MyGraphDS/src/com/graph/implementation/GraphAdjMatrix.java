@@ -13,7 +13,7 @@ public class GraphAdjMatrix<T> {
     private int[][] adj;
     //map that stores values in a way each value
     //corresponds to its index.
-    private Map<T, Integer> indexedValues;
+    private List<T> indexedValues;
     private int V;
     private int E;
 
@@ -24,7 +24,7 @@ public class GraphAdjMatrix<T> {
 
     public GraphAdjMatrix() {
         this.adj = new int[1][1];
-        this.indexedValues = new HashMap<>();
+        this.indexedValues = new ArrayList<>();
     }
 
     /**
@@ -40,13 +40,11 @@ public class GraphAdjMatrix<T> {
             System.out.println("Input values aren't validated, Graph instance is not initialized.\n");
             return;
         }
+        //filling the fields
         this.V = V;
         this.adj = new int[V][V];
-        this.indexedValues = new HashMap<>();
-        //filling the map with the values.
-        for(int i = 0; i < V; i++) {
-            this.indexedValues.put(i,values.get(i));
-        }
+        this.indexedValues = new ArrayList<>();
+        this.indexedValues.addAll(values);
     }
 
     /**
@@ -94,7 +92,8 @@ public class GraphAdjMatrix<T> {
 
     public void addVertex(T data) {
         if(V == adj.length) { resize(V * 2); }
-        indexedValues.put(V++, data);
+        indexedValues.add(data);
+        V++;
     }
 
     /**
@@ -103,9 +102,15 @@ public class GraphAdjMatrix<T> {
 
     public void removeVertex(T toBeRemoved) {
         if(V == (adj.length / 4)) { resize(V / 2); }
+        int shiftFrom = indexedValues.indexOf(toBeRemoved);
         indexedValues.remove(toBeRemoved);
-        for (Map.Entry<T ,Integer> entry : indexedValues.entrySet()) {
-            entry.get()--;
+        while(shiftFrom < V) {
+            for(int i = 0; i < V; i++) {
+                //shifting rows
+                adj[i][shiftFrom] = adj[i][shiftFrom + 1];
+                //shifting columns
+                adj[shiftFrom][i] = adj[shiftFrom + 1][i];
+            }
         }
     }
 
@@ -145,6 +150,11 @@ public class GraphAdjMatrix<T> {
      */
 
     public int vertexDegree(T v) {
+        int vertex = indexedValues.indexOf(v);
+        int degree = 0;
+        for(int i = 0; i < V; i++) {
+            if(adj[vertex][i] == 1) { degree++; }
+        }
         return degree;
     }
 
@@ -160,9 +170,7 @@ public class GraphAdjMatrix<T> {
         int[] result = new int[V];
         int countAdj = 0;
         for(int i = 0; i < V; i++) {
-            if(adj[v][i] == 1) {
-                result[countAdj++] = i;
-            }
+            if(adj[v][i] == 1) { result[countAdj++] = i; }
         }
         return Arrays.copyOf(result, countAdj);
     }
