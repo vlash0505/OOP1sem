@@ -14,7 +14,7 @@ import java.util.*;
 public class GraphAdjList<T> {
     //using map to store information about vertices
     //therefore graph cannot contain duplicate objects.
-    private Map<T, List<? extends T>> vertices;
+    private Map<T, List<T>> vertices;
     private int V;
     private int E;
 
@@ -31,7 +31,7 @@ public class GraphAdjList<T> {
      * @param V - initial number of vertices.
      */
 
-    public GraphAdjList(int V, List<? extends T> elements) {
+    public GraphAdjList(int V, List<T> elements) {
         //checking parameters for validity.
         if(V <= 0 || elements.size() != V) {
             System.out.println("Input values aren't validated, Graph is not initialized.\n");
@@ -44,7 +44,7 @@ public class GraphAdjList<T> {
         }
     }
 
-    public Map<T, List<? extends T>> getVertices() {
+    public Map<T, List<T>> getVertices() {
         return vertices;
     }
 
@@ -98,7 +98,7 @@ public class GraphAdjList<T> {
         vertices.remove(w);
         //iterating throw each vertex and deleting w vertex from
         //the list of connected vertices of other vertices
-        for (Map.Entry<T, List<? extends T>> entry : vertices.entrySet()) {
+        for (Map.Entry<T, List<T>> entry : vertices.entrySet()) {
             entry.getValue().remove(w);
         }
         V--;
@@ -138,7 +138,7 @@ public class GraphAdjList<T> {
             return;
         }
         vertices.get(v).remove(w);
-        vertices.get(v).remove(w);
+        vertices.get(w).remove(v);
         E--;
     }
 
@@ -151,6 +151,7 @@ public class GraphAdjList<T> {
      */
 
     public int vertexDegree(T v) {
+        //validating the input
         if(!vertices.containsKey(v)) {
             System.out.println("No such vertex found in the graph.\n");
             return -1;
@@ -166,7 +167,8 @@ public class GraphAdjList<T> {
      * @return all the adjacent vertices to v.
      */
 
-    public List<? extends T> adjacent(T v) {
+    public List<T> adjacent(T v) {
+        //validating parameters
         if(!vertices.containsKey(v)) {
             System.out.println("No such vertex found.");
             //returning empty List.
@@ -187,7 +189,8 @@ public class GraphAdjList<T> {
         StringBuilder result = new StringBuilder((V + "Vertices and " + E + "Edges \n"));
         //iterating through the map and appending each entry
         //to the resulting graph string representation.
-        for (Map.Entry<T, List<? extends T>> entry : vertices.entrySet()) {
+        for (Map.Entry<T, List<T>> entry : vertices.entrySet()) {
+            //for eevrey vertex appending it;s adjacet vertoces
             result.append(entry.getKey().toString());
             result.append(": ");
             result.append(entry.getValue().toString());

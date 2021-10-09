@@ -13,7 +13,7 @@ public class GraphAdjMatrix<T> {
     private int[][] adj;
     //map that stores values in a way each value
     //corresponds to its index.
-    private Map<Integer, T> indexedValues;
+    private Map<T, Integer> indexedValues;
     private int V;
     private int E;
 
@@ -104,8 +104,8 @@ public class GraphAdjMatrix<T> {
     public void removeVertex(T toBeRemoved) {
         if(V == (adj.length / 4)) { resize(V / 2); }
         indexedValues.remove(toBeRemoved);
-        for (Map.Entry<Integer, T> entry : indexedValues.entrySet()) {
-            entry.getKey()--;
+        for (Map.Entry<T ,Integer> entry : indexedValues.entrySet()) {
+            entry.get()--;
         }
     }
 
