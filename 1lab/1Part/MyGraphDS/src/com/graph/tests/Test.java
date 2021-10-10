@@ -15,6 +15,9 @@ public class Test {
         graphInstance.addEdge(1,3);
         graphInstance.addEdge(2,3);
 
+        DepthFirstPath<Integer> testPath = new DepthFirstPath<>(graphInstance, 1);
+
+
         //DepthFirstPath path = new DepthFirstPath(graphInstance, 1);
         //path.hasPathTo(2);
         //path.pathTo(2);
