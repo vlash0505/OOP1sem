@@ -1,5 +1,8 @@
 package com.graph.implementation;
+import com.graph.path.DepthFirstPath;
+
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Class that creates an instance of a graph
@@ -89,7 +92,7 @@ public class GraphAdjList<T> {
 
     public void addVertex(T data) {
         //checking parameters for validity.
-        if(!vertices.containsKey(data)) {
+        if(vertices.containsKey(data)) {
             System.out.println("Graph already contains element you are trying to add.");
             return;
         }
@@ -174,6 +177,14 @@ public class GraphAdjList<T> {
             return -1;
         }
         return (vertices.get(v).size());
+    }
+
+    public boolean isConnected() {
+        GraphAdjList<T> G = new GraphAdjList<>();
+        DepthFirstPath<T> traverse = new DepthFirstPath<>(G, G.getIndexedVertices().get(0));
+        boolean[] arr = traverse.getConnection();
+
+        return (!Arrays.asList(arr).contains(false));
     }
 
     /**
