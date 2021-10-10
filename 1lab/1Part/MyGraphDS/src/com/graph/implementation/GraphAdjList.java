@@ -15,6 +15,9 @@ public class GraphAdjList<T> {
     //using map to store information about vertices
     //therefore graph cannot contain duplicate objects.
     private Map<T, List<T>> vertices;
+    //list of vertices ot get access to the vertices by index
+    //used in the pathfinding algorithms.
+    private List<T> indexedVertices;
     private int V;
     private int E;
 
@@ -23,7 +26,12 @@ public class GraphAdjList<T> {
      * data structure.
      */
 
-    public GraphAdjList() { this.vertices = new HashMap<>(); }
+    public GraphAdjList() {
+        this.V = 0;
+        this.E = 0;
+        this.vertices = new HashMap<>();
+        this.indexedVertices = new ArrayList<>();
+    }
 
     /**
      * Constructor for a Graph data structure.
@@ -38,14 +46,21 @@ public class GraphAdjList<T> {
             return;
         }
         this.V = V;
+        this.E = 0;
         this.vertices = new HashMap<>(V);
+        this.indexedVertices = new ArrayList<>(V);
         for(int i = 0; i < V; i++) {
             vertices.put(elements.get(i), new ArrayList<>());
         }
+        this.indexedVertices.addAll(elements);
     }
 
     public Map<T, List<T>> getVertices() {
         return vertices;
+    }
+
+    public List<T> getIndexedVertices() {
+        return indexedVertices;
     }
 
     /**
@@ -79,6 +94,7 @@ public class GraphAdjList<T> {
             return;
         }
         vertices.put(data, new ArrayList<>());
+        indexedVertices.add(data);
         V++;
     }
 
@@ -101,6 +117,7 @@ public class GraphAdjList<T> {
         for (Map.Entry<T, List<T>> entry : vertices.entrySet()) {
             entry.getValue().remove(w);
         }
+        indexedVertices.remove(w);
         V--;
     }
 

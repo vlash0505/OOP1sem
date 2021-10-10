@@ -2,30 +2,29 @@ package com.graph.path;
 
 import com.graph.implementation.GraphAdjList;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Class that finds a path between two vertices in a
  * graph using BFS.
  */
 
-public class BreadthFirstPath implements Path{
+public class BreadthFirstPath<T> {
     private boolean[] isVisited;
-    private int[] edgeTo;
-    private final int s;
+    private List<T> edgeTo;
+    //source vertex
+    private final T s;
 
     /**
      * Constructor for pathfinding using BFS.
      *
-     * @param G - given graph.
-     * @param s - starting point
+     * @param G   given graph.
+     * @param s   starting point.
      */
 
-    public BreadthFirstPath(GraphAdjList G, int s) {
+    public BreadthFirstPath(GraphAdjList<T> G, T s) {
         isVisited = new boolean[G.V()];
-        edgeTo = new int[G.V()];
+        edgeTo = new ArrayList<>();
         this.s = s;
         traverse(G, s);
     }
@@ -33,24 +32,27 @@ public class BreadthFirstPath implements Path{
     /**
      * Iterative BFS method to traverse the graph.
      *
-     * @param G - given graph.
-     * @param s - starting vertex.
+     * @param G   given graph.
+     * @param s   starting vertex.
      */
 
-    public void traverse(GraphAdjList G, int s) {
+    public void traverse(GraphAdjList<T> G, T s) {
         //Using Queue interface and Linked List class
         //to implement queue.
+        int currentNodeIndex = G.getIndexedVertices().indexOf(s);
         Queue<Integer> queue = new LinkedList<>();
-        isVisited[s] = true;
-        queue.offer(s);
+        isVisited[currentNodeIndex] = true;
+        queue.offer(currentNodeIndex);
         while (!queue.isEmpty()) {
             int v = queue.remove();
-            for (int w : G.adj.get(v))
-                if (!isVisited[w]) {
-                    edgeTo[w] = v;
-                    isVisited[w] = true;
-                    queue.offer(w);
+            for (T w : G.getVertices().get(s)) {
+                int index = G.getIndexedVertices().indexOf(w);
+                if (!isVisited[index]) {
+                    edgeTo.add(w);
+                    isVisited[index] = true;
+                    queue.offer(index);
                 }
+            }
         }
     }
 
@@ -63,7 +65,9 @@ public class BreadthFirstPath implements Path{
      * @return true if the path exists, otherwise - false.
      */
 
-    public boolean hasPathTo(int v) { return isVisited[v]; }
+    public boolean hasPathTo(GraphAdjList<T> G, T element) {
+        return isVisited[G.getIndexedVertices().indexOf(element)];
+    }
 
     /**
      * Method that researches traversed graph and
@@ -75,11 +79,10 @@ public class BreadthFirstPath implements Path{
      * as the Iterable.
      */
 
-    public Iterable<Integer> pathTo(int v) {
-        if(!hasPathTo(v)) { return null; }
-        Stack<Integer> path = new Stack<>();
-        for (int x = v; x != s; x = edgeTo[x]) { path.push(x); }
-        path.push(s);
+    public Iterable<T> pathTo(GraphAdjList<T> G, T element) {
+        if(!hasPathTo(G, element)) { return null; }
+        Stack<T> path = new Stack<>();
+        for (T x : edgeTo) { path.push(x); }
         return path;
     }
 }
