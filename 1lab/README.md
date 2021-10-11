@@ -24,7 +24,7 @@
         In perspective: implement Dijkstra algorithms and try to visualize it.
         
        
-2 part: Database that operates on books.
+<h1>2 part: Database that operates on books.</h1>
         Implemented a simple C.R.U.D application using Spring Framework and 
         Jpa Repository functionality.
         Project is built with Maven, to operate on database we use SQL and JPA
