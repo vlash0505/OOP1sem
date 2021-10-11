@@ -1,4 +1,4 @@
-1 part: Basic Graph implementation.
+<h1>1 part: Basic Graph implementation.</h1>
 
         Implemented generic graph DS both with adjacency list and adjacency matrix.
         To find the path between vertices we use methods from two classes
