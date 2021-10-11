@@ -12,7 +12,7 @@ import java.util.Stack;
  * @param <T> data that is stored in a graph's vertex.
  */
 
-public class GraphPath<T> {
+public class BaseGraphPath<T> {
     protected boolean[] isVisited;
     protected List<T> edgeTo;
     private final T s;
@@ -24,7 +24,7 @@ public class GraphPath<T> {
      * @param s    starting vertex(source).
      */
 
-    public GraphPath(GraphAdjList<T> G, T s) {
+    public BaseGraphPath(GraphAdjList<T> G, T s) {
         this.isVisited = new boolean[G.V()];
         this.edgeTo = new ArrayList<>();
         this.s = s;
@@ -75,7 +75,6 @@ public class GraphPath<T> {
         Stack<T> path = new Stack<>();
         path.push(s);
         for (T x : edgeTo) { path.push(x); }
-        //path.push(s);
         return path;
     }
 }

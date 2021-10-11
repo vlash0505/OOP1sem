@@ -2,7 +2,6 @@ package com.graph.implementation;
 import com.graph.path.DepthFirstPath;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * Class that creates an instance of a graph
@@ -14,15 +13,10 @@ import java.util.stream.Stream;
  *              graph's edges.
  */
 
-public class GraphAdjList<T> {
+public class GraphAdjList<T> extends BaseGraph<T> {
     //using map to store information about vertices
     //therefore graph cannot contain duplicate objects.
     private Map<T, List<T>> vertices;
-    //list of vertices ot get access to the vertices by index
-    //used in the pathfinding algorithms.
-    private List<T> indexedVertices;
-    private int V;
-    private int E;
 
     /**
      * Constructor without parameters for a Graph
@@ -30,10 +24,8 @@ public class GraphAdjList<T> {
      */
 
     public GraphAdjList() {
-        this.V = 0;
-        this.E = 0;
+        super();
         this.vertices = new HashMap<>();
-        this.indexedVertices = new ArrayList<>();
     }
 
     /**
@@ -43,46 +35,23 @@ public class GraphAdjList<T> {
      */
 
     public GraphAdjList(int V, List<T> elements) {
-        //checking parameters for validity.
-        if(V <= 0 || elements.size() != V) {
-            System.out.println("Input values aren't validated, Graph is not initialized.\n");
-            return;
-        }
-        this.V = V;
-        this.E = 0;
+        super(V, elements);
         this.vertices = new HashMap<>(V);
-        this.indexedVertices = new ArrayList<>(V);
         for(int i = 0; i < V; i++) {
             vertices.put(elements.get(i), new ArrayList<>());
         }
-        this.indexedVertices.addAll(elements);
     }
+
+    /**
+     * Method that gets all the graph's vertices(and adjacent
+     * to each of them)
+     *
+     * @return graph as adjacency list.(in that case - HashMap)
+     */
 
     public Map<T, List<T>> getVertices() {
         return vertices;
     }
-
-    public List<T> getIndexedVertices() {
-        return indexedVertices;
-    }
-
-    /**
-     * Method that returns number of vertices in an
-     * instance of a graph.
-     *
-     * @return number of vertices in a Graph.
-     */
-
-    public int V() { return V; }
-
-    /**
-     * Method that returns number of edges in an
-     * instance of a graph.
-     *
-     * @return number of edges in a graph instance.
-     */
-
-    public int E() { return E; }
 
     /**
      * Method that adds vertex to the graph.
@@ -178,6 +147,12 @@ public class GraphAdjList<T> {
         }
         return (vertices.get(v).size());
     }
+
+    /**
+     * Method that checks whether the given graph is connected.
+     *
+     * @return true if the graph is connected, otherwise - false.
+     */
 
     public boolean isConnected() {
         GraphAdjList<T> G = new GraphAdjList<>();

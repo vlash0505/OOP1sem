@@ -7,7 +7,7 @@ import com.graph.implementation.GraphAdjList;
  * in a graph using DFS.
  */
 
-public class DepthFirstPath<T> extends GraphPath<T> {
+public class DepthFirstPath<T> extends BaseGraphPath<T> {
 
     /**
      * Constructor for pathfinding using DFS.

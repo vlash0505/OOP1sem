@@ -9,13 +9,8 @@ import java.util.*;
  * adjacency matrix.
  */
 
-public class GraphAdjMatrix<T> {
+public class GraphAdjMatrix<T> extends  BaseGraph<T>{
     private int[][] adj;
-    //map that stores values in a way each value
-    //corresponds to its index.
-    private List<T> indexedValues;
-    private int V;
-    private int E;
 
     /**
      * Constructor without parameters for a Graph
@@ -23,8 +18,8 @@ public class GraphAdjMatrix<T> {
      */
 
     public GraphAdjMatrix() {
+        super();
         this.adj = new int[1][1];
-        this.indexedValues = new ArrayList<>();
     }
 
     /**
@@ -35,16 +30,8 @@ public class GraphAdjMatrix<T> {
      */
 
     public GraphAdjMatrix(int V, List<T> values) {
-        //checking parameter for validity
-        if(V <= 0 || values.size() != V) {
-            System.out.println("Input values aren't validated, Graph instance is not initialized.\n");
-            return;
-        }
-        //filling the fields
-        this.V = V;
+        super(V, values);
         this.adj = new int[V][V];
-        this.indexedValues = new ArrayList<>();
-        this.indexedValues.addAll(values);
     }
 
     /**
@@ -92,7 +79,7 @@ public class GraphAdjMatrix<T> {
 
     public void addVertex(T data) {
         if(V == adj.length) { resize(V * 2); }
-        indexedValues.add(data);
+        indexedVertices.add(data);
         V++;
     }
 
@@ -102,8 +89,8 @@ public class GraphAdjMatrix<T> {
 
     public void removeVertex(T toBeRemoved) {
         if(V == (adj.length / 4)) { resize(V / 2); }
-        int shiftFrom = indexedValues.indexOf(toBeRemoved);
-        indexedValues.remove(toBeRemoved);
+        int shiftFrom = indexedVertices.indexOf(toBeRemoved);
+        indexedVertices.remove(toBeRemoved);
         while(shiftFrom < V) {
             for(int i = 0; i < V; i++) {
                 //shifting rows
@@ -150,7 +137,7 @@ public class GraphAdjMatrix<T> {
      */
 
     public int vertexDegree(T v) {
-        int vertex = indexedValues.indexOf(v);
+        int vertex = indexedVertices.indexOf(v);
         int degree = 0;
         for(int i = 0; i < V; i++) {
             if(adj[vertex][i] == 1) { degree++; }

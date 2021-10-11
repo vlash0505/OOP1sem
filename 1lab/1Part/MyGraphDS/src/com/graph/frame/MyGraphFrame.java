@@ -1,13 +1,12 @@
 package com.graph.frame;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 //GUI is not yet implemented, what
 //you see here is just a playground.
 
-public class MyGraphFrame extends JFrame implements ActionListener {
+public class MyGraphFrame extends JPanel implements ActionListener, MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
     JButton button1;
     JButton button2;
 
