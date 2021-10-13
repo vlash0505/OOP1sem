@@ -1,4 +1,4 @@
-1 part: Basic Graph implementation.
+<h1>1 part: Basic Graph implementation.</h1>
 
         Implemented generic graph DS both with adjacency list and adjacency matrix.
         To find the path between vertices we use methods from two classes
@@ -24,7 +24,7 @@
         In perspective: implement Dijkstra algorithms and try to visualize it.
         
        
-2 part: Database that operates on books.
+<h1>2 part: Database that operates on books.</h1>
         Implemented a simple C.R.U.D application using Spring Framework and 
         Jpa Repository functionality.
         Project is built with Maven, to operate on database we use SQL and JPA
