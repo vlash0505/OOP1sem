@@ -42,6 +42,10 @@ public class GraphAdjList<T> extends BaseGraph<T> {
         }
     }
 
+    public void validateVertex(T t) throws IllegalArgumentException{
+
+    }
+
     /**
      * Method that gets all the graph's vertices(and adjacent
      * to each of them)
@@ -172,9 +176,10 @@ public class GraphAdjList<T> extends BaseGraph<T> {
 
     public List<T> adjacent(T v) {
         //validating parameters
+        //in the case of non-existing vertex
+        //return empty list.
         if(!vertices.containsKey(v)) {
             System.out.println("No such vertex found.");
-            //returning empty List.
             return new ArrayList<>();
         }
         return vertices.get(v);
