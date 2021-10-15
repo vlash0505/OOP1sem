@@ -2,6 +2,7 @@ package com.graph.implementation;
 import com.graph.path.DepthFirstPath;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Class that creates an instance of a graph
@@ -42,8 +43,18 @@ public class GraphAdjList<T> extends BaseGraph<T> {
         }
     }
 
-    public void validateVertex(T t) throws IllegalArgumentException{
+    /**
+     * Utility method that validates user input
+     * and checks whether the vertex is present in a
+     * graph.
+     *
+     * @param t vertex to be checked.
+     * @throws IllegalArgumentException if the vertex is not
+     * present in a graph.
+     */
 
+    public void validateVertex(T t) throws IllegalArgumentException{
+        if(!vertices.containsKey(t)) { throw new IllegalArgumentException(); }
     }
 
     /**
@@ -53,9 +64,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      * @return graph as adjacency list.(in that case - HashMap)
      */
 
-    public Map<T, List<T>> getVertices() {
-        return vertices;
-    }
+    public Map<T, List<T>> getVertices() { return vertices; }
 
     /**
      * Method that adds vertex to the graph.
@@ -64,7 +73,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      */
 
     public void addVertex(T data) {
-        //checking parameters for validity.
+        //avoiding duplicated in a graph
         if(vertices.containsKey(data)) {
             System.out.println("Graph already contains element you are trying to add.");
             return;
@@ -81,11 +90,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      */
 
     public void removeVertex(T w) {
-        //parameter validation
-        if(!vertices.containsKey(w)) {
-            System.out.println("No such vertex found in the graph.\n");
-            return;
-        }
+        validateVertex(w);
         //removing the actual vertex.
         vertices.remove(w);
         //iterating throw each vertex and deleting w vertex from
@@ -106,11 +111,8 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      */
 
     public void addEdge(T v, T w) {
-        //checking parameters for validity.
-        if(!vertices.containsKey(v) || !vertices.containsKey(w)) {
-            System.out.println("Can't add edge because one of the vertices or both of them do not exist.");
-            return;
-        }
+        validateVertex(v);
+        validateVertex(w);
         vertices.get(v).add(w);
         vertices.get(w).add(v);
         E++;
@@ -125,11 +127,8 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      */
 
     public void removeEdge(T v, T w) {
-        //checking parameters for validity.
-        if(!vertices.containsKey(v) || !vertices.containsKey(w)) {
-            System.out.println("Can't add edge because one of the vertices or both of them do not exist.");
-            return;
-        }
+        validateVertex(v);
+        validateVertex(w);
         vertices.get(v).remove(w);
         vertices.get(w).remove(v);
         E--;
@@ -144,11 +143,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      */
 
     public int vertexDegree(T v) {
-        //validating the input
-        if(!vertices.containsKey(v)) {
-            System.out.println("No such vertex found in the graph.\n");
-            return -1;
-        }
+        validateVertex(v);
         return (vertices.get(v).size());
     }
 
@@ -163,7 +158,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
         DepthFirstPath<T> traverse = new DepthFirstPath<>(G, G.getIndexedVertices().get(0));
         boolean[] arr = traverse.getConnection();
 
-        return (!Arrays.asList(arr).contains(false));
+        return (Stream.of(arr).noneMatch(value -> value.equals(Boolean.FALSE)));
     }
 
     /**
@@ -171,17 +166,13 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      * adjacent vertices to the given one.
      *
      * @param v - vertex to be inspected.
-     * @return all the adjacent vertices to v.
+     * @return all the adjacent vertices to v. In the
+     *         case when vertex does not exist method
+     *         returns empty list.
      */
 
     public List<T> adjacent(T v) {
-        //validating parameters
-        //in the case of non-existing vertex
-        //return empty list.
-        if(!vertices.containsKey(v)) {
-            System.out.println("No such vertex found.");
-            return new ArrayList<>();
-        }
+        validateVertex(v);
         return vertices.get(v);
     }
 
