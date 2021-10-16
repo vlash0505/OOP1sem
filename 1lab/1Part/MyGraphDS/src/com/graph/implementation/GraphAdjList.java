@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 public class GraphAdjList<T> extends BaseGraph<T> {
     //using map to store information about vertices
     //therefore graph cannot contain duplicate objects.
-    private Map<T, List<T>> vertices;
+    protected final Map<T, List<T>> vertices;
 
     /**
      * Constructor without parameters for a Graph
@@ -54,7 +54,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      */
 
     public void validateVertex(T t) throws IllegalArgumentException{
-        if(!vertices.containsKey(t)) { throw new IllegalArgumentException(); }
+        if(!vertices.containsKey(t)) { throw new IllegalArgumentException("No such vertex found."); }
     }
 
     /**

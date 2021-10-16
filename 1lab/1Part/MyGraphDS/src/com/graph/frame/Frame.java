@@ -5,6 +5,10 @@ import java.awt.event.*;
 
 public class Frame extends JFrame implements ActionListener, MouseListener, KeyListener {
 
+    public Frame() {
+
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
