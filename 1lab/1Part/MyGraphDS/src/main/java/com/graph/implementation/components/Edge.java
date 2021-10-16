@@ -85,6 +85,6 @@ public class Edge<T> implements Comparable<Edge<T>>{
 
     @Override
     public String toString() {
-        return (this.v.toString() + " " + this.w.toString() + " weight: " + weight);
+        return (this.v.toString() + " - " + this.w.toString() + " weight: " + weight);
     }
 }
