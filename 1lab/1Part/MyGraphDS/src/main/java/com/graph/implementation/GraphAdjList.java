@@ -3,6 +3,7 @@ package com.graph.implementation;
 import com.graph.path.DepthFirstPath;
 
 import java.util.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -103,6 +104,10 @@ public class GraphAdjList<T> extends BaseGraph<T> {
         V--;
     }
 
+    public boolean hasEdge(T v, T w) {
+        return (vertices.get(v).contains(w));
+    }
+
     /**
      * Method that adds edge to a graph (connects
      * two vertices).
@@ -154,12 +159,11 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      * @return true if the graph is connected, otherwise - false.
      */
 
-    public boolean isConnected() {
-        GraphAdjList<T> G = new GraphAdjList<>();
+    public boolean isConnected(GraphAdjList<T> G) {
         DepthFirstPath<T> traverse = new DepthFirstPath<>(G, G.getIndexedVertices().get(0));
         boolean[] arr = traverse.getConnection();
 
-        return (Stream.of(arr).noneMatch(value -> value.equals(Boolean.FALSE)));
+        return (IntStream.range(0, arr.length).allMatch(i -> arr[i]));
     }
 
     /**
@@ -167,9 +171,8 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      * adjacent vertices to the given one.
      *
      * @param v - vertex to be inspected.
-     * @return all the adjacent vertices to v. In the
-     *         case when vertex does not exist method
-     *         returns empty list.
+     *
+     * @return list of all the adjacent vertices to v.
      */
 
     public List<T> adjacent(T v) {
