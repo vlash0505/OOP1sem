@@ -16,8 +16,7 @@ import java.util.stream.IntStream;
  */
 
 public class GraphAdjList<T> extends BaseGraph<T> {
-    //using map to store information about vertices
-    //therefore graph cannot contain duplicate objects.
+
     protected final Map<T, List<T>> vertices;
 
     /**
@@ -33,27 +32,13 @@ public class GraphAdjList<T> extends BaseGraph<T> {
     /**
      * Constructor for a Graph data structure.
      *
-     * @param V - initial number of vertices.
+     * @param V  initial number of vertices.
      */
 
     public GraphAdjList(int V, List<T> elements) {
         super(V, elements);
         this.vertices = new HashMap<>(V);
         for(int i = 0; i < V; i++) { vertices.put(elements.get(i), new ArrayList<>()); }
-    }
-
-    /**
-     * Utility method that validates user input
-     * and checks whether the vertex is present in a
-     * graph.
-     *
-     * @param t vertex to be checked.
-     * @throws IllegalArgumentException if the vertex is not
-     * present in a graph.
-     */
-
-    public void validateVertex(T t) throws IllegalArgumentException{
-        if(!vertices.containsKey(t)) { throw new IllegalArgumentException("No such vertex found."); }
     }
 
     /**
@@ -68,7 +53,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
     /**
      * Method that adds vertex to the graph.
      *
-     * @param data - data to be stored in a new vertex.
+     * @param data  data to be stored in a new vertex.
      */
 
     public void addVertex(T data) {
@@ -84,7 +69,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
     /**
      * Method that removes vertex from the graph.
      *
-     * @param w - vertex to be removed.
+     * @param w  vertex to be removed.
      */
 
     public void removeVertex(T w) {
@@ -100,14 +85,24 @@ public class GraphAdjList<T> extends BaseGraph<T> {
         V--;
     }
 
+    /**
+     * Utility method that checks whether edge between two
+     * vertices exist.
+     *
+     * @param v first vertex
+     * @param w second vertex
+     *
+     * @return true if there is an edge, otherwise - false.
+     */
+
     public boolean hasEdge(T v, T w) { return (vertices.get(v).contains(w)); }
 
     /**
      * Method that adds edge to a graph (connects
      * two vertices).
      *
-     * @param v - first vertex.
-     * @param w - second vertex.
+     * @param v  first vertex.
+     * @param w  second vertex.
      */
 
     public void addEdge(T v, T w) {
@@ -123,8 +118,8 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      * Method that deletes an edge in a graph.(deletes
      * connection between two vertices)
      *
-     * @param v - first vertex.
-     * @param w - second vertex.
+     * @param v  first vertex.
+     * @param w  second vertex.
      */
 
     public void removeEdge(T v, T w) {
@@ -139,7 +134,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
     /**
      * Method that calculates the degree of a vertex.
      *
-     * @param v - vertex to be inspected.
+     * @param v  vertex to be inspected.
      *
      * @return degree of a given vertex.
      */
@@ -166,7 +161,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      * Method that collects and returns all the
      * adjacent vertices to the given one.
      *
-     * @param v - vertex to be inspected.
+     * @param v  vertex to be inspected.
      *
      * @return list of all the adjacent vertices to v.
      */

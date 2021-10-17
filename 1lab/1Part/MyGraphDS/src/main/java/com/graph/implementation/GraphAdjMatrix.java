@@ -26,7 +26,7 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
      * Constructor without parameters for a Graph
      * data structure represented as adjacency matrix.
      *
-     * @param V - initial number of vertices
+     * @param V  initial number of vertices
      */
 
     public GraphAdjMatrix(int V, List<T> values) {
@@ -40,7 +40,7 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
      * (Old size) / 2 when we are going to use only 1/4 of initial
      *                array.
      *
-     * @param newSize - size of the new 2D array.
+     * @param newSize  size of the new 2D array.
      */
 
     public void resize(int newSize) {
@@ -50,13 +50,31 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
     }
 
     /**
+     * Utility method that checks whether edge between two
+     * vertices exist.
+     *
+     * @param indexV index of the first vertex
+     * @param indexW index of the second vertex
+     *
+     * @return true if there is an edge, otherwise - false.
+     */
+
+    public boolean hasEdge(int indexV, int indexW) {
+        return (adj[indexV][indexW] == 1);
+    }
+
+    /**
      * Method that adds vertex to the graph.
      *
-     * @param data - data to be stored in a new
+     * @param data  data to be stored in a new
      *             vertex.
      */
 
     public void addVertex(T data) {
+        if(indexedVertices.contains(data)) {
+            System.out.println("Graph already contains element you are trying to add.");
+            return;
+        }
         if(V == adj.length) { resize(V * 2); }
         indexedVertices.add(data);
         V++;
@@ -67,6 +85,7 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
      */
 
     public void removeVertex(T toBeRemoved) {
+        validateVertex(toBeRemoved);
         if(V == (adj.length / 4)) { resize(V / 2); }
 
         int shiftFrom = indexedVertices.indexOf(toBeRemoved);
@@ -86,13 +105,17 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
      * Method that adds edge to a graph (connects
      * two vertices).
      *
-     * @param v - first vertex.
-     * @param w - second vertex.
+     * @param v  first vertex.
+     * @param w  second vertex.
      */
 
     public void addEdge(T v, T w) {
+        validateVertex(v);
+        validateVertex(w);
         int firstIndex = indexedVertices.indexOf(v);
         int secondIndex = indexedVertices.indexOf(w);
+        if(hasEdge(firstIndex, secondIndex)) { return; }
+
         adj[firstIndex][secondIndex] = 1;
         adj[secondIndex][firstIndex] = 1;
         E++;
@@ -102,13 +125,17 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
      * Method that deletes an edge in a graph.(deletes
      * connection between two vertices)
      *
-     * @param v - first vertex.
-     * @param w - second vertex.
+     * @param v  first vertex.
+     * @param w  second vertex.
      */
 
     public void removeEdge(T v, T w) {
+        validateVertex(v);
+        validateVertex(w);
         int firstIndex = indexedVertices.indexOf(v);
         int secondIndex = indexedVertices.indexOf(w);
+        if(!hasEdge(firstIndex, secondIndex)) { return; }
+
         adj[firstIndex][secondIndex] = 0;
         adj[secondIndex][firstIndex] = 0;
         E--;
@@ -117,11 +144,12 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
     /**
      * Method that calculates the degree of a vertex.
      *
-     * @param v - vertex to be inspected.
+     * @param v  vertex to be inspected.
      * @return degree of a given vertex.
      */
 
     public int vertexDegree(T v) {
+        validateVertex(v);
         int vertex = indexedVertices.indexOf(v);
         int degree = 0;
         for(int i = 0; i < V; i++) {
@@ -134,11 +162,12 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
      * Method that collects and returns all the
      * adjacent vertices to the given one.
      *
-     * @param v - vertex to be inspected.
+     * @param v  vertex to be inspected.
      * @return all the adjacent vertices to v.
      */
 
     public List<T> adjacent(T v) {
+        validateVertex(v);
         int[] row = adj[indexedVertices.indexOf(v)];
         return indexedVertices.stream()
                               .filter(i -> row[indexedVertices.indexOf(i)] == 1)

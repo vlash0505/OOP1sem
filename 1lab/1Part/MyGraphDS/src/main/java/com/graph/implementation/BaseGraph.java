@@ -39,6 +39,20 @@ public class BaseGraph<T> {
     }
 
     /**
+     * Utility method that validates user input
+     * and checks whether the vertex is present in a
+     * graph.
+     *
+     * @param t vertex to be checked.
+     * @throws IllegalArgumentException if the vertex is not
+     * present in a graph.
+     */
+
+    public void validateVertex(T t) throws IllegalArgumentException{
+        if(!indexedVertices.contains(t)) { throw new IllegalArgumentException("No such vertex found."); }
+    }
+
+    /**
      * Method that returns graph's vertices as List.
      *
      * @return Graph's vertices as List.
