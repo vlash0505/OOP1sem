@@ -33,7 +33,7 @@ public class DepthFirstPath<T> extends BaseGraphPath<T> {
         T toInspect = G.getIndexedVertices().get(v);
         //going through adjacent vertices to the vertex
         //we are currently inspecting.
-        for (T w : G.getVertices().get(toInspect)) {
+        for (T w : G.adjacent(toInspect)) {
 
             int index = G.getIndexedVertices().indexOf(w);
             if (!isVisited[index]) {

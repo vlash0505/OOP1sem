@@ -4,7 +4,6 @@ import com.graph.path.DepthFirstPath;
 
 import java.util.*;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Class that creates an instance of a graph
@@ -40,9 +39,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
     public GraphAdjList(int V, List<T> elements) {
         super(V, elements);
         this.vertices = new HashMap<>(V);
-        for(int i = 0; i < V; i++) {
-            vertices.put(elements.get(i), new ArrayList<>());
-        }
+        for(int i = 0; i < V; i++) { vertices.put(elements.get(i), new ArrayList<>()); }
     }
 
     /**
@@ -75,7 +72,6 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      */
 
     public void addVertex(T data) {
-        //avoiding duplicated in a graph
         if(vertices.containsKey(data)) {
             System.out.println("Graph already contains element you are trying to add.");
             return;

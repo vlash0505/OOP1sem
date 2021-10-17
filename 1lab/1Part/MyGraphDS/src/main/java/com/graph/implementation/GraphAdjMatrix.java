@@ -1,7 +1,7 @@
 package com.graph.implementation;
 
 import java.util.*;
-
+import java.util.stream.Collectors;
 /**
  * Class that creates an instance of a graph
  * and implements basic operations on graph
@@ -37,38 +37,17 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
     /**
      * Resizing the adjacency matrix.
      * (Old size) * 2 when we are exceeding the initial array.
-     * (Old size) / 2 when we are using only 1/4 of initial array.
+     * (Old size) / 2 when we are going to use only 1/4 of initial
+     *                array.
      *
      * @param newSize - size of the new 2D array.
      */
 
     public void resize(int newSize) {
         int[][] newArr = new int[newSize][newSize];
-        for(int i = 0; i < V; i++) {
-            for(int j = 0; j < adj.length; j++) {
-                newArr[i][j] = adj[i][j];
-            }
-        }
+        for(int i = 0; i < V; i++) { newArr[i] = adj[i].clone(); }
         adj = newArr;
     }
-
-    /**
-     * Method that returns number of vertices in an
-     * instance of a graph.
-     *
-     * @return number of vertices in a Graph.
-     */
-
-    public int V()  { return V; }
-
-    /**
-     * Method that returns number vertices in an
-     * instance of a graph.
-     *
-     * @return number of edges in a graph instance.
-     */
-
-    public int E()  { return E; }
 
     /**
      * Method that adds vertex to the graph.
@@ -89,8 +68,10 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
 
     public void removeVertex(T toBeRemoved) {
         if(V == (adj.length / 4)) { resize(V / 2); }
+
         int shiftFrom = indexedVertices.indexOf(toBeRemoved);
         indexedVertices.remove(toBeRemoved);
+
         while(shiftFrom < V) {
             for(int i = 0; i < V; i++) {
                 //shifting rows
@@ -109,9 +90,11 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
      * @param w - second vertex.
      */
 
-    public void addEdge(int v, int w) {
-        adj[v][w] = 1;
-        adj[w][v] = 1;
+    public void addEdge(T v, T w) {
+        int firstIndex = indexedVertices.indexOf(v);
+        int secondIndex = indexedVertices.indexOf(w);
+        adj[firstIndex][secondIndex] = 1;
+        adj[secondIndex][firstIndex] = 1;
         E++;
     }
 
@@ -123,9 +106,11 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
      * @param w - second vertex.
      */
 
-    public void removeEdge(int v, int w) {
-        adj[v][w] = 0;
-        adj[w][v] = 0;
+    public void removeEdge(T v, T w) {
+        int firstIndex = indexedVertices.indexOf(v);
+        int secondIndex = indexedVertices.indexOf(w);
+        adj[firstIndex][secondIndex] = 0;
+        adj[secondIndex][firstIndex] = 0;
         E--;
     }
 
@@ -153,13 +138,11 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
      * @return all the adjacent vertices to v.
      */
 
-    public int[] adjacent(int v) {
-        int[] result = new int[V];
-        int countAdj = 0;
-        for(int i = 0; i < V; i++) {
-            if(adj[v][i] == 1) { result[countAdj++] = i; }
-        }
-        return Arrays.copyOf(result, countAdj);
+    public List<T> adjacent(T v) {
+        int[] row = adj[indexedVertices.indexOf(v)];
+        return indexedVertices.stream()
+                              .filter(i -> row[indexedVertices.indexOf(i)] == 1)
+                              .collect(Collectors.toList());
     }
 
     /**
@@ -173,12 +156,9 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
     public String toString() {
         StringBuilder result = new StringBuilder((V + "Vertices and " + E + "Edges \n"));
         for(int i = 0; i < V; i++) {
-            int[] traverse = adjacent(i);
-            result.append(i).append(" : ");
-            for(int j : traverse) {
-                result.append(j).append(" ");
-            }
-            result.append("\n");
+            result.append(indexedVertices.get(i));
+            result.append(" : ");
+            result.append(this.adjacent(indexedVertices.get(i)));
         }
         return (result.toString());
     }
