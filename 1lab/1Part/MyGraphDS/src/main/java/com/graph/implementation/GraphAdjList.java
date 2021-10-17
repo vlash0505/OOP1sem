@@ -104,9 +104,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
         V--;
     }
 
-    public boolean hasEdge(T v, T w) {
-        return (vertices.get(v).contains(w));
-    }
+    public boolean hasEdge(T v, T w) { return (vertices.get(v).contains(w)); }
 
     /**
      * Method that adds edge to a graph (connects
@@ -119,6 +117,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
     public void addEdge(T v, T w) {
         validateVertex(v);
         validateVertex(w);
+        if(hasEdge(v, w)) { return; }
         vertices.get(v).add(w);
         vertices.get(w).add(v);
         E++;
@@ -135,6 +134,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
     public void removeEdge(T v, T w) {
         validateVertex(v);
         validateVertex(w);
+        if(!hasEdge(v, w)) { return; }
         vertices.get(v).remove(w);
         vertices.get(w).remove(v);
         E--;

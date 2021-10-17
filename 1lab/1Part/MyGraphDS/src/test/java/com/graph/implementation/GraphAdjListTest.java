@@ -73,6 +73,24 @@ class GraphAdjListTest {
     }
 
     @Test
+    @DisplayName("Should remove edge from the graph")
+    void shouldReturnAllAdjacentVertices() {
+        GraphAdjList<Integer> graph = new GraphAdjList<>();
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+        graph.addVertex(4);
+
+        graph.addEdge(1,2);
+        Assertions.assertEquals(1,graph.E());
+
+        graph.removeEdge(1,2);
+        Assertions.assertEquals(0,graph.E());
+        Assertions.assertFalse(graph.getVertices().get(1).contains(2));
+        Assertions.assertFalse(graph.getVertices().get(2).contains(1));
+    }
+
+    @Test
     @DisplayName("Should ensure vertex degree")
     void shouldEnsureVertexDegree() {
         GraphAdjList<Integer> graph = new GraphAdjList<>();
