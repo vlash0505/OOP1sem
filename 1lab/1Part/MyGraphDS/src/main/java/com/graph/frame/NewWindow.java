@@ -2,33 +2,30 @@ package com.graph.frame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class NewWindow extends JFrame implements ActionListener {
+public class NewWindow extends JFrame {
     private final Window grid;
 
     private final JPanel allContent;
     private final JPanel controlPanel;
 
     private final JButton startButton;
-    private final JComboBox<String> gridEditorList;
+    private final JComboBox<String> tileModes;
 
     public NewWindow(){
         grid = new Window();
-
         allContent = new JPanel(new BorderLayout());
         controlPanel = new JPanel(new BorderLayout());
 
         startButton = new JButton("Let's GooOoO");
         startButton.setActionCommand("start");
-        startButton.addActionListener(this);
+        startButton.addActionListener(e -> grid.startSearch());
         controlPanel.add(startButton, BorderLayout.WEST);
 
         String[] editList = {"Source", "Gate", "Dwayne The Rock Johnson"};
-        gridEditorList = new JComboBox<>(editList);
-        gridEditorList.addActionListener(this);
-        controlPanel.add(gridEditorList,BorderLayout.CENTER);
+        tileModes = new JComboBox<>(editList);
+        tileModes.addActionListener(e -> grid.setTileMod(tileModes.getSelectedIndex()));
+        controlPanel.add(tileModes, BorderLayout.CENTER);
 
         controlPanel.setPreferredSize(new Dimension(690,75));
 
@@ -41,10 +38,5 @@ public class NewWindow extends JFrame implements ActionListener {
         this.setTitle("Bruh");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }

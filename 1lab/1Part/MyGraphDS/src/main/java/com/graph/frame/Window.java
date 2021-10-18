@@ -12,12 +12,6 @@ public class Window extends JPanel implements ActionListener, MouseListener, Key
     private static final int size = 30;
 
     private final JPanel panel;
-    //private final JFrame frame;
-    //private final JComboBox<String> comboBox;
-
-    //private final JPanel control;
-
-    private JLabel label;
 
     private final TestPath<Integer> path;
 
@@ -27,24 +21,12 @@ public class Window extends JPanel implements ActionListener, MouseListener, Key
         this.panel.setFocusable(false);
         this.setPreferredSize(new Dimension(690,420));
 
-        //this.comboBox = new JComboBox<>();
-
-
-        //this.frame = new JFrame();
-        //this.frame.setContentPane(this);
-        //this.frame.setLayout(new BorderLayout());
-        //this.frame.setTitle("Dungeon Master");
-        //this.frame.setSize(690, 420);
-        //this.frame.setResizable(false);
-        //this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.frame.setVisible(true);
-
         addKeyListener(this);
         addMouseListener(this);
         addMouseMotionListener(this);
 
-        GraphAdjList<Integer> graph = new GraphAdjList<>();
         //GraphAdjList<Integer>() - we have to init graph as grid.
+        GraphAdjList<Integer> graph = new GraphAdjList<>();
         graph.addVertex(1);
         graph.addVertex(2);
         graph.addVertex(3);
@@ -57,6 +39,12 @@ public class Window extends JPanel implements ActionListener, MouseListener, Key
 
     @Override
     public void paintComponents(Graphics g) { super.paintComponent(g); }
+
+    public void startSearch(){}
+
+    public void setTileMod(int mode) {
+
+    }
 
     public boolean emptyTile(Tile t) { return t == null; }
 
