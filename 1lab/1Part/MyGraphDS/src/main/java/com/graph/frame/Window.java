@@ -26,7 +26,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     private final Tile[][] gridMatrix;
     private int tileMode;
 
-    private TestPath<Integer> path;
+    private TestPath<Tile> path;
 
     public Window() {
         this.setPreferredSize(new Dimension(690,420));
@@ -45,7 +45,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     @Override
     public void paintComponents(Graphics g) { super.paintComponent(g); }
 
-    public void graphInitialise() {
+    public GraphAdjList<Tile> graphInitialise() {
         int rowsNum = this.getWidth()/size;
         int columnsNum = this.getHeight()/size;
         int V = (rowsNum * columnsNum);
@@ -70,21 +70,15 @@ public class Window extends JPanel implements ActionListener, MouseListener {
                 graph.addEdge(entry.getKey(), gridMatrix[rr][cc]);
             }
         }
+        return graph;
     }
 
     public void startSearch() {
-        GraphAdjList<Integer> graph = new GraphAdjList<>();
-        graph.addVertex(1);
-        graph.addVertex(2);
-        graph.addVertex(3);
-        graph.addVertex(4);
-        graph.addEdge(1,2);
-        path = new TestPath<>(graph, 1);
+        GraphAdjList<Tile> G = graphInitialise();
+        path = new TestPath<>(G, gridMatrix[0][0]);
     }
 
-    public void setTileMode(int mode) {
-
-    }
+    public void setTileMode(int mode) { this.tileMode = mode; }
 
     public boolean emptyTile(Tile t) { return t == null; }
 
