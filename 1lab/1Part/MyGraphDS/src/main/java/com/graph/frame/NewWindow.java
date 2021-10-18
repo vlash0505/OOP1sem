@@ -17,12 +17,12 @@ public class NewWindow extends JFrame {
         allContent = new JPanel(new BorderLayout());
         controlPanel = new JPanel(new BorderLayout());
 
-        startButton = new JButton("Let's GooOoO");
+        startButton = new JButton("Start");
         startButton.setActionCommand("start");
         startButton.addActionListener(e -> grid.startSearch());
         controlPanel.add(startButton, BorderLayout.WEST);
 
-        String[] editList = {"Source", "Gate", "Dwayne The Rock Johnson"};
+        String[] editList = {"Source", "Gate", "Wall"};
         tileModes = new JComboBox<>(editList);
         tileModes.addActionListener(e -> grid.setTileMode(tileModes.getSelectedIndex()));
         controlPanel.add(tileModes, BorderLayout.CENTER);

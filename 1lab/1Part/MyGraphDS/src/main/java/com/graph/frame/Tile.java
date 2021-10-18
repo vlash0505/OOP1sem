@@ -4,9 +4,37 @@ public class Tile {
     private int x;
     private int y;
 
+    private boolean isWall;
+    private boolean isSource;
+    private boolean isGate;
+
     public Tile(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public boolean isWall() {
+        return isWall;
+    }
+
+    public void setWall(boolean wall) {
+        isWall = wall;
+    }
+
+    public boolean isSource() {
+        return isSource;
+    }
+
+    public void setSource(boolean source) {
+        isSource = source;
+    }
+
+    public boolean isGate() {
+        return isGate;
+    }
+
+    public void setGate(boolean gate) {
+        isGate = gate;
     }
 
     public void setX(int x) {
