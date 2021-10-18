@@ -24,7 +24,7 @@ public class NewWindow extends JFrame {
 
         String[] editList = {"Source", "Gate", "Dwayne The Rock Johnson"};
         tileModes = new JComboBox<>(editList);
-        tileModes.addActionListener(e -> grid.setTileMod(tileModes.getSelectedIndex()));
+        tileModes.addActionListener(e -> grid.setTileMode(tileModes.getSelectedIndex()));
         controlPanel.add(tileModes, BorderLayout.CENTER);
 
         controlPanel.setPreferredSize(new Dimension(690,75));

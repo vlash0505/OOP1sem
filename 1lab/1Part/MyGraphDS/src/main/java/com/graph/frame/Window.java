@@ -4,14 +4,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import com.graph.implementation.*;
+
+/**
+ * Class that represents panel and functionality
+ * to visualise
+ */
 
 public class Window extends JPanel implements ActionListener, MouseListener {
     private static final int size = 30;
     private Tile spawnPosition;
     private Tile endPosition;
+    private final Tile[][] gridMatrix;
     private int tileMode;
 
     private TestPath<Integer> path;
@@ -19,13 +31,45 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     public Window() {
         this.setPreferredSize(new Dimension(690,420));
         addMouseListener(this);
+
+        this.gridMatrix = new Tile[getWidth()/size][getHeight()/size];
+        this.initMatrixGrid(gridMatrix);
+    }
+
+    public void initMatrixGrid(Tile[][] array) {
+        IntStream.range(0, array.length)
+                 .forEach(x -> IntStream.range(0, array[x].length)
+                                        .forEach(y -> array[x][y] = new Tile(x, y)));
     }
 
     @Override
     public void paintComponents(Graphics g) { super.paintComponent(g); }
 
     public void graphInitialise() {
+        int rowsNum = this.getWidth()/size;
+        int columnsNum = this.getHeight()/size;
+        int V = (rowsNum * columnsNum);
+        //converting 2d matrix to list to initialize graph with
+        //its values.
+        List<Tile> values = Stream.of(gridMatrix)
+                                  .flatMap(Arrays::stream)
+                                  .collect(Collectors.toList());
+        GraphAdjList<Tile> graph = new GraphAdjList<>(V, values);
+        // vectors for exploring neighbour vertices
+        // north/south/east/west
+        int[] dr = {-1, 1, 0, 0};
+        int[] dc = {0, 0, 1, -1};
+        for(Map.Entry<Tile, List<Tile>> entry : graph.getVertices().entrySet()) {
+            for(int i = 0; i < 4; i++) {
+                int rr = entry.getKey().getX() + dr[i];
+                int cc = entry.getKey().getY() + dc[i];
 
+                if(rr < 0 || cc < 0) { continue; }
+                if(rr > rowsNum || cc > columnsNum) { continue; }
+
+                graph.addEdge(entry.getKey(), gridMatrix[rr][cc]);
+            }
+        }
     }
 
     public void startSearch() {
@@ -38,7 +82,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         path = new TestPath<>(graph, 1);
     }
 
-    public void setTileMod(int mode) {
+    public void setTileMode(int mode) {
 
     }
 
@@ -53,15 +97,15 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         }
     }
 
-    public void paintWalls(Graphics g) {
-        Set<Tile> wallList = path.getWalls();
-        g.setColor(Color.BLACK);
-        for(Tile tile : wallList) {
-            int x = tile.getX();
-            int y = tile.getY();
-            g.fillRect(x, y, size , size);
-        }
-    }
+    //public void paintWalls(Graphics g) {
+    //    Set<Tile> wallList = path.getWalls();
+    //    g.setColor(Color.BLACK);
+    //    for(Tile tile : wallList) {
+    //        int x = tile.getX();
+    //        int y = tile.getY();
+    //        g.fillRect(x, y, size , size);
+    //    }
+    //}
 
     //public void paintSpawnPoint(Graphics g) {
     //    if(emptyTile(spawnPoint)) return;
@@ -75,10 +119,16 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     //    g.fillRect(endPoint.getX(), endPoint.getY(), size, size);
     //}
 
+    /**
+     * Driver method for drawing the grid.
+     *
+     * @param g graphics used in this frame.
+     */
+
     @Override
     public void paint(Graphics g) {
         paintGrid(g);
-        paintWalls(g);
+        //paintWalls(g);
 
         //paintSpawnPoint(g);
         //paintEndPoint(g);
