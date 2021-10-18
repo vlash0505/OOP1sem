@@ -3,44 +3,40 @@ package com.graph.frame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import com.graph.implementation.*;
 
-public class Window extends JPanel implements ActionListener, MouseListener, KeyListener, MouseMotionListener {
+public class Window extends JPanel implements ActionListener, MouseListener {
     private static final int size = 30;
+    private Tile spawnPosition;
+    private Tile endPosition;
+    private int tileMode;
 
-    private final JPanel panel;
-
-    private final TestPath<Integer> path;
+    private TestPath<Integer> path;
 
     public Window() {
-        this.panel = new JPanel();
-        this.panel.setLayout(null);
-        this.panel.setFocusable(false);
         this.setPreferredSize(new Dimension(690,420));
-
-        addKeyListener(this);
         addMouseListener(this);
-        addMouseMotionListener(this);
-
-        //GraphAdjList<Integer>() - we have to init graph as grid.
-        GraphAdjList<Integer> graph = new GraphAdjList<>();
-        graph.addVertex(1);
-        graph.addVertex(2);
-        graph.addVertex(3);
-        graph.addVertex(4);
-
-        graph.addEdge(1,2);
-
-        path = new TestPath<>(graph, 1);
     }
 
     @Override
     public void paintComponents(Graphics g) { super.paintComponent(g); }
 
-    public void startSearch(){}
+    public void graphInitialise() {
+
+    }
+
+    public void startSearch() {
+        GraphAdjList<Integer> graph = new GraphAdjList<>();
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+        graph.addVertex(4);
+        graph.addEdge(1,2);
+        path = new TestPath<>(graph, 1);
+    }
 
     public void setTileMod(int mode) {
 
@@ -105,19 +101,4 @@ public class Window extends JPanel implements ActionListener, MouseListener, Key
 
     @Override
     public void mouseExited(MouseEvent e) {}
-
-    @Override
-    public void keyTyped(KeyEvent e) {}
-
-    @Override
-    public void keyPressed(KeyEvent e) {}
-
-    @Override
-    public void keyReleased(KeyEvent e) {}
-
-    @Override
-    public void mouseDragged(MouseEvent e) {}
-
-    @Override
-    public void mouseMoved(MouseEvent e) {}
 }
