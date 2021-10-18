@@ -1,5 +1,6 @@
 package com.graph.path;
 
+import com.graph.implementation.BaseGraph;
 import com.graph.implementation.GraphAdjList;
 
 /**

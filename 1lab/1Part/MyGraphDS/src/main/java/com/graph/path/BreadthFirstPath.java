@@ -10,7 +10,6 @@ import java.util.*;
  */
 
 public class BreadthFirstPath<T>  extends BaseGraphPath<T> {
-
     /**
      * Constructor for pathfinding using BFS.
      *
@@ -41,7 +40,7 @@ public class BreadthFirstPath<T>  extends BaseGraphPath<T> {
             int v = queue.remove();
             T toInspect = G.getIndexedVertices().get(v);
 
-            for (T w : G.getVertices().get(toInspect)) {
+            for (T w : G.adjacent(toInspect)) {
 
                 int index = G.getIndexedVertices().indexOf(w);
                 if (!isVisited[index]) {
