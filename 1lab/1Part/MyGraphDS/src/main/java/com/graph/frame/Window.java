@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import java.util.Timer;
+
+import java.util.concurrent.TimeUnit;
+
 import com.graph.implementation.*;
 
 /**
@@ -23,10 +27,14 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     private Tile spawnPosition;
     private Tile endPosition;
 
-    private Tile[][] gridMatrix;
+    private final Tile[][] gridMatrix;
     private int tileMode;
 
     private TestPath<Tile> path;
+    private boolean pathIsDone;
+    private Timer timer;
+
+    private Iterable<Tile> f;
 
     public Window() {
         this.setPreferredSize(new Dimension(690,420));
@@ -39,6 +47,8 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         this.endPosition = new Tile(1, 1);
 
         addMouseListener(this);
+
+        timer = new Timer();
     }
 
     public void fillMatrixGrid(Tile[][] array) {
@@ -47,8 +57,8 @@ public class Window extends JPanel implements ActionListener, MouseListener {
                         .forEach(y -> array[x][y] = new Tile(x, y)));
     }
 
-    @Override
-    public void paintComponents(Graphics g) { super.paintComponent(g); }
+    //@Override
+    //public void paintComponents(Graphics g) { super.paintComponent(g); }
 
     public GraphAdjList<Tile> graphInitialise() {
         int rowsNum = this.getWidth()/size;
@@ -66,11 +76,13 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         int[] dc = {0, 0, 1, -1};
         for(Map.Entry<Tile, List<Tile>> entry : graph.getVertices().entrySet()) {
             for(int i = 0; i < 4; i++) {
+                if(entry.getKey().isWall()) { continue; }
                 int rr = entry.getKey().getX() + dr[i];
                 int cc = entry.getKey().getY() + dc[i];
 
                 if(rr < 0 || cc < 0) { continue; }
-                if(rr > rowsNum || cc > columnsNum) { continue; }
+                if(rr > rowsNum - 1 || cc > columnsNum - 1) { continue; }
+                if(gridMatrix[rr][cc].isWall()) { continue; }
 
                 graph.addEdge(entry.getKey(), gridMatrix[rr][cc]);
             }
@@ -80,12 +92,11 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
     public void startSearch() {
         GraphAdjList<Tile> G = graphInitialise();
-        path = new TestPath<>(G, spawnPosition);
+        path = new TestPath<>(G, spawnPosition, endPosition);
+        this.f = path.pathTo(G, endPosition);
+        pathIsDone = true;
+        repaint();
     }
-
-    public void setTileMode(int mode) { this.tileMode = mode; }
-
-    public boolean emptyTile(Tile t) { return t == null; }
 
     public void paintGrid(Graphics g) {
         for (int i = 0; i < this.getWidth() / 30; i++) {
@@ -104,6 +115,32 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         }
     }
 
+    void paintTrack(Graphics g) {
+        Stack<Tile> toPaint = path.getTrack();
+        for(Tile t : toPaint) {
+
+            int x1 = t.getX() * 30;
+            int y1 = t.getY() * 30;
+            g.setColor(Color.CYAN);
+            g.fillRect(x1, y1, size, size);
+
+            g.setColor(Color.BLACK);
+            g.drawRect(x1, y1, size, size);
+        }
+    }
+
+    void paintTrace(Graphics g) {
+        for(Tile t : f) {
+            int x1 = t.getX() * 30;
+            int y1 = t.getY() * 30;
+            g.setColor(Color.BLUE);
+            g.fillRect(x1, y1, size, size);
+
+            g.setColor(Color.BLACK);
+            g.drawRect(x1, y1, size, size);
+        }
+    }
+
     /**
      * Driver method for drawing the grid.
      *
@@ -113,10 +150,17 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     @Override
     public void paint(Graphics g) {
         paintGrid(g);
-
+        if(pathIsDone) {
+            paintTrack(g);
+            if(f != null) {
+                paintTrace(g);
+            }
+        }
         //paintSpawnPoint(g);
         //paintEndPoint(g);
     }
+
+    public void setTileMode(int mode) { this.tileMode = mode; }
 
     @Override
     public void mouseClicked(MouseEvent e) {

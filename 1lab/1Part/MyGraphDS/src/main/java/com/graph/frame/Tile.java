@@ -7,10 +7,19 @@ public class Tile {
     private boolean isWall;
     private boolean isSource;
     private boolean isGate;
+    private boolean isVisited;
 
     public Tile(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public boolean isVisited() {
+        return isVisited;
+    }
+
+    public void setVisited(boolean visited) {
+        isVisited = visited;
     }
 
     public boolean isWall() {
@@ -60,5 +69,10 @@ public class Tile {
 
         final Tile that = (Tile) o;
         return (this.x == that.x && this.y == that.y);
+    }
+
+    @Override
+    public String toString() {
+        return (this.x + " " + this.y);
     }
 }
