@@ -25,7 +25,6 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
     private Tile[][] gridMatrix;
     private int tileMode;
-    private Set<Tile> walls;
 
     private TestPath<Tile> path;
 
@@ -35,7 +34,9 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         this.gridMatrix = new Tile[23][14];
         System.out.println(gridMatrix.length);
         this.fillMatrixGrid(gridMatrix);
-        this.walls = new HashSet<>();
+
+        this.spawnPosition = new Tile(0, 0);
+        this.endPosition = new Tile(1, 1);
 
         addMouseListener(this);
     }
@@ -87,18 +88,6 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     public boolean emptyTile(Tile t) { return t == null; }
 
     public void paintGrid(Graphics g) {
-        g.setColor(Color.BLACK);
-        for (int i = 0; i < this.getHeight(); i += size) {
-            for (int j = 0; j < this.getWidth(); j += size) {
-                g.setColor(Color.WHITE);
-                g.fillRect(j, i, size, size);
-                g.setColor(Color.BLACK);
-                g.drawRect(j, i, size, size);
-            }
-        }
-    }
-
-    public void paintg(Graphics g) {
         for (int i = 0; i < this.getWidth() / 30; i++) {
             for (int j = 0; j < this.getHeight() / 30; j++) {
                 int x1 = gridMatrix[i][j].getX() * 30;
@@ -107,21 +96,11 @@ public class Window extends JPanel implements ActionListener, MouseListener {
                 g.setColor((gridMatrix[i][j].isWall()) ? (Color.BLACK) : (Color.WHITE));
                 if(gridMatrix[i][j].isSource()) { g.setColor(Color.YELLOW); }
                 if(gridMatrix[i][j].isGate())   { g.setColor(Color.RED); }
-
                 g.fillRect(x1, y1, size, size);
+
                 g.setColor(Color.BLACK);
                 g.drawRect(x1, y1, size, size);
             }
-        }
-    }
-
-    public void paintWalls(Graphics g) {
-        //Set<Tile> wallList = path.getWalls();
-        g.setColor(Color.BLACK);
-        for(Tile tile : walls) {
-            int x = tile.getX() * 30;
-            int y = tile.getY() * 30;
-            g.fillRect(x, y, size , size);
         }
     }
 
@@ -133,8 +112,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
     @Override
     public void paint(Graphics g) {
-        paintg(g);
-        paintWalls(g);
+        paintGrid(g);
 
         //paintSpawnPoint(g);
         //paintEndPoint(g);
@@ -145,9 +123,28 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         int x = (e.getX() - (e.getX() % size)) / size;
         int y = (e.getY() - (e.getY() % size)) / size;
         switch (tileMode) {
-            case (0) -> gridMatrix[x][y].setSource(true);
-            case (1) -> gridMatrix[x][y].setGate(true);
-            case (2) -> gridMatrix[x][y].setWall(true);
+            case (0) -> {
+                if(gridMatrix[x][y].isGate() || gridMatrix[x][y].isWall()) { break; }
+
+                spawnPosition.setSource(false);
+                gridMatrix[x][y].setSource(true);
+                spawnPosition = gridMatrix[x][y];
+            }
+            case (1) -> {
+                if(gridMatrix[x][y].isSource() || gridMatrix[x][y].isWall()) { break; }
+
+                endPosition.setGate(false);
+                gridMatrix[x][y].setGate(true);
+                endPosition = gridMatrix[x][y];
+            }
+            case (2) -> {
+                if(gridMatrix[x][y].isSource() || gridMatrix[x][y].isGate()) { break; }
+                if(gridMatrix[x][y].isWall()) {
+                    gridMatrix[x][y].setWall(false);
+                    break;
+                }
+                gridMatrix[x][y].setWall(true);
+            }
         }
         repaint();
     }
