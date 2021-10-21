@@ -7,36 +7,19 @@ public class Tile {
     private boolean isWall;
     private boolean isSource;
     private boolean isGate;
-    private boolean isVisited;
 
     public Tile(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public boolean isVisited() {
-        return isVisited;
-    }
+    public boolean isWall() { return isWall; }
 
-    public void setVisited(boolean visited) {
-        isVisited = visited;
-    }
+    public void setWall(boolean wall) { isWall = wall; }
 
-    public boolean isWall() {
-        return isWall;
-    }
+    public boolean isSource() { return isSource; }
 
-    public void setWall(boolean wall) {
-        isWall = wall;
-    }
-
-    public boolean isSource() {
-        return isSource;
-    }
-
-    public void setSource(boolean source) {
-        isSource = source;
-    }
+    public void setSource(boolean source) { isSource = source; }
 
     public boolean isGate() {
         return isGate;

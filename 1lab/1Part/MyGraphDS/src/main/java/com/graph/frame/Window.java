@@ -6,6 +6,8 @@ import java.awt.event.*;
 
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -30,7 +32,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     private final Tile[][] gridMatrix;
     private int tileMode;
 
-    private TestPath<Tile> path;
+    private NewTestPath<Tile> path;
     private boolean pathIsDone;
     private Timer timer;
 
@@ -92,7 +94,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
     public void startSearch() {
         GraphAdjList<Tile> G = graphInitialise();
-        path = new TestPath<>(G, spawnPosition, endPosition);
+        path = new NewTestPath<>(G, spawnPosition, endPosition);
         this.f = path.pathTo(G, endPosition);
         pathIsDone = true;
         repaint();
@@ -129,18 +131,6 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         }
     }
 
-    void paintTrace(Graphics g) {
-        for(Tile t : f) {
-            int x1 = t.getX() * 30;
-            int y1 = t.getY() * 30;
-            g.setColor(Color.BLUE);
-            g.fillRect(x1, y1, size, size);
-
-            g.setColor(Color.BLACK);
-            g.drawRect(x1, y1, size, size);
-        }
-    }
-
     /**
      * Driver method for drawing the grid.
      *
@@ -152,9 +142,9 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         paintGrid(g);
         if(pathIsDone) {
             paintTrack(g);
-            if(f != null) {
-                paintTrace(g);
-            }
+            //if(f != null) {
+                //paintTrace(g);
+            //}
         }
         //paintSpawnPoint(g);
         //paintEndPoint(g);
