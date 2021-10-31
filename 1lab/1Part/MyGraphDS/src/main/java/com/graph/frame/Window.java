@@ -49,6 +49,8 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
         this.i = 0;
 
+        this.f = new Stack<>();
+
 
         addMouseListener(this);
     }
@@ -63,8 +65,8 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         paintGrid(g);
-        //if(pathIsDone) { paintTrack(g); }
-        if(pathIsDone) { paintTile(g ,path.getTrack().get(i).getX() * size, path.getTrack().get(i).getY() * size); }
+        if(pathIsDone) { paintTrack(g); }
+        //if(pathIsDone) { paintTile(g ,path.getTrack().get(i).getX() * size, path.getTrack().get(i).getY() * size); }
     }
 
     public GraphAdjList<Tile> graphInitialise() {
@@ -105,7 +107,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         GraphAdjList<Tile> G = graphInitialise();
         path = new NewTestPath<>(G, spawnPosition, endPosition);
         pathIsDone = true;
-        Timer timer = new Timer(500, this);
+        Timer timer = new Timer(100, this);
         timer.start();
         repaint();
     }
@@ -130,7 +132,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     }
 
     public void paintTile(Graphics g, int x1, int y1) {
-        g.setColor(Color.CYAN);
+        //g.setColor(Color.CYAN);
         g.fillRect(x1, y1, size, size);
 
         g.setColor(Color.BLACK);
@@ -139,18 +141,16 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
 
     public void paintTrack(Graphics g) {
-        Stack<Tile> toPaint = path.getTrack();
-        final Iterator<Tile> tiles = toPaint.iterator();
+        //Stack<Tile> toPaint = path.getTrack();
+        //final Iterator<Tile> tiles = toPaint.iterator();
         //Timer timer = new Timer(500, this);
         //timer.start();
-        //for(Tile t : toPaint) {
-
-        //    int x1 = t.getX() * size;
-        //    int y1 = t.getY() * size;
-        //    g.setColor(Color.CYAN);
-        //    //timer.start();
-        //    paintTile(g, x1, y1);
-        //}
+        for(Tile t : f) {
+            int x1 = t.getX() * size;
+            int y1 = t.getY() * size;
+            g.setColor(Color.CYAN);
+            paintTile(g, x1, y1);
+        }
     }
 
     /**
@@ -200,7 +200,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        i++;
+        f.add(path.getTrack().get(i++));
         System.out.println("Text");
         repaint();
     }
