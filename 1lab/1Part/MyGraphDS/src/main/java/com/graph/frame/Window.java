@@ -29,9 +29,11 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     private int tileMode;
 
     private NewTestPath<Tile> path;
-    private boolean pathIsDone;
 
-    private Iterable<Tile> f;
+    private boolean pathIsDone;
+    private int i;
+
+    private Stack<Tile> f;
 
     private Tile currentPathTile;
 
@@ -45,6 +47,8 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         this.spawnPosition = new Tile(0, 0);
         this.endPosition = new Tile(1, 1);
 
+        this.i = 0;
+
 
         addMouseListener(this);
     }
@@ -56,7 +60,12 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     }
 
     @Override
-    public void paintComponent(Graphics g) { super.paintComponent(g); }
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        paintGrid(g);
+        //if(pathIsDone) { paintTrack(g); }
+        if(pathIsDone) { paintTile(g ,path.getTrack().get(i).getX() * size, path.getTrack().get(i).getY() * size); }
+    }
 
     public GraphAdjList<Tile> graphInitialise() {
         int rowsNum = this.getWidth()/size;
@@ -96,6 +105,8 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         GraphAdjList<Tile> G = graphInitialise();
         path = new NewTestPath<>(G, spawnPosition, endPosition);
         pathIsDone = true;
+        Timer timer = new Timer(500, this);
+        timer.start();
         repaint();
     }
 
@@ -119,7 +130,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     }
 
     public void paintTile(Graphics g, int x1, int y1) {
-        //g.setColor(Color.CYAN);
+        g.setColor(Color.CYAN);
         g.fillRect(x1, y1, size, size);
 
         g.setColor(Color.BLACK);
@@ -129,30 +140,30 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
     public void paintTrack(Graphics g) {
         Stack<Tile> toPaint = path.getTrack();
-        Timer timer = new Timer(1000, e -> {});
-        timer.setInitialDelay(1000);
-        timer.setRepeats(false);
-        for(Tile t : toPaint) {
+        final Iterator<Tile> tiles = toPaint.iterator();
+        //Timer timer = new Timer(500, this);
+        //timer.start();
+        //for(Tile t : toPaint) {
 
-            int x1 = t.getX() * size;
-            int y1 = t.getY() * size;
-            g.setColor(Color.CYAN);
-            //timer.start();
-            paintTile(g, x1, y1);
-        }
+        //    int x1 = t.getX() * size;
+        //    int y1 = t.getY() * size;
+        //    g.setColor(Color.CYAN);
+        //    //timer.start();
+        //    paintTile(g, x1, y1);
+        //}
     }
 
     /**
      * Driver method for drawing the grid.
      *
-     * @param g graphics used in this frame.
+     //* @param g graphics used in this frame.
      */
 
-    @Override
-    public void paint(Graphics g) {
-        paintGrid(g);
-        if(pathIsDone) { paintTrack(g); }
-    }
+    //@Override
+    //public void paint(Graphics g) {
+   //     paintGrid(g);
+    //    if(pathIsDone) { paintTrack(g); }
+    //}
 
     public void setTileMode(int mode) { this.tileMode = mode; }
 
@@ -188,7 +199,11 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent e) {
+        i++;
+        System.out.println("Text");
+        repaint();
+    }
 
     @Override
     public void mousePressed(MouseEvent e) {}

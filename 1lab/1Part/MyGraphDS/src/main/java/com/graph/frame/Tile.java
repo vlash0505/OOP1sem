@@ -1,5 +1,9 @@
 package com.graph.frame;
 
+/**
+ * Class that represents tile of a grid in GUI model.
+ */
+
 public class Tile {
     private int x;
     private int y;
@@ -7,6 +11,14 @@ public class Tile {
     private boolean isWall;
     private boolean isSource;
     private boolean isGate;
+
+    /**
+     * Constructor for a Tile instance that takes two
+     * parameters
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     */
 
     public Tile(int x, int y) {
         this.x = x;
@@ -53,6 +65,8 @@ public class Tile {
         final Tile that = (Tile) o;
         return (this.x == that.x && this.y == that.y);
     }
+
+
 
     @Override
     public String toString() {
