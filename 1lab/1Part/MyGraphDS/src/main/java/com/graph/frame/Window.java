@@ -29,12 +29,14 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     private int tileMode;
 
     private NewTestPath<Tile> path;
+    private TestShortPath<Tile> pathShort;
     private final Timer timer;
 
     private boolean pathIsDone;
     private int i;
 
     private final Stack<Tile> f;
+    private Stack<Tile> sh;
 
     public Window() {
         this.setPreferredSize(new Dimension(690,420));
@@ -50,6 +52,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         this.timer = new Timer(50, this);
 
         this.f = new Stack<>();
+        this.sh = new Stack<>();
 
         addMouseListener(this);
     }
@@ -104,6 +107,9 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
         GraphAdjList<Tile> G = graphInitialise();
         path = new NewTestPath<>(G, spawnPosition, endPosition);
+
+        pathShort = new TestShortPath<>(G, spawnPosition, endPosition);
+        sh = pathShort.getShortestPath();
         pathIsDone = true;
         timer.start();
         repaint();
@@ -148,6 +154,13 @@ public class Window extends JPanel implements ActionListener, MouseListener {
             int x1 = t.getX() * size;
             int y1 = t.getY() * size;
             g.setColor(Color.CYAN);
+            paintTile(g, x1, y1);
+        }
+
+        for(Tile t : sh) {
+            int x1 = t.getX() * size;
+            int y1 = t.getY() * size;
+            g.setColor(Color.GRAY);
             paintTile(g, x1, y1);
         }
     }
