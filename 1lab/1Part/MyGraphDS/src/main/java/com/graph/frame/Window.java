@@ -22,26 +22,24 @@ import com.graph.implementation.*;
 public class Window extends JPanel implements ActionListener, MouseListener {
     private static final int size = 30;
 
+    private final Tile[][] gridMatrix;
     private Tile spawnPosition;
     private Tile endPosition;
 
-    private final Tile[][] gridMatrix;
     private int tileMode;
 
     private NewTestPath<Tile> path;
+    private final Timer timer;
 
     private boolean pathIsDone;
     private int i;
 
-    private Stack<Tile> f;
-
-    private Tile currentPathTile;
+    private final Stack<Tile> f;
 
     public Window() {
         this.setPreferredSize(new Dimension(690,420));
 
         this.gridMatrix = new Tile[23][14];
-        System.out.println(gridMatrix.length);
         this.fillMatrixGrid(gridMatrix);
 
         this.spawnPosition = new Tile(0, 0);
@@ -49,8 +47,9 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
         this.i = 0;
 
-        this.f = new Stack<>();
+        this.timer = new Timer(50, this);
 
+        this.f = new Stack<>();
 
         addMouseListener(this);
     }
@@ -61,17 +60,17 @@ public class Window extends JPanel implements ActionListener, MouseListener {
                                         .forEach(y -> array[x][y] = new Tile(x, y)));
     }
 
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        paintGrid(g);
-        if(pathIsDone) { paintTrack(g); }
-        //if(pathIsDone) { paintTile(g ,path.getTrack().get(i).getX() * size, path.getTrack().get(i).getY() * size); }
-    }
+    /**
+     * Method that initializes graph that will
+     * be used when operating pathfinding actions.
+     *
+     * @return adjacency list graph that is
+     *         represented as grid.
+     */
 
     public GraphAdjList<Tile> graphInitialise() {
-        int rowsNum = this.getWidth()/size;
-        int columnsNum = this.getHeight()/size;
+        int rowsNum = this.getWidth() / size;
+        int columnsNum = this.getHeight() / size;
         int V = (rowsNum * columnsNum);
         //converting 2d matrix to list to initialize graph with
         //its values.
@@ -90,7 +89,6 @@ public class Window extends JPanel implements ActionListener, MouseListener {
                 int rr = entry.getKey().getX() + dr[i];
                 int cc = entry.getKey().getY() + dc[i];
 
-
                 if(rr < 0 || cc < 0) { continue; }
                 if(rr > rowsNum - 1 || cc > columnsNum - 1) { continue; }
                 if(gridMatrix[rr][cc].isWall()) { continue; }
@@ -107,9 +105,15 @@ public class Window extends JPanel implements ActionListener, MouseListener {
         GraphAdjList<Tile> G = graphInitialise();
         path = new NewTestPath<>(G, spawnPosition, endPosition);
         pathIsDone = true;
-        Timer timer = new Timer(100, this);
         timer.start();
         repaint();
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        paintGrid(g);
+        if(pathIsDone) { paintTrack(g); }
     }
 
     public void paintGrid(Graphics g) {
@@ -120,8 +124,8 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
                 g.setColor((gridMatrix[i][j].isWall()) ? (Color.BLACK) : (Color.WHITE));
 
-                if(gridMatrix[i][j].isSource()) { g.setColor(Color.YELLOW); }
-                if(gridMatrix[i][j].isGate())   { g.setColor(Color.RED); }
+                if(gridMatrix[i][j].equals(spawnPosition)) { g.setColor(Color.YELLOW); }
+                if(gridMatrix[i][j].equals(endPosition))   { g.setColor(Color.RED); }
 
                 g.fillRect(x1, y1, size, size);
 
@@ -132,7 +136,6 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     }
 
     public void paintTile(Graphics g, int x1, int y1) {
-        //g.setColor(Color.CYAN);
         g.fillRect(x1, y1, size, size);
 
         g.setColor(Color.BLACK);
@@ -141,10 +144,6 @@ public class Window extends JPanel implements ActionListener, MouseListener {
 
 
     public void paintTrack(Graphics g) {
-        //Stack<Tile> toPaint = path.getTrack();
-        //final Iterator<Tile> tiles = toPaint.iterator();
-        //Timer timer = new Timer(500, this);
-        //timer.start();
         for(Tile t : f) {
             int x1 = t.getX() * size;
             int y1 = t.getY() * size;
@@ -158,12 +157,6 @@ public class Window extends JPanel implements ActionListener, MouseListener {
      *
      //* @param g graphics used in this frame.
      */
-
-    //@Override
-    //public void paint(Graphics g) {
-   //     paintGrid(g);
-    //    if(pathIsDone) { paintTrack(g); }
-    //}
 
     public void setTileMode(int mode) { this.tileMode = mode; }
 
@@ -201,7 +194,7 @@ public class Window extends JPanel implements ActionListener, MouseListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         f.add(path.getTrack().get(i++));
-        System.out.println("Text");
+        if(i == path.getTrack().size()) { timer.stop(); }
         repaint();
     }
 
