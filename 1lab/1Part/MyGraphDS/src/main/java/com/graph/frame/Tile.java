@@ -5,16 +5,14 @@ package com.graph.frame;
  */
 
 public class Tile {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     private boolean isWall;
-    private boolean isSource;
-    private boolean isGate;
 
     /**
      * Constructor for a Tile instance that takes two
-     * parameters
+     * parameters.
      *
      * @param x x coordinate
      * @param y y coordinate
@@ -25,37 +23,13 @@ public class Tile {
         this.y = y;
     }
 
+    public int getX()    { return x; }
+
+    public int getY()    { return y; }
+
     public boolean isWall() { return isWall; }
 
-    public void setWall(boolean wall) { isWall = wall; }
-
-    public boolean isSource() { return isSource; }
-
-    public void setSource(boolean source) { isSource = source; }
-
-    public boolean isGate() {
-        return isGate;
-    }
-
-    public void setGate(boolean gate) {
-        isGate = gate;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
+    public void setWall(boolean isWall) { this.isWall = isWall; }
 
     @Override
     public boolean equals(Object o) {
@@ -65,8 +39,6 @@ public class Tile {
         final Tile that = (Tile) o;
         return (this.x == that.x && this.y == that.y);
     }
-
-
 
     @Override
     public String toString() {
