@@ -95,8 +95,8 @@ public class GridPanel extends JPanel implements MouseListener {
         int x = this.getWidth() / size;
         int y = this.getHeight() / size;
 
-        TileGraph G = new TileGraph(x, y, gridMatrix);
-        GraphAdjList<Tile> graph = G.graphInitialise();
+        GraphOnGrid G = new GraphOnGrid(x, y, gridMatrix);
+        GraphAdjList<Tile> graph = G.graphInit();
         path = new NewTestPath<>(graph, spawnPosition, endPosition);
 
         pathShort = new TestShortPath<>(graph, spawnPosition, endPosition);

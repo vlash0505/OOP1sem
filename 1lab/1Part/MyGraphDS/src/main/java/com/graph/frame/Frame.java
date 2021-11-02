@@ -43,6 +43,8 @@ public class Frame extends JFrame {
     public void startButtonInit() {
         JButton startButton = new JButton("Start");
         startButton.setActionCommand("start");
+        //when button is pressed algorithm starts.
+        //right after we got the results, animation starts.
         startButton.addActionListener(e -> grid.startSearch());
         controlPanel.add(startButton, BorderLayout.WEST);
     }
@@ -55,6 +57,7 @@ public class Frame extends JFrame {
     public void comboBoxInit() {
         String[] tileTypes = {"Source", "Gate", "Wall"};
         JComboBox<String> tileModes = new JComboBox<>(tileTypes);
+        //sets the type of the tile the user wants to put on the grid.
         tileModes.addActionListener(e -> grid.setTileMode(tileModes.getSelectedIndex()));
         controlPanel.add(tileModes, BorderLayout.CENTER);
     }
