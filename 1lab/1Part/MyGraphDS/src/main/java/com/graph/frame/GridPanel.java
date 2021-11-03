@@ -18,24 +18,22 @@ import com.graph.implementation.*;
 
 public class GridPanel extends JPanel implements MouseListener {
     private static final int size = 30;
+    private int tileMode;
 
     private final Tile[][] gridMatrix;
     private Tile spawnPosition;
     private Tile endPosition;
 
-    private int tileMode;
-
-    private NewTestPath<Tile> path;
-    private TestShortPath<Tile> pathShort;
-
     private final Timer timerForVisited;
     private final Timer timerForPath;
 
-    private boolean pathIsDone;
+    private TestShortPath<Tile> pathShort;
+
+    private boolean pathfindingIsDone;
     private int i;
 
-    private final Stack<Tile> f;
-    private Stack<Tile> sh;
+    private final Stack<Tile> visitedTiles;
+    private final Stack<Tile> finalPath;
 
     private boolean searchIsPrinted;
 
@@ -46,19 +44,17 @@ public class GridPanel extends JPanel implements MouseListener {
         this.gridMatrix = new Tile[23][14];
         this.fillGridMatrix();
 
-        this.spawnPosition = new Tile(0, 0);
-        this.endPosition = new Tile(1, 1);
-
         this.i = 0;
 
-        this.f = new Stack<>();
-        this.sh = new Stack<>();
+        this.visitedTiles = new Stack<>();
+        this.finalPath = new Stack<>();
 
+        //delayed animation for all visited tiles.
         this.timerForVisited = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                f.add(path.getTrack().get(i++));
-                if(i == path.getTrack().size()) {
+                visitedTiles.add(pathShort.getVisited().get(i++));
+                if(i == pathShort.getVisited().size()) {
                     timerForVisited.stop();
                     searchIsPrinted = true;
                     i = 0;
@@ -68,15 +64,21 @@ public class GridPanel extends JPanel implements MouseListener {
             }
         });
 
+        //delayed animation for final path
         this.timerForPath = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sh.add(pathShort.getT().get(i++));
+                finalPath.add(pathShort.getT().get(i++));
                 if(i == pathShort.getT().size()) { timerForPath.stop(); }
                 repaint();
             }
         });
     }
+
+    /**
+     * Method that fills the grid matrix such as each tile corresponds
+     * with matrix's indexes.
+     */
 
     public void fillGridMatrix() {
         IntStream.range(0, gridMatrix.length)
@@ -97,12 +99,19 @@ public class GridPanel extends JPanel implements MouseListener {
 
         GraphOnGrid G = new GraphOnGrid(x, y, gridMatrix);
         GraphAdjList<Tile> graph = G.graphInit();
-        path = new NewTestPath<>(graph, spawnPosition, endPosition);
 
         pathShort = new TestShortPath<>(graph, spawnPosition, endPosition);
         pathShort.setT();
-        pathIsDone = true;
+        pathfindingIsDone = true;
         timerForVisited.start();
+    }
+
+    /**
+     * Method that completely resets the
+     */
+
+    public void resetFrame() {
+        pathfindingIsDone = false;
     }
 
     /**
@@ -115,14 +124,14 @@ public class GridPanel extends JPanel implements MouseListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         paintGrid(g);
-        if(pathIsDone) { paintVisited(g); }
+        if(pathfindingIsDone) { paintVisited(g); }
         if(searchIsPrinted) { paintPath(g); }
     }
 
     /**
      * Paints specific tile on a grid.
      *
-     * @param g program's graphic.
+     * @param g program's graphics.
      * @param t tile to be painted.
      */
 
@@ -138,7 +147,7 @@ public class GridPanel extends JPanel implements MouseListener {
     /**
      * Paints the grid that will represent a graph.
      *
-     * @param g programs graphics.
+     * @param g program's graphics.
      */
 
     public void paintGrid(Graphics g) {
@@ -158,11 +167,11 @@ public class GridPanel extends JPanel implements MouseListener {
      * Paints all tiles that have been visited during
      * pathfinding.
      *
-     * @param g programs graphics.
+     * @param g program's graphics.
      */
 
     public void paintVisited(Graphics g) {
-        for(Tile t : f) {
+        for(Tile t : visitedTiles) {
             g.setColor(Color.CYAN);
             paintTile(g, t);
         }
@@ -171,12 +180,12 @@ public class GridPanel extends JPanel implements MouseListener {
     /**
      * Paints the shortest path.
      *
-     * @param g programs graphics.
+     * @param g program's graphics.
      */
 
     public void paintPath(Graphics g) {
-        for(Tile t : sh) {
-            g.setColor(Color.PINK);
+        for(Tile t : finalPath) {
+            g.setColor(Color.ORANGE);
             paintTile(g, t);
         }
     }

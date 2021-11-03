@@ -1,5 +1,6 @@
 package com.graph.frame;
 
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -17,11 +18,12 @@ public class Frame extends JFrame {
      */
     public Frame(){
         JPanel allContent = new JPanel(new BorderLayout());
-        grid = new GridPanel();
-        controlPanel = new JPanel(new BorderLayout());
+        this.grid = new GridPanel();
+        this.controlPanel = new JPanel(new BorderLayout());
 
         startButtonInit();
         comboBoxInit();
+        resetButtonInit();
 
         controlPanel.setPreferredSize(new Dimension(690,75));
 
@@ -42,20 +44,31 @@ public class Frame extends JFrame {
 
     public void startButtonInit() {
         JButton startButton = new JButton("Start");
-        startButton.setActionCommand("start");
-        //when button is pressed algorithm starts.
-        //right after we got the results, animation starts.
+        //when button is pressed, pathfinding algorithm starts.
+        //right after it's done, animation starts.
         startButton.addActionListener(e -> grid.startSearch());
         controlPanel.add(startButton, BorderLayout.WEST);
     }
 
     /**
+     * Method that initializes a reset button on a panel.
+     */
+
+    public void resetButtonInit() {
+        JButton resetButton = new JButton("Reset");
+        //when button is pressed, pathfinding algorithm starts.
+        //right after it's done, animation starts.
+        resetButton.addActionListener(e -> grid.resetFrame());
+        controlPanel.add(resetButton, BorderLayout.EAST);
+    }
+
+    /**
      * Method that initializes combo box that allows the user to choose
-     * type of the tile user wants to use.
+     * type of the tile user wants to set on the grid.
      */
 
     public void comboBoxInit() {
-        String[] tileTypes = {"Source", "Gate", "Wall"};
+        String[] tileTypes = {"Spawn", "Destination", "Wall"};
         JComboBox<String> tileModes = new JComboBox<>(tileTypes);
         //sets the type of the tile the user wants to put on the grid.
         tileModes.addActionListener(e -> grid.setTileMode(tileModes.getSelectedIndex()));
