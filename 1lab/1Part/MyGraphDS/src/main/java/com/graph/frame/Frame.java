@@ -1,8 +1,12 @@
 package com.graph.frame;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 /**
  * Class that represents frame of pathfinding visualisation
@@ -33,7 +37,7 @@ public class Frame extends JFrame {
         this.add(allContent);
         this.setResizable(false);
         this.setVisible(true);
-        this.setTitle("Shortest Path Visualizer");
+        this.setTitle("Pathfinding Visualizer");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
     }
@@ -56,8 +60,8 @@ public class Frame extends JFrame {
 
     public void resetButtonInit() {
         JButton resetButton = new JButton("Reset");
-        //when button is pressed, pathfinding algorithm starts.
-        //right after it's done, animation starts.
+        //when button is pressed, grid refreshes and
+        //becomes blank.
         resetButton.addActionListener(e -> grid.resetFrame());
         controlPanel.add(resetButton, BorderLayout.EAST);
     }

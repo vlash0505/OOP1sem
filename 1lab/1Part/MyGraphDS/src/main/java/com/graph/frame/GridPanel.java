@@ -1,12 +1,15 @@
 package com.graph.frame;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 import javax.swing.Timer;
+
 import java.awt.*;
 import java.awt.event.*;
 
-import java.util.*;
-
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 import java.util.stream.IntStream;
 
 import com.graph.implementation.*;
@@ -17,59 +20,54 @@ import com.graph.implementation.*;
  */
 
 public class GridPanel extends JPanel implements MouseListener {
-    private static final int size = 30;
-    private int tileMode;
+    private static final int tileSize = 30;
+    private static final int frameWidth = 690;
+    private static final int frameHeight = 420;
 
     private final Tile[][] gridMatrix;
-    private Tile spawnPosition;
-    private Tile endPosition;
+    private Tile sourcePosition;
+    private Tile destinationPosition;
+    private int tileMode;
 
     private final Timer timerForVisited;
     private final Timer timerForPath;
 
-    private TestShortPath<Tile> pathShort;
+    private Iterator<Tile> visitedTiles;
+    private Queue<Tile> finalPath;
 
-    private boolean pathfindingIsDone;
-    private int i;
-
-    private final Stack<Tile> visitedTiles;
-    private final Stack<Tile> finalPath;
-
-    private boolean searchIsPrinted;
+    private final Stack<Tile> temp;
 
     public GridPanel() {
-        this.setPreferredSize(new Dimension(690,420));
+        this.setPreferredSize(new Dimension(frameWidth, frameHeight));
         addMouseListener(this);
 
-        this.gridMatrix = new Tile[23][14];
+        this.gridMatrix = new Tile[frameWidth/tileSize][frameHeight/tileSize];
         this.fillGridMatrix();
 
-        this.i = 0;
-
-        this.visitedTiles = new Stack<>();
-        this.finalPath = new Stack<>();
+        this.finalPath = new LinkedList<>();
 
         //delayed animation for all visited tiles.
         this.timerForVisited = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                visitedTiles.add(pathShort.getVisited().get(i++));
-                if(i == pathShort.getVisited().size()) {
+                Tile current = visitedTiles.next();
+                gridMatrix[current.getX()][current.getY()].setVisited(true);
+                repaint();
+                if(!visitedTiles.hasNext()) {
                     timerForVisited.stop();
-                    searchIsPrinted = true;
-                    i = 0;
                     timerForPath.start();
                 }
-                repaint();
             }
         });
+
+        temp = new Stack<>();
 
         //delayed animation for final path
         this.timerForPath = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                finalPath.add(pathShort.getT().get(i++));
-                if(i == pathShort.getT().size()) { timerForPath.stop(); }
+                if(finalPath.isEmpty()) { timerForPath.stop(); }
+                temp.add(finalPath.remove());
                 repaint();
             }
         });
@@ -89,20 +87,21 @@ public class GridPanel extends JPanel implements MouseListener {
     /**
      * Method that does pathfinding and collects information
      * on visited tiles.
-     * Called from NewWindow when user presses the start button.
+     * Called from Frame when user presses the start button.
      */
 
     public void startSearch() {
-        if(spawnPosition == null || endPosition == null) { return; }
-        int x = this.getWidth() / size;
-        int y = this.getHeight() / size;
+        if(sourcePosition == null || destinationPosition == null) { return; }
+        int rowsNum = frameWidth / tileSize;
+        int columnsNum = frameHeight / tileSize;
 
-        GraphOnGrid G = new GraphOnGrid(x, y, gridMatrix);
+        GraphOnGrid G = new GraphOnGrid(rowsNum, columnsNum, gridMatrix);
         GraphAdjList<Tile> graph = G.graphInit();
 
-        pathShort = new TestShortPath<>(graph, spawnPosition, endPosition);
+        TestShortPath<Tile> pathShort = new TestShortPath<>(graph, sourcePosition, destinationPosition);
         pathShort.setT();
-        pathfindingIsDone = true;
+        visitedTiles = pathShort.getVisited().iterator();
+        finalPath = pathShort.getT();
         timerForVisited.start();
     }
 
@@ -111,7 +110,13 @@ public class GridPanel extends JPanel implements MouseListener {
      */
 
     public void resetFrame() {
-        pathfindingIsDone = false;
+        finalPath.clear();
+        IntStream.range(0, gridMatrix.length)
+                .forEach(x -> IntStream.range(0, gridMatrix[x].length)
+                        .forEach(y -> {gridMatrix[x][y].setVisited(false);
+                                       gridMatrix[x][y].setWall(false);}));
+        sourcePosition = null;
+        destinationPosition = null;
     }
 
     /**
@@ -124,8 +129,7 @@ public class GridPanel extends JPanel implements MouseListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         paintGrid(g);
-        if(pathfindingIsDone) { paintVisited(g); }
-        if(searchIsPrinted) { paintPath(g); }
+        if(!finalPath.isEmpty()) { paintPath(g); }
     }
 
     /**
@@ -136,12 +140,12 @@ public class GridPanel extends JPanel implements MouseListener {
      */
 
     public void paintTile(Graphics g, Tile t) {
-        int x = t.getX() * size;
-        int y = t.getY() * size;
-        g.fillRect(x, y, size, size);
+        int x = t.getX() * tileSize;
+        int y = t.getY() * tileSize;
+        g.fillRect(x, y, tileSize, tileSize);
 
         g.setColor(Color.BLACK);
-        g.drawRect(x, y, size, size);
+        g.drawRect(x, y, tileSize, tileSize);
     }
 
     /**
@@ -151,29 +155,16 @@ public class GridPanel extends JPanel implements MouseListener {
      */
 
     public void paintGrid(Graphics g) {
-        for (int i = 0; i < this.getWidth() / size; i++) {
-            for (int j = 0; j < this.getHeight() / size; j++) {
+        for (int i = 0; i < frameWidth / tileSize; i++) {
+            for (int j = 0; j < frameHeight / tileSize; j++) {
 
                 g.setColor((gridMatrix[i][j].isWall()) ? (Color.BLACK) : (Color.WHITE));
-                if(gridMatrix[i][j].equals(spawnPosition)) { g.setColor(Color.YELLOW); }
-                if(gridMatrix[i][j].equals(endPosition))   { g.setColor(Color.RED); }
+                if(gridMatrix[i][j].isVisited()) { g.setColor(Color.CYAN); }
+                if(gridMatrix[i][j].equals(sourcePosition)) { g.setColor(Color.YELLOW); }
+                if(gridMatrix[i][j].equals(destinationPosition))   { g.setColor(Color.RED); }
 
                 paintTile(g, gridMatrix[i][j]);
             }
-        }
-    }
-
-    /**
-     * Paints all tiles that have been visited during
-     * pathfinding.
-     *
-     * @param g program's graphics.
-     */
-
-    public void paintVisited(Graphics g) {
-        for(Tile t : visitedTiles) {
-            g.setColor(Color.CYAN);
-            paintTile(g, t);
         }
     }
 
@@ -184,7 +175,7 @@ public class GridPanel extends JPanel implements MouseListener {
      */
 
     public void paintPath(Graphics g) {
-        for(Tile t : finalPath) {
+        for(Tile t : temp) {
             g.setColor(Color.ORANGE);
             paintTile(g, t);
         }
@@ -207,24 +198,24 @@ public class GridPanel extends JPanel implements MouseListener {
      * Edits and paints the grid according to the mode
      * of the tile the user has chosen on mouse click.
      *
-     * @param e MouseEvent.
+     * @param e mouse clicked.
      */
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int x = (e.getX() - (e.getX() % size)) / size;
-        int y = (e.getY() - (e.getY() % size)) / size;
+        int x = (e.getX() - (e.getX() % tileSize)) / tileSize;
+        int y = (e.getY() - (e.getY() % tileSize)) / tileSize;
         switch (tileMode) {
             case (0) -> {
-                if(gridMatrix[x][y].equals(endPosition) || gridMatrix[x][y].isWall()) { break; }
-                spawnPosition = gridMatrix[x][y];
+                if(gridMatrix[x][y].equals(destinationPosition) || gridMatrix[x][y].isWall()) { break; }
+                sourcePosition = gridMatrix[x][y];
             }
             case (1) -> {
-                if(gridMatrix[x][y].equals(spawnPosition) || gridMatrix[x][y].isWall()) { break; }
-                endPosition = gridMatrix[x][y];
+                if(gridMatrix[x][y].equals(sourcePosition) || gridMatrix[x][y].isWall()) { break; }
+                destinationPosition = gridMatrix[x][y];
             }
             case (2) -> {
-                if(gridMatrix[x][y].equals(spawnPosition) || gridMatrix[x][y].equals(endPosition)) { break; }
+                if(gridMatrix[x][y].equals(sourcePosition) || gridMatrix[x][y].equals(destinationPosition)) { break; }
                 if(gridMatrix[x][y].isWall()) { gridMatrix[x][y].setWall(false); break; }
                 gridMatrix[x][y].setWall(true);
             }
