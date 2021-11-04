@@ -29,6 +29,7 @@ public class Frame extends JFrame {
         comboBoxInit();
         resetButtonInit();
 
+        //width is the same as grid panel's width
         controlPanel.setPreferredSize(new Dimension(690,75));
 
         allContent.add(grid,BorderLayout.CENTER);
