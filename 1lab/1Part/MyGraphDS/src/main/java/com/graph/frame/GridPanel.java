@@ -16,10 +16,11 @@ import com.graph.implementation.*;
  * as grid on the panel.
  */
 
-public class GridPanel extends JPanel implements MouseListener {
+public class GridPanel extends JPanel implements MouseListener, ActionListener {
     private static final int TILE_SIZE = 30;
     private static final int FRAME_WIDTH = 690;
     private static final int FRAME_HEIGHT = 420;
+
 
     private final Tile[][] gridMatrix;
     private Tile sourcePosition;
@@ -27,12 +28,14 @@ public class GridPanel extends JPanel implements MouseListener {
     //defines type of the tile user wants to set on the grid.
     private int tileMode;
 
-    private final Timer timerForVisited;
-    private final Timer timerForPath;
-    private boolean pathfindingIsDone;
+    private Timer timerForVisited;
+    private Timer timerForPath;
+    //user can't change the grid when the animation
+    //is being performed, and after it's being performed
+    private boolean userCantInteract;
 
-    private Iterator<Tile> visitedTiles;
-    private final Stack<PathTile> finalPath;
+    private Stack<Tile> visitedTiles;
+    private final Stack<PathTile> pathTiles;
 
     /**
      * Constructor for the grid panel.
@@ -41,38 +44,54 @@ public class GridPanel extends JPanel implements MouseListener {
     public GridPanel() {
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         addMouseListener(this);
+        this.tileMode = 0;
+
+        this.timerForVisited = new Timer(50, this);
+        this.timerForVisited.setRepeats(false);
+        this.timerForPath = new Timer(50, this);
+        this.timerForPath.setRepeats(false);
 
         this.gridMatrix = new Tile[FRAME_WIDTH / TILE_SIZE][FRAME_HEIGHT / TILE_SIZE];
         this.fillGridMatrix();
+        System.out.println(gridMatrix.length);
+        System.out.println(gridMatrix[0].length);
 
-        this.finalPath = new Stack<>();
+        this.visitedTiles = new Stack<>();
+        this.pathTiles = new Stack<>();
+    }
+
+    public void animationLogic() {
+        userCantInteract = true;
+        timerForVisited.setRepeats(true);
+        timerForPath.setRepeats(true);
 
         //delayed animation for all visited tiles.
-        this.timerForVisited = new Timer(50, new ActionListener() {
+        timerForVisited = new Timer(50, new ActionListener() {
+            final Iterator<Tile> visitedIterator = visitedTiles.iterator();
             @Override
             public void actionPerformed(ActionEvent e) {
-                Tile current = visitedTiles.next();
-                gridMatrix[current.getX()][current.getY()].setVisited(true);
-                repaint();
-                if(!visitedTiles.hasNext()) {
+                if(!visitedIterator.hasNext()) {
                     timerForVisited.stop();
                     timerForPath.start();
+                    return;
                 }
+                visitedIterator.next().setVisited(true);
+                repaint();
             }
         });
+        timerForVisited.start();
 
         //delayed animation for final path
-        this.timerForPath = new Timer(50, new ActionListener() {
-            int currentTileIndex = 0;
+        timerForPath = new Timer(50, new ActionListener() {
+            final Iterator<PathTile> pathIterator = pathTiles.iterator();
             @Override
             public void actionPerformed(ActionEvent e) {
-                finalPath.get(finalPath.size() - 1 - currentTileIndex++).setVisible(true);
-                repaint();
-                if(currentTileIndex == finalPath.size()) {
-                    pathfindingIsDone = true;
-                    currentTileIndex = 0;
+                if(!pathIterator.hasNext()) {
                     timerForPath.stop();
+                    return;
                 }
+                pathIterator.next().setVisible(true);
+                repaint();
             }
         });
     }
@@ -96,20 +115,19 @@ public class GridPanel extends JPanel implements MouseListener {
 
     public void startSearch() {
         if(sourcePosition == null || destinationPosition == null) { return; }
-        if(pathfindingIsDone) { return; }
+        if(userCantInteract) { return; }
         int rowsNum = FRAME_WIDTH / TILE_SIZE;
         int columnsNum = FRAME_HEIGHT / TILE_SIZE;
 
-        GraphOnGrid G = new GraphOnGrid(rowsNum, columnsNum, gridMatrix);
+        GraphOnGrid<Tile> G = new GraphOnGrid<>(rowsNum, columnsNum, gridMatrix);
         GraphAdjList<Tile> graph = G.graphInit();
 
         TestShortPath<Tile> pathShort = new TestShortPath<>(graph, sourcePosition, destinationPosition);
-        pathShort.setT();
-        visitedTiles = pathShort.getVisited().iterator();
-        for(Tile t : pathShort.getT()) {
-            finalPath.push(new PathTile(t));
-        }
-        timerForVisited.start();
+        visitedTiles = pathShort.getVisited();
+        Stack<Tile> pathAsTiles = pathShort.getT();
+        while(!pathAsTiles.isEmpty()) { pathTiles.push(new PathTile(pathAsTiles.pop())); }
+
+        animationLogic();
     }
 
     /**
@@ -118,15 +136,18 @@ public class GridPanel extends JPanel implements MouseListener {
      */
 
     public void resetFrame() {
-        if(!pathfindingIsDone)    { return; }
-        finalPath.clear();
+        userCantInteract = false;
+        visitedTiles.clear();
+        pathTiles.clear();
+
         IntStream.range(0, gridMatrix.length)
                  .forEach(x -> IntStream.range(0, gridMatrix[x].length)
                                         .forEach(y -> { gridMatrix[x][y].setVisited(false);
                                                         gridMatrix[x][y].setWall(false); }));
-        pathfindingIsDone = false;
         sourcePosition = null;
         destinationPosition = null;
+        timerForVisited.stop();
+        timerForPath.stop();
         repaint();
     }
 
@@ -186,8 +207,8 @@ public class GridPanel extends JPanel implements MouseListener {
      */
 
     public void paintPath(Graphics g) {
-        for(PathTile t : finalPath) {
-            if(!t.isVisible)    { continue; }
+        for(PathTile t : pathTiles) {
+            if(!t.isVisible())    { continue; }
             g.setColor(Color.ORANGE);
             paintTile(g, t.getBaseTile());
         }
@@ -215,7 +236,8 @@ public class GridPanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(pathfindingIsDone)   { return; }
+        if(userCantInteract)   { return; }
+        //catching the mouse click and formatting coordinates to the tile-based type.
         int x = (e.getX() - (e.getX() % TILE_SIZE)) / TILE_SIZE;
         int y = (e.getY() - (e.getY() % TILE_SIZE)) / TILE_SIZE;
         switch (tileMode) {
@@ -247,4 +269,7 @@ public class GridPanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {}
+
+    @Override
+    public void actionPerformed(ActionEvent e) {}
 }

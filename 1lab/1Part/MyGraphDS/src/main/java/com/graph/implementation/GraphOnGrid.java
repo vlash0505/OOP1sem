@@ -12,10 +12,10 @@ import java.util.stream.Stream;
  * Class that represent graph on a grid.
  */
 
-public class GraphOnGrid {
+public class GraphOnGrid<T extends Tile> {
     private final int rowsNum;
     private final int columnsNum;
-    private final Tile[][] gridMatrix;
+    private final T[][] gridMatrix;
 
     /**
      * Constructor for a tile graph.
@@ -25,7 +25,7 @@ public class GraphOnGrid {
      * @param gridMatrix matrix that represents a grid.
      */
 
-    public GraphOnGrid(int rowsNum, int columnsNum, Tile[][] gridMatrix) {
+    public GraphOnGrid(int rowsNum, int columnsNum, T[][] gridMatrix) {
         this.rowsNum = rowsNum;
         this.columnsNum = columnsNum;
         this.gridMatrix = gridMatrix;
@@ -39,19 +39,19 @@ public class GraphOnGrid {
      *         as grid and corresponding with matrix grid.
      */
 
-    public GraphAdjList<Tile> graphInit() {
+    public GraphAdjList<T> graphInit() {
         int V = (rowsNum * columnsNum);
         //converting 2d matrix to list to initialize graph with
         //its values.
-        List<Tile> values = Stream.of(gridMatrix)
+        List<T> values = Stream.of(gridMatrix)
                 .flatMap(Arrays::stream)
                 .collect(Collectors.toList());
-        GraphAdjList<Tile> graph = new GraphAdjList<>(V, values);
+        GraphAdjList<T> graph = new GraphAdjList<>(V, values);
         // vectors for exploring neighbour vertices
         // north/south/east/west
         int[] dr = {-1, 1, 0, 0};
         int[] dc = {0, 0, 1, -1};
-        for(Map.Entry<Tile, List<Tile>> entry : graph.getVertices().entrySet()) {
+        for(Map.Entry<T, List<T>> entry : graph.getVertices().entrySet()) {
             for(int i = 0; i < 4; i++) {
                 if(entry.getKey().isWall()) { continue; }
 
