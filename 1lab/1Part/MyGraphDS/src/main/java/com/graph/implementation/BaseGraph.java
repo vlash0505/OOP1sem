@@ -79,4 +79,8 @@ public class BaseGraph<T> {
      */
 
     public int E() { return E; }
+
+    public boolean hasVertex(T v) {
+        return this.getIndexedVertices().contains(v);
+    }
 }

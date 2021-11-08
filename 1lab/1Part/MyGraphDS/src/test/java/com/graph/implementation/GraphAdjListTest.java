@@ -3,11 +3,12 @@ package com.graph.implementation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 
 class GraphAdjListTest {
 
     @Test
-    @DisplayName("Should initialize and add vertex to the graph")
+    @DisplayName("Should add vertex to the graph")
     void shouldAddVertex() {
         GraphAdjList<Integer> graph = new GraphAdjList<>();
         graph.addVertex(1);
@@ -34,7 +35,7 @@ class GraphAdjListTest {
     }
 
     @Test
-    @DisplayName("Should initialize and add edge to the graph")
+    @DisplayName("Should add edge to the graph")
     void shouldAddEdge() {
         GraphAdjList<Integer> graph = new GraphAdjList<>();
         graph.addVertex(1);
@@ -73,7 +74,7 @@ class GraphAdjListTest {
     }
 
     @Test
-    @DisplayName("Should remove edge from the graph")
+    @DisplayName("Should return all the adjacent vertices to the given vertex")
     void shouldReturnAllAdjacentVertices() {
         GraphAdjList<Integer> graph = new GraphAdjList<>();
         graph.addVertex(1);
@@ -117,16 +118,16 @@ class GraphAdjListTest {
         graph.addVertex(2);
         graph.addVertex(3);
         graph.addVertex(4);
-        Assertions.assertFalse(graph.isConnected(graph));
+        Assertions.assertFalse(graph.isConnected());
 
         graph.addEdge(1,2);
-        Assertions.assertFalse(graph.isConnected(graph));
+        Assertions.assertFalse(graph.isConnected());
         graph.addEdge(2,3);
-        Assertions.assertFalse(graph.isConnected(graph));
+        Assertions.assertFalse(graph.isConnected());
         graph.addEdge(3,4);
-        Assertions.assertTrue(graph.isConnected(graph));
+        Assertions.assertTrue(graph.isConnected());
 
         graph.removeEdge(2,3);
-        Assertions.assertFalse(graph.isConnected(graph));
+        Assertions.assertFalse(graph.isConnected());
     }
 }

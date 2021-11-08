@@ -150,8 +150,8 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      * @return true if the graph is connected, otherwise - false.
      */
 
-    public boolean isConnected(GraphAdjList<T> G) {
-        DepthFirstPath<T> traverse = new DepthFirstPath<>(G, G.getIndexedVertices().get(0));
+    public boolean isConnected() {
+        DepthFirstPath<T> traverse = new DepthFirstPath<>(this, this.getIndexedVertices().get(0));
         boolean[] arr = traverse.getConnection();
 
         return (IntStream.range(0, arr.length).allMatch(i -> arr[i]));

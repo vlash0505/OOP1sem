@@ -115,16 +115,16 @@ class GraphAdjMatrixTest {
         graph.addVertex(2);
         graph.addVertex(3);
         graph.addVertex(4);
-        Assertions.assertFalse(graph.isConnected(graph));
+        Assertions.assertFalse(graph.isConnected());
 
         graph.addEdge(1,2);
-        Assertions.assertFalse(graph.isConnected(graph));
+        Assertions.assertFalse(graph.isConnected());
         graph.addEdge(2,3);
-        Assertions.assertFalse(graph.isConnected(graph));
+        Assertions.assertFalse(graph.isConnected());
         graph.addEdge(3,4);
-        Assertions.assertTrue(graph.isConnected(graph));
+        Assertions.assertTrue(graph.isConnected());
 
         graph.removeEdge(2,3);
-        Assertions.assertFalse(graph.isConnected(graph));
+        Assertions.assertFalse(graph.isConnected());
     }
 }
