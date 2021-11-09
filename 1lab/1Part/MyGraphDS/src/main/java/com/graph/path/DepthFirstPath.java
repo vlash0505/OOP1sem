@@ -1,6 +1,5 @@
 package com.graph.path;
 
-import com.graph.implementation.BaseGraph;
 import com.graph.implementation.GraphAdjList;
 
 /**
@@ -19,7 +18,7 @@ public class DepthFirstPath<T> extends BaseGraphPath<T> {
 
     public DepthFirstPath(GraphAdjList<T> G, T s) {
         super(G, s);
-        traverse(G, G.getIndexedVertices().indexOf(s));
+        traverseDFS(G, G.getIndexedVertices().indexOf(s));
     }
 
     /**
@@ -29,7 +28,7 @@ public class DepthFirstPath<T> extends BaseGraphPath<T> {
      * @param v index of a vertex that is being inspected.
      */
 
-    public void traverse(GraphAdjList<T> G, int v) {
+    public void traverseDFS(GraphAdjList<T> G, int v) {
         isVisited[v] = true;
         T toInspect = G.getIndexedVertices().get(v);
         //going through adjacent vertices to the vertex
@@ -39,7 +38,7 @@ public class DepthFirstPath<T> extends BaseGraphPath<T> {
             int index = G.getIndexedVertices().indexOf(w);
             if (!isVisited[index]) {
                 edgeTo.add(w);
-                traverse(G, index);
+                traverseDFS(G, index);
             }
         }
 

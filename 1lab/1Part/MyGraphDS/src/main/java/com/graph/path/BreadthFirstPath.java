@@ -2,7 +2,8 @@ package com.graph.path;
 
 import com.graph.implementation.GraphAdjList;
 
-import java.util.*;
+import java.util.Queue;
+import java.util.LinkedList;
 
 /**
  * Class that finds a path between two vertices in a
@@ -19,7 +20,7 @@ public class BreadthFirstPath<T>  extends BaseGraphPath<T> {
 
     public BreadthFirstPath(GraphAdjList<T> G, T source) {
         super(G, source);
-        traverse(G, source);
+        traverseBFS(G, source);
     }
 
     /**
@@ -29,7 +30,7 @@ public class BreadthFirstPath<T>  extends BaseGraphPath<T> {
      * @param s   starting vertex.
      */
 
-    public void traverse(GraphAdjList<T> G, T s) {
+    public void traverseBFS(GraphAdjList<T> G, T s) {
         int currentIndex = G.getIndexedVertices().indexOf(s);
         Queue<Integer> queue = new LinkedList<>();
 
