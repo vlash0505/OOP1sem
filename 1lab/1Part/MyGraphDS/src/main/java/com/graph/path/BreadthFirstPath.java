@@ -13,13 +13,13 @@ public class BreadthFirstPath<T>  extends BaseGraphPath<T> {
     /**
      * Constructor for pathfinding using BFS.
      *
-     * @param G   given graph.
-     * @param s   starting point.
+     * @param G        given graph.
+     * @param source   starting point.
      */
 
-    public BreadthFirstPath(GraphAdjList<T> G, T s) {
-        super(G, s);
-        traverse(G, s);
+    public BreadthFirstPath(GraphAdjList<T> G, T source) {
+        super(G, source);
+        traverse(G, source);
     }
 
     /**

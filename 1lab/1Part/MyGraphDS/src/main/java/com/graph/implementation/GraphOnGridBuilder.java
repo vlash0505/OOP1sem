@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  * Class that represent graph on a grid.
  */
 
-public class GraphOnGrid<T extends Tile> {
+public class GraphOnGridBuilder<T extends Tile> {
     private final int rowsNum;
     private final int columnsNum;
     private final T[][] gridMatrix;
@@ -25,7 +25,7 @@ public class GraphOnGrid<T extends Tile> {
      * @param gridMatrix matrix that represents a grid.
      */
 
-    public GraphOnGrid(int rowsNum, int columnsNum, T[][] gridMatrix) {
+    public GraphOnGridBuilder(int rowsNum, int columnsNum, T[][] gridMatrix) {
         this.rowsNum = rowsNum;
         this.columnsNum = columnsNum;
         this.gridMatrix = gridMatrix;

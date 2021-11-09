@@ -9,7 +9,7 @@ import java.util.List;
  * @param <T> type of data that is stored in a graph's vertex.
  */
 
-public class BaseGraph<T> {
+public abstract class BaseGraph<T> {
     protected List<T> indexedVertices;
     protected int V;
     protected int E;

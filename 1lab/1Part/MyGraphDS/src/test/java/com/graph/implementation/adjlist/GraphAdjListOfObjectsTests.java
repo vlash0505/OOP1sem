@@ -1,4 +1,4 @@
-package com.graph.implementation;
+package com.graph.implementation.adjlist;
 
 public class GraphAdjListOfObjectsTests extends GraphAdjListReferenceTests<Object> {
     private static final Object sample = new Object();

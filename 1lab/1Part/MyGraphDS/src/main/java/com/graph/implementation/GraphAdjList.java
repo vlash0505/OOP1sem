@@ -2,7 +2,10 @@ package com.graph.implementation;
 
 import com.graph.path.DepthFirstPath;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 /**
@@ -57,6 +60,7 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      */
 
     public void addVertex(T data) {
+        if(data == null) {return;}
         if(vertices.containsKey(data)) {
             System.out.println("Graph already contains element you are trying to add.");
             return;
@@ -77,7 +81,8 @@ public class GraphAdjList<T> extends BaseGraph<T> {
         //removing the actual vertex.
         vertices.remove(w);
         //iterating throw each vertex and deleting w vertex from
-        //the list of connected vertices of other vertices
+        //the list of connected vertices of other vertices if
+        //there is such.
         for (Map.Entry<T, List<T>> entry : vertices.entrySet()) {
             entry.getValue().remove(w);
         }
@@ -95,7 +100,11 @@ public class GraphAdjList<T> extends BaseGraph<T> {
      * @return true if there is an edge, otherwise - false.
      */
 
-    public boolean hasEdge(T v, T w) { return (vertices.get(v).contains(w)); }
+    public boolean hasEdge(T v, T w) {
+        validateVertex(v);
+        validateVertex(w);
+        return (vertices.get(v).contains(w));
+    }
 
     /**
      * Method that adds edge to a graph (connects

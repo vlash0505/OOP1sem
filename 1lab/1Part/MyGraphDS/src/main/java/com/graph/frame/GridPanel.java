@@ -6,10 +6,13 @@ import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.*;
 
-import java.util.*;
+import java.util.Stack;
+import java.util.Iterator;
+
 import java.util.stream.IntStream;
 
 import com.graph.implementation.*;
+import com.graph.path.ShortestPath;
 
 /**
  * Class that represents graph data structure
@@ -119,12 +122,12 @@ public class GridPanel extends JPanel implements MouseListener, ActionListener {
         int rowsNum = FRAME_WIDTH / TILE_SIZE;
         int columnsNum = FRAME_HEIGHT / TILE_SIZE;
 
-        GraphOnGrid<Tile> G = new GraphOnGrid<>(rowsNum, columnsNum, gridMatrix);
+        GraphOnGridBuilder<Tile> G = new GraphOnGridBuilder<>(rowsNum, columnsNum, gridMatrix);
         GraphAdjList<Tile> graph = G.graphInit();
 
-        TestShortPath<Tile> pathShort = new TestShortPath<>(graph, sourcePosition, destinationPosition);
-        visitedTiles = pathShort.getVisited();
-        Stack<Tile> pathAsTiles = pathShort.getT();
+        ShortestPath<Tile> pathShort = new ShortestPath<>(graph, sourcePosition, destinationPosition);
+        visitedTiles = pathShort.pathTo(destinationPosition);
+        Stack<Tile> pathAsTiles = pathShort.getShortestPath();
         while(!pathAsTiles.isEmpty()) { pathTiles.push(new PathTile(pathAsTiles.pop())); }
 
         animationLogic();

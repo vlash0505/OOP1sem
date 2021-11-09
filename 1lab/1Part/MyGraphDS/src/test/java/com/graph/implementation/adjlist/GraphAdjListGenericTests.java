@@ -1,5 +1,6 @@
-package com.graph.implementation;
+package com.graph.implementation.adjlist;
 
+import com.graph.implementation.GraphAdjList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ public abstract class GraphAdjListGenericTests<T> {
 
         Assertions.assertEquals(1, G.V());
         Assertions.assertTrue(G.hasVertex(valueToAdd));
+        Assertions.assertTrue(G.getVertices().containsKey(valueToAdd));
     }
 
     @Test
@@ -28,6 +30,7 @@ public abstract class GraphAdjListGenericTests<T> {
 
         Assertions.assertEquals(0, G.V());
         Assertions.assertFalse(G.hasVertex(valueToAdd));
+        Assertions.assertFalse(G.getVertices().containsKey(valueToAdd));
     }
 
     @Test
@@ -66,6 +69,7 @@ public abstract class GraphAdjListGenericTests<T> {
         T valueToAdd = this.createSampleValue();
         T anotherValueToAdd = this.createDifferentValue();
         T andAnotherValueToAdd = this.createDifferentValue();
+
         G.addVertex(valueToAdd);
         G.addVertex(anotherValueToAdd);
         G.addVertex(andAnotherValueToAdd);
@@ -90,6 +94,55 @@ public abstract class GraphAdjListGenericTests<T> {
 
         Assertions.assertEquals(1, G.E());
         Assertions.assertFalse(G.isConnected());
+    }
+
+    @Test
+    @DisplayName("Should get the vertex degree.")
+    void shouldGetVertexDegree() {
+        GraphAdjList<T> G = new GraphAdjList<>();
+        T valueToAdd = this.createSampleValue();
+        T anotherValueToAdd = this.createDifferentValue();
+        T andAnotherValueToAdd = this.createDifferentValue();
+        G.addVertex(valueToAdd);
+        G.addVertex(anotherValueToAdd);
+        G.addVertex(andAnotherValueToAdd);
+
+        Assertions.assertEquals(0, G.vertexDegree(valueToAdd));
+        G.addEdge(valueToAdd, anotherValueToAdd);
+        Assertions.assertEquals(1, G.vertexDegree(valueToAdd));
+        G.addEdge(valueToAdd, andAnotherValueToAdd);
+        Assertions.assertEquals(2, G.vertexDegree(valueToAdd));
+
+        G.removeEdge(valueToAdd, anotherValueToAdd);
+        Assertions.assertEquals(1, G.vertexDegree(valueToAdd));
+    }
+
+    @Test
+    @DisplayName("Should get all the adjacent vertices to the given one.")
+    void shouldGetAdjacentVertices() {
+        GraphAdjList<T> G = new GraphAdjList<>();
+        T valueToAdd = this.createSampleValue();
+        T anotherValueToAdd = this.createDifferentValue();
+        T andAnotherValueToAdd = this.createDifferentValue();
+        G.addVertex(valueToAdd);
+        G.addVertex(anotherValueToAdd);
+        G.addVertex(andAnotherValueToAdd);
+        G.addEdge(valueToAdd, anotherValueToAdd);
+
+        G.addEdge(valueToAdd, anotherValueToAdd);
+        Assertions.assertEquals(1, G.adjacent(valueToAdd).size());
+        Assertions.assertTrue(G.adjacent(valueToAdd).contains(anotherValueToAdd));
+        Assertions.assertFalse(G.adjacent(valueToAdd).contains(andAnotherValueToAdd));
+
+        G.addEdge(valueToAdd, andAnotherValueToAdd);
+        Assertions.assertEquals(2, G.adjacent(valueToAdd).size());
+        Assertions.assertTrue(G.adjacent(valueToAdd).contains(anotherValueToAdd));
+        Assertions.assertTrue(G.adjacent(valueToAdd).contains(andAnotherValueToAdd));
+
+        G.removeEdge(valueToAdd, anotherValueToAdd);
+        Assertions.assertEquals(1, G.adjacent(valueToAdd).size());
+        Assertions.assertFalse(G.adjacent(valueToAdd).contains(anotherValueToAdd));
+        Assertions.assertTrue(G.adjacent(valueToAdd).contains(andAnotherValueToAdd));
     }
 
     protected abstract T createSampleValue();

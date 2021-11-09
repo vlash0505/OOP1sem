@@ -1,6 +1,5 @@
 package com.graph.path;
 
-import com.graph.implementation.BaseGraph;
 import com.graph.implementation.GraphAdjList;
 
 import java.util.ArrayList;
@@ -13,22 +12,24 @@ import java.util.Stack;
  * @param <T> data that is stored in a graph's vertex.
  */
 
-public class BaseGraphPath<T> {
+public abstract class BaseGraphPath<T> {
     protected boolean[] isVisited;
     protected List<T> edgeTo;
-    private final T s;
+    protected GraphAdjList<T> G;
+    protected final T source;
 
     /**
      * Constructor for a GraphPath.
      *
-     * @param G    given graph.
-     * @param s    starting vertex(source).
+     * @param G         given graph.
+     * @param source    starting vertex(source).
      */
 
-    public BaseGraphPath(GraphAdjList<T> G, T s) {
+    public BaseGraphPath(GraphAdjList<T> G, T source) {
         this.isVisited = new boolean[G.V()];
         this.edgeTo = new ArrayList<>();
-        this.s = s;
+        this.G = G;
+        this.source = source;
     }
 
     /**
@@ -48,33 +49,31 @@ public class BaseGraphPath<T> {
      * Method that checks whether the path to the given
      * vertex exists.
      *
-     * @param G       Given graph.
-     * @param element Vertex that we want to check the path exists
-     *                to from the source vertex.
+     * @param destination Vertex that we want to check the path exists
+     *                    to from the source vertex.
      *
      * @return true if the path exists, otherwise - false.
      */
 
-    public boolean hasPathTo(GraphAdjList<T> G, T element) {
-        return isVisited[G.getIndexedVertices().indexOf(element)];
+    public boolean hasPathTo(T destination) {
+        return isVisited[G.getIndexedVertices().indexOf(destination)];
     }
 
     /**
      * Method that researches traversed graph and
      * builds a path to the given vertex(if it exists).
      *
-     * @param G       Given graph.
-     * @param element Vertex that we want to get path to
-     *                from the source vertex.
+     * @param destination Vertex that we want to get path to
+     *                    from the source vertex.
      *
      * @return path to the vertex v from the source vertex
      * as the Iterable.
      */
 
-    public Iterable<T> pathTo(GraphAdjList<T> G, T element) {
-        if(!hasPathTo(G, element)) { return null; }
+    public Stack<T> pathTo(T destination) {
+        if(!hasPathTo(destination)) { return null; }
         Stack<T> path = new Stack<>();
-        path.push(s);
+        path.push(source);
         for (T x : edgeTo) { path.push(x); }
         return path;
     }

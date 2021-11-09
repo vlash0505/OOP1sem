@@ -53,14 +53,14 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
      * Utility method that checks whether edge between two
      * vertices exist.
      *
-     * @param indexV index of the first vertex
-     * @param indexW index of the second vertex
+     * @param v first vertex
+     * @param w second vertex
      *
      * @return true if there is an edge, otherwise - false.
      */
 
-    public boolean hasEdge(int indexV, int indexW) {
-        return (adj[indexV][indexW] == 1);
+    public boolean hasEdge(T v, T w) {
+        return (adj[indexedVertices.indexOf(v)][indexedVertices.indexOf(w)] == 1);
     }
 
     /**
@@ -114,7 +114,7 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
         validateVertex(w);
         int firstIndex = indexedVertices.indexOf(v);
         int secondIndex = indexedVertices.indexOf(w);
-        if(hasEdge(firstIndex, secondIndex)) { return; }
+        if(hasEdge(v, w)) { return; }
 
         adj[firstIndex][secondIndex] = 1;
         adj[secondIndex][firstIndex] = 1;
@@ -134,7 +134,7 @@ public class GraphAdjMatrix<T> extends  BaseGraph<T>{
         validateVertex(w);
         int firstIndex = indexedVertices.indexOf(v);
         int secondIndex = indexedVertices.indexOf(w);
-        if(!hasEdge(firstIndex, secondIndex)) { return; }
+        if(!hasEdge(v, w)) { return; }
 
         adj[firstIndex][secondIndex] = 0;
         adj[secondIndex][firstIndex] = 0;

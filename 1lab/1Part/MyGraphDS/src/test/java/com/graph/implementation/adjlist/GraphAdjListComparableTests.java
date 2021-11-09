@@ -1,6 +1,6 @@
-package com.graph.implementation;
+package com.graph.implementation.adjlist;
 
-public class GraphAdjListComparableTests extends GraphAdjListReferenceTests<GraphAdjListComparableTests.ComparableElement>{
+public class GraphAdjListComparableTests extends GraphAdjListReferenceTests<GraphAdjListComparableTests.ComparableElement> {
 
     public static class ComparableElement implements Comparable<ComparableElement> {
         private final int id;
