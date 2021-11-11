@@ -2,7 +2,7 @@
 
 <h1>1 part: Generic graph implementation.</h1>
 
-        <p>
+<p>
         (****) + (*) + (*) + (*) + (*)
         (****) Implemented generic graph DS both with adjacency list and adjacency matrix(I 
         used abstract class for shared functionality), (all methods that are required for me 
@@ -19,14 +19,14 @@
         (*) for documentation (JavaDoc)
         (*) for unit tests (JUnit5)
         
-        </p>
+</p>
         
         
         
        
 <h1>2 part: Database that operates on books.</h1>
         
-        <p>
+<p>
         (***) + (*) + (*)
         (***) Implemented a simple C.R.U.D application using Spring Framework and 
         Jpa Repository functionality.
@@ -37,4 +37,4 @@
         (*) Database implementation.
         (*) Framework usage
         (*) Documentation.
-        </p>
+</p>
