@@ -81,6 +81,6 @@ public abstract class BaseGraph<T> {
     public int E() { return E; }
 
     public boolean hasVertex(T v) {
-        return this.getIndexedVertices().contains(v);
+        return indexedVertices.contains(v);
     }
 }

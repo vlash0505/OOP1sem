@@ -5,7 +5,32 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public abstract class GraphAdjListGenericTests<T> {
+
+    @Test
+    @DisplayName("Should initialize empty graph instance")
+    void shouldInitEmptyGraph() {
+        GraphAdjList<T> G = new GraphAdjList<>();
+
+        Assertions.assertNotNull(G);
+        Assertions.assertEquals(G.V(), 0);
+    }
+
+    @Test
+    @DisplayName("Should initialize graph instance and fill it with passed parameters")
+    void shouldInitGraph() {
+        T valueToAdd = this.createSampleValue();
+        T anotherValueToAdd = this.createDifferentValue();
+
+        GraphAdjList<T> G = new GraphAdjList<>(2, List.of(valueToAdd, anotherValueToAdd));
+
+        Assertions.assertNotNull(G);
+        Assertions.assertEquals(G.V(), 2);
+        Assertions.assertTrue(G.hasVertex(valueToAdd));
+        Assertions.assertTrue(G.hasVertex(anotherValueToAdd));
+    }
 
     @Test
     @DisplayName("Should add vertex to the graph")

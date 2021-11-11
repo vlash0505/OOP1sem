@@ -14,6 +14,9 @@ import java.awt.Dimension;
  */
 
 public class Frame extends JFrame {
+    private static final int FRAME_WIDTH = 690;
+    private static final int CONTROL_PANEL_HEIGHT = 75;
+
     private final GridPanel grid;
     private final JPanel controlPanel;
 
@@ -30,7 +33,7 @@ public class Frame extends JFrame {
         resetButtonInit();
 
         //width is the same as grid panel's width
-        controlPanel.setPreferredSize(new Dimension(690,75));
+        controlPanel.setPreferredSize(new Dimension(FRAME_WIDTH, CONTROL_PANEL_HEIGHT));
 
         allContent.add(grid,BorderLayout.CENTER);
         allContent.add(controlPanel,BorderLayout.SOUTH);

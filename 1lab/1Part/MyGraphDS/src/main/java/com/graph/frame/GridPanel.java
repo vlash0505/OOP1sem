@@ -56,8 +56,6 @@ public class GridPanel extends JPanel implements MouseListener, ActionListener {
 
         this.gridMatrix = new Tile[FRAME_WIDTH / TILE_SIZE][FRAME_HEIGHT / TILE_SIZE];
         this.fillGridMatrix();
-        System.out.println(gridMatrix.length);
-        System.out.println(gridMatrix[0].length);
 
         this.visitedTiles = new Stack<>();
         this.pathTiles = new Stack<>();
