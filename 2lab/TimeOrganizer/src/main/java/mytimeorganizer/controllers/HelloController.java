@@ -1,4 +1,4 @@
-package com.organizer.timeorganizer.controllers;
+package mytimeorganizer.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

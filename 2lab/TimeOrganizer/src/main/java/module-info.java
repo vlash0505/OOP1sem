@@ -11,8 +11,8 @@ module com.organizer.timeorganizer {
     requires eu.hansolo.tilesfx;
     requires javafx.graphics;
 
-    opens com.organizer.timeorganizer to javafx.fxml;
-    exports com.organizer.timeorganizer;
-    exports com.organizer.timeorganizer.controllers;
-    opens com.organizer.timeorganizer.controllers to javafx.fxml;
+    opens mytimeorganizer to javafx.fxml;
+    exports mytimeorganizer;
+    exports mytimeorganizer.controllers;
+    opens mytimeorganizer.controllers to javafx.fxml;
 }

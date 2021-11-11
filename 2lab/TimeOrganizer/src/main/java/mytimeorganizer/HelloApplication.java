@@ -1,4 +1,4 @@
-package com.organizer.timeorganizer;
+package mytimeorganizer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
