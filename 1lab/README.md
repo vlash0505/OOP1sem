@@ -1,4 +1,4 @@
-<h1> 13 * : (****) + (*) + (*) + (*) + (*) + (***) + (*) + (*) </h1>
+<h1> 14 * : (****) + (*) + (*) + (*) + (*) + (***) + (*) + (*) </h1>
 
 <h1>1 part: Generic graph implementation.</h1>
 
@@ -28,7 +28,7 @@
 <h1>2 part: Database that operates on books.</h1>
         
 <p>
-        (***) + (*) + (*)
+        (***) + (*) + (*) + (*)
         
         (***) Implemented a simple C.R.U.D application using Spring Framework and 
         Jpa Repository functionality.
