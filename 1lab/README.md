@@ -4,6 +4,7 @@
 
 <p>
         (****) + (*) + (*) + (*) + (*)
+        
         (****) Implemented generic graph DS both with adjacency list and adjacency matrix(I 
         used abstract class for shared functionality), (all methods that are required for me 
         to have are, in fact, implemented: graph initialization, vertex/edge addition/deletion, 
@@ -28,6 +29,7 @@
         
 <p>
         (***) + (*) + (*)
+        
         (***) Implemented a simple C.R.U.D application using Spring Framework and 
         Jpa Repository functionality.
         Project is built with Maven, to operate on database we use SQL and JPA
