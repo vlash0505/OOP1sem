@@ -9,4 +9,7 @@
 
 .idea/*
 
-External Libraries
+*.class
+
+
+
