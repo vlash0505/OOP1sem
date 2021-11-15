@@ -34,8 +34,7 @@
                   StackPane.alignment="CENTER">
 
          <children>
-            <ImageView fx:id="signInLogoImage"
-                       fitHeight="100.0"
+            <ImageView fitHeight="100.0"
                        fitWidth="100.0"
                        layoutX="220.0"
                        layoutY="15.0"
@@ -69,8 +68,7 @@
                            prefWidth="200.0"
                            promptText="Password" />
 
-            <ImageView fx:id="signInProfileIcon"
-                       fitHeight="20.0"
+            <ImageView fitHeight="20.0"
                        fitWidth="20.0"
                        layoutX="150.0"
                        layoutY="140.0"
@@ -81,8 +79,7 @@
                </image>
             </ImageView>
 
-            <ImageView fx:id="signInPasswordIcon"
-                       fitHeight="20.0"
+            <ImageView fitHeight="20.0"
                        fitWidth="20.0"
                        layoutX="150.0"
                        layoutY="185.0"
@@ -93,8 +90,7 @@
                </image>
             </ImageView>
 
-            <JFXButton fx:id="signInButton"
-                       layoutX="242.0"
+            <JFXButton layoutX="242.0"
                        layoutY="265.0"
                        maxHeight="25.0"
                        maxWidth="60.0"
@@ -104,14 +100,14 @@
                        prefWidth="60.0"
                        style="-fx-background-color: #3ca6e8;"
                        text="Sign In"
-                       textFill="WHITE">
+                       textFill="WHITE"
+                       onAction="#onSignIn">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
 
-            <Text fx:id="signInText"
-                  layoutX="196.0"
+            <Text layoutX="196.0"
                   layoutY="358.0"
                   opacity="0.5"
                   strokeType="OUTSIDE"
@@ -119,14 +115,12 @@
                   text="Not signed up yet? Sign up "
                   wrappingWidth="155" />
 
-            <Hyperlink fx:id="signInToSignUpHyperlink"
-                       layoutX="339.0"
+            <Hyperlink layoutX="339.0"
                        layoutY="342.0"
                        text="here."
-                       onAction="#onSignUp" />
+                       onAction="#onSignUpHere" />
 
-            <JFXCheckBox fx:id="signInRememberMeCheckBox"
-                         checkedColor="#3ca6e8"
+            <JFXCheckBox checkedColor="#3ca6e8"
                          layoutX="217.0"
                          layoutY="228.0"
                          text="Remember me"

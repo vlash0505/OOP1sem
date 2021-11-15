@@ -12,39 +12,133 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="450.0" minWidth="550.0" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #aeb2b5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytimeorganizer.controllers.SignUpController">
+<StackPane maxHeight="-Infinity"
+           maxWidth="-Infinity"
+           minHeight="450.0"
+           minWidth="550.0"
+           prefHeight="500.0"
+           prefWidth="700.0"
+           style="-fx-background-color: #aeb2b5;"
+           xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="mytimeorganizer.controllers.SignUpController">
+
    <children>
-      <AnchorPane maxHeight="378.0" maxWidth="550.0" minHeight="300.0" minWidth="500.0" prefHeight="380.0" prefWidth="550.0" StackPane.alignment="CENTER">
+      <AnchorPane maxHeight="378.0"
+                  maxWidth="550.0"
+                  minHeight="300.0"
+                  minWidth="500.0"
+                  prefHeight="380.0"
+                  prefWidth="550.0"
+                  StackPane.alignment="CENTER">
+
          <children>
-            <ImageView fx:id="signUpMainLogo" fitHeight="100.0" fitWidth="100.0" layoutX="220.0" layoutY="15.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="signUpMainLogo"
+                       fitHeight="100.0"
+                       fitWidth="100.0"
+                       layoutX="220.0"
+                       layoutY="15.0"
+                       opacity="0.5"
+                       pickOnBounds="true"
+                       preserveRatio="true">
                <image>
                   <Image url="@../assets/2910020.png" />
-               </image></ImageView>
-            <TextField fx:id="signUpEmailTextField" layoutX="180.0" layoutY="136.0" maxHeight="25.0" maxWidth="200.0" minHeight="25.0" minWidth="200.0" prefHeight="25.0" prefWidth="200.0" promptText="E-mail" />
-            <PasswordField fx:id="signUpPasswordTextField" layoutX="180.0" layoutY="218.0" maxHeight="25.0" maxWidth="200.0" minHeight="25.0" minWidth="200.0" prefHeight="25.0" prefWidth="200.0" promptText="Password" />
-            <ImageView fx:id="signUpProfileIcon" fitHeight="20.0" fitWidth="20.0" layoutX="150.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
+               </image>
+            </ImageView>
+
+            <TextField fx:id="signUpEmailTextField"
+                       layoutX="180.0"
+                       layoutY="136.0"
+                       maxHeight="25.0"
+                       maxWidth="200.0"
+                       minHeight="25.0"
+                       minWidth="200.0"
+                       prefHeight="25.0"
+                       prefWidth="200.0"
+                       promptText="E-mail" />
+
+            <PasswordField layoutX="180.0"
+                           layoutY="218.0"
+                           maxHeight="25.0"
+                           maxWidth="200.0"
+                           minHeight="25.0"
+                           minWidth="200.0"
+                           prefHeight="25.0"
+                           prefWidth="200.0"
+                           promptText="Password" />
+
+            <ImageView fitHeight="20.0"
+                       fitWidth="20.0"
+                       layoutX="150.0"
+                       layoutY="179.0"
+                       pickOnBounds="true"
+                       preserveRatio="true">
                <image>
                   <Image url="@../assets/icons8-user-64.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="signUpPasswordIcon" fitHeight="20.0" fitWidth="20.0" layoutX="150.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
+
+            <ImageView fitHeight="20.0"
+                       fitWidth="20.0"
+                       layoutX="150.0"
+                       layoutY="221.0"
+                       pickOnBounds="true"
+                       preserveRatio="true">
                <image>
                   <Image url="@../assets/icons8-password-50.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="signUpButton" layoutX="240.0" layoutY="300.0" maxHeight="25.0" maxWidth="60.0" minHeight="25.0" minWidth="60.0" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #3ca6e8;" text="Sign Up" textFill="WHITE">
+
+            <JFXButton layoutX="240.0"
+                       layoutY="300.0"
+                       maxHeight="25.0"
+                       maxWidth="60.0"
+                       minHeight="25.0"
+                       minWidth="60.0"
+                       prefHeight="25.0"
+                       prefWidth="60.0"
+                       style="-fx-background-color: #3ca6e8;"
+                       text="Sign Up"
+                       textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+
             </JFXButton>
-            <Text fx:id="signUpTextToSignIn" layoutX="187.0" layoutY="358.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Courier New;" text="Signed up already? Sign in " wrappingWidth="155.3515625" />
-            <Hyperlink fx:id="signUpHyperlinkToSignIn" layoutX="326.0" layoutY="342.0" text="here." />
-            <TextField fx:id="signUpUsernameTextField" layoutX="180.0" layoutY="176.0" maxHeight="25.0" maxWidth="200.0" minHeight="25.0" minWidth="200.0" prefHeight="25.0" prefWidth="200.0" promptText="Username" />
-            <ImageView fx:id="signUpEmailIcon" fitHeight="20.0" fitWidth="20.0" layoutX="150.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true">
+            <Text layoutX="196.0"
+                  layoutY="358.0"
+                  opacity="0.5"
+                  strokeType="OUTSIDE"
+                  strokeWidth="0.0"
+                  text="Signed up already? Sign in "
+                  wrappingWidth="155.3515625" />
+
+            <Hyperlink layoutX="337.0"
+                       layoutY="342.0"
+                       text="here."
+                       onAction="#onLogInHyperlink"/>
+
+            <TextField  layoutX="180.0"
+                        layoutY="176.0"
+                        maxHeight="25.0"
+                        maxWidth="200.0"
+                        minHeight="25.0"
+                        minWidth="200.0"
+                        prefHeight="25.0"
+                        prefWidth="200.0"
+                        promptText="Username" />
+
+            <ImageView fitHeight="20.0"
+                       fitWidth="20.0"
+                       layoutX="150.0"
+                       layoutY="139.0"
+                       pickOnBounds="true"
+                       preserveRatio="true">
                <image>
                   <Image url="@../assets/icons8-mail-50.png" />
                </image>
             </ImageView>
+
          </children>
          <StackPane.margin>
             <Insets />

@@ -7,35 +7,24 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import mytimeorganizer.logic.View;
+import mytimeorganizer.logic.ViewSwitcher;
 
 public class SignUpController {
-    @FXML
-    private JFXButton signUpButton;
 
-    @FXML
-    private ImageView signUpEmailIcon;
+    public void onLogInHyperlink() {
+        ViewSwitcher.switchTo(View.LOGIN);
+    }
 
-    @FXML
-    private TextField signUpEmailTextField;
+    public void regExEmailValidation() {
 
-    @FXML
-    private Hyperlink signUpHyperlinkToSignIn;
+    }
 
-    @FXML
-    private ImageView signUpMainLogo;
+    public void regExUsernameValidation() {
 
-    @FXML
-    private ImageView signUpPasswordIcon;
+    }
 
-    @FXML
-    private PasswordField signUpPasswordTextField;
+    public void regExPasswordValidation() {
 
-    @FXML
-    private ImageView signUpProfileIcon;
-
-    @FXML
-    private Text signUpTextToSignIn;
-
-    @FXML
-    private TextField signUpUsernameTextField;
+    }
 }

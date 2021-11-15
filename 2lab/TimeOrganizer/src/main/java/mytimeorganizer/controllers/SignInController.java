@@ -4,12 +4,8 @@ import javafx.fxml.FXML;
 
 import java.util.regex.*;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Hyperlink;
 
 import mytimeorganizer.logic.View;
 import mytimeorganizer.logic.ViewSwitcher;
@@ -17,33 +13,24 @@ import mytimeorganizer.logic.ViewSwitcher;
 public class SignInController {
 
     @FXML
-    private JFXButton signInButton;
+    private TextField signInUsernameField;
 
     @FXML
     private PasswordField signInPasswordField;
 
-    @FXML
-    private JFXCheckBox signInRememberMeCheckBox;
+    public void onSignIn() {
+        if (regularExpressionsValidator(signInUsernameField.getText().trim()) && regularExpressionsValidator(signInPasswordField.getText().trim())) {
+            ViewSwitcher.switchTo(View.HOME);
+        }
+    }
 
-    @FXML
-    private Hyperlink signInToSignUpHyperlink;
-
-    @FXML
-    private TextField signInUsernameField;
-
-    public void onSignUp() {
+    public void onSignUpHere() {
         ViewSwitcher.switchTo(View.SIGNUP);
     }
 
-    public boolean validateUsername(String userEmail) {
-        Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]$", Pattern.CASE_INSENSITIVE);
-        Matcher matchEmail = emailPattern.matcher(userEmail);
-        return matchEmail.find();
-    }
-
-    public boolean validatePassword(String username) {
-        Pattern usernamePattern = Pattern.compile("^[A-Z0-9._%+-]$", Pattern.CASE_INSENSITIVE);
-        Matcher matchUsername = usernamePattern.matcher(username);
-        return matchUsername.find();
+    public boolean regularExpressionsValidator(String toInspect) {
+        Pattern pattern = Pattern.compile("^[A-Za-z][A-Za-z0-9_]{7,29}$");
+        Matcher match = pattern.matcher(toInspect);
+        return match.matches();
     }
 }

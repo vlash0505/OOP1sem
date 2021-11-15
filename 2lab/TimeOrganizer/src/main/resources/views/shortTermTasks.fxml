@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
@@ -10,21 +8,6 @@
 
     <children>
         <AnchorPane maxHeight="380.0" maxWidth="550.0" minHeight="300.0" minWidth="400.0" prefHeight="380.0" prefWidth="550.0" StackPane.alignment="CENTER">
-
-            <children>
-                <ImageView fx:id="signInLogoImage" fitHeight="100.0" fitWidth="100.0" layoutX="220.0" layoutY="15.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../assets/2910020.png" />
-                    </image>
-                </ImageView>
-
-                <ImageView fx:id="signInPasswordIcon" fitHeight="20.0" fitWidth="20.0" layoutX="150.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../assets/icons8-password-50.png" />
-                    </image>
-                </ImageView>
-
-            </children>
             <StackPane.margin>
                 <Insets />
             </StackPane.margin>

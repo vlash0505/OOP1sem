@@ -5,20 +5,49 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Class that implements scene-switching
+ * in order for user to switch between
+ * different views.
+ */
+
 public class ViewSwitcher {
-    public static Scene scene;
+    private static Scene scene;
+    //cache mechanism
+    private static final Map<View, Parent> cache = new HashMap<>();
+
+    /**
+     *
+     *
+     * @param scene
+     */
 
     public static void setScene(Scene scene) {
         ViewSwitcher.scene = scene;
     }
 
+    /**
+     * Method that switches scene to one given as a parameter
+     * so that user now has different view.
+     *
+     * @param view - scene to which we want to switch.
+     */
+
     public static void switchTo(View view) {
         try {
-            Parent root = FXMLLoader.load(
-                    Objects.requireNonNull(ViewSwitcher.class.getResource(view.getFilename()))
-            );
+            Parent root;
+            if(cache.containsKey(view)) {
+                root = cache.get(view);
+            } else {
+                root = FXMLLoader.load(
+                        Objects.requireNonNull(ViewSwitcher.class.getResource(view.getFilename()))
+                );
+                cache.put(view, root);
+            }
             scene.setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
