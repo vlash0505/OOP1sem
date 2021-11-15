@@ -1,36 +1,49 @@
 package mytimeorganizer.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+
+import java.util.regex.*;
+
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
+
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Hyperlink;
+
+import mytimeorganizer.logic.View;
+import mytimeorganizer.logic.ViewSwitcher;
 
 public class SignInController {
 
     @FXML
-    private ImageView signInLogoIcon;
+    private JFXButton signInButton;
 
     @FXML
-    private ImageView signInUsernameIcon;
+    private PasswordField signInPasswordField;
 
     @FXML
-    private ImageView signInPasswordIcon;
+    private JFXCheckBox signInRememberMeCheckBox;
 
     @FXML
-    private PasswordField signInPassword;
+    private Hyperlink signInToSignUpHyperlink;
 
     @FXML
-    private TextField signInUserName;
+    private TextField signInUsernameField;
 
-    @FXML
-    private Button signInButton;
+    public void onSignUp() {
+        ViewSwitcher.switchTo(View.SIGNUP);
+    }
 
-    @FXML
-    void initialize() {
+    public boolean validateUsername(String userEmail) {
+        Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]$", Pattern.CASE_INSENSITIVE);
+        Matcher matchEmail = emailPattern.matcher(userEmail);
+        return matchEmail.find();
+    }
 
-        signInButton.setOnAction(event -> {
-            System.out.println("Login is clicked!");
-        });
+    public boolean validatePassword(String username) {
+        Pattern usernamePattern = Pattern.compile("^[A-Z0-9._%+-]$", Pattern.CASE_INSENSITIVE);
+        Matcher matchUsername = usernamePattern.matcher(username);
+        return matchUsername.find();
     }
 }
