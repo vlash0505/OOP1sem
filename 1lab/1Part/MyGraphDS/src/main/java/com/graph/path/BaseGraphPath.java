@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * Base class for BFS and DFS.
+ * Base class for graph traversals.
+ * Can be extended.
  *
  * @param <T> data that is stored in a graph's vertex.
  */
@@ -71,7 +72,7 @@ public abstract class BaseGraphPath<T> {
      */
 
     public Stack<T> pathTo(T destination) {
-        if(!hasPathTo(destination)) { return null; }
+        if(!hasPathTo(destination)) { return new Stack<>(); }
         Stack<T> path = new Stack<>();
         path.push(source);
         for (T x : edgeTo) { path.push(x); }

@@ -61,6 +61,11 @@ public class GridPanel extends JPanel implements MouseListener, ActionListener {
         this.pathTiles = new Stack<>();
     }
 
+    /**
+     * Method that is responsible for performing
+     * pathfinding animation.
+     */
+
     public void animationLogic() {
         userCantInteract = true;
         timerForVisited.setRepeats(true);

@@ -8,8 +8,19 @@ import java.util.HashMap;
 import java.util.Queue;
 import java.util.LinkedList;
 
+/**
+ * Class that represents finding the shortest
+ * path using simplified Dijkstra in its core
+ * logic.
+ *
+ * @param <T> data that is stored in the graph's
+ *            vertices.
+ */
+
 public class ShortestPath<T> extends BaseGraphPath<T> {
     private final T destination;
+    //index of the element corresponding to its
+    //element accordingly.
     private final Map<Integer, T> predecessors;
 
     /**
@@ -18,13 +29,18 @@ public class ShortestPath<T> extends BaseGraphPath<T> {
      * @param G      given graph.
      * @param source starting vertex(source).
      */
+
     public ShortestPath(GraphAdjList<T> G, T source, T destination) {
         super(G, source);
-        //this.dist = new int[G.V()];
         this.predecessors = new HashMap<>();
         this.destination = destination;
         traverseForPath();
     }
+
+    /**
+     * Traversing the graph and filling the predecessors
+     * field to form the shortest path in the future.
+     */
 
     public void traverseForPath() {
         int currentIndex = G.getIndexedVertices().indexOf(source);
@@ -41,6 +57,7 @@ public class ShortestPath<T> extends BaseGraphPath<T> {
                 int index = G.getIndexedVertices().indexOf(w);
                 if (!isVisited[index]) {
                     isVisited[index] = true;
+                    //adding the predecessor
                     predecessors.put(index, toInspect);
                     queue.offer(index);
                     if(w.equals(destination)) {
@@ -51,6 +68,14 @@ public class ShortestPath<T> extends BaseGraphPath<T> {
             }
         }
     }
+
+    /**
+     * Method that collects the shortest path
+     * based on information it got in traverseForPath
+     * method.
+     *
+     * @return shortest path represented as stack.
+     */
 
     public Stack<T> getShortestPath() {
         Stack<T> path = new Stack<>();

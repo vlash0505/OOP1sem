@@ -10,7 +10,7 @@ public abstract class GraphAdjListReferenceTests<T> extends GraphAdjListGenericT
 
     @Test
     @DisplayName("Adding non null value and validating null presence in it(should return false)")
-    public void nonNullValueAddedToEmptyGraphHasVertexInvokedWithNull() {
+    public void nonNullValueAddedToEmptyGraph_HasVertexInvokedWithNull() {
         T valueToAdd = this.createSampleValue();
         GraphAdjList<T> G = new GraphAdjList<>();
         G.addVertex(valueToAdd);
@@ -20,7 +20,7 @@ public abstract class GraphAdjListReferenceTests<T> extends GraphAdjListGenericT
 
     @Test
     @DisplayName("Adding null value and validating non null presence in it(should return false)")
-    public void nullValueAddedToEmptyGraphHasVertexInvokedWithNonNull() {
+    public void nullValueAddedToEmptyGraph_HasVertexInvokedWithNonNull() {
         T valueToAdd = this.createSampleValue();
         GraphAdjList<T> G = new GraphAdjList<>();
         G.addVertex(null);
@@ -49,7 +49,7 @@ public abstract class GraphAdjListReferenceTests<T> extends GraphAdjListGenericT
 
     @Test
     @DisplayName("Deleting edge where one of vertices is a null value and another has edge(should throw IllegalArgumentException)")
-    public void edgeDeletionInvokedWithOneNullValueWithEdgeExisting() {
+    public void edgeDeletionInvokedWithOneNullValue_WithEdgeExisting() {
         T valueToAdd = this.createSampleValue();
         T anotherValueToAdd = this.createDifferentValue();
         GraphAdjList<T> G = new GraphAdjList<>();
@@ -63,7 +63,7 @@ public abstract class GraphAdjListReferenceTests<T> extends GraphAdjListGenericT
 
     @Test
     @DisplayName("Deleting edge where one of vertices is a null value and another doesnt has edge(should throw IllegalArgumentException)")
-    public void edgeDeletionInvokedWithOneNullValueWithoutEdgeExisting() {
+    public void edgeDeletionInvokedWithOneNullValue_WithoutEdgeExisting() {
         T valueToAdd = this.createSampleValue();
         T anotherValueToAdd = this.createDifferentValue();
         GraphAdjList<T> G = new GraphAdjList<>();
@@ -78,7 +78,7 @@ public abstract class GraphAdjListReferenceTests<T> extends GraphAdjListGenericT
 
     @Test
     @DisplayName("Creating edge with two null values(there is edge in a graph) (should throw IllegalArgumentException)")
-    public void edgeDeletionInvokedWithTwoNullValuesWithEdgeExisting() {
+    public void edgeDeletionInvokedWithTwoNullValues_WithEdgeExisting() {
         T valueToAdd = this.createSampleValue();
         T anotherValueToAdd = this.createDifferentValue();
         GraphAdjList<T> G = new GraphAdjList<>();
@@ -91,7 +91,7 @@ public abstract class GraphAdjListReferenceTests<T> extends GraphAdjListGenericT
 
     @Test
     @DisplayName("Deleting edge two null values(there is no edge in a graph) (should throw IllegalArgumentException)")
-    public void edgeDeletionInvokedWithTwoNullValueWithoutEdgeExisting() {
+    public void edgeDeletionInvokedWithTwoNullValue_WithoutEdgeExisting() {
         GraphAdjList<T> G = new GraphAdjList<>();
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->  G.removeEdge(null, null));
@@ -99,7 +99,7 @@ public abstract class GraphAdjListReferenceTests<T> extends GraphAdjListGenericT
 
     @Test
     @DisplayName("Get all adjacent vertices to the null value(should throw IllegalArgumentException)")
-    public void getAdjacentInvokedWithNullValueNoVerticesInGraph() {
+    public void getAdjacentInvokedWithNullValue_NoVerticesInGraph() {
         GraphAdjList<T> G = new GraphAdjList<>();
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->  G.adjacent(null));
@@ -107,7 +107,7 @@ public abstract class GraphAdjListReferenceTests<T> extends GraphAdjListGenericT
 
     @Test
     @DisplayName("Get all adjacent vertices to the null value(should throw IllegalArgumentException)")
-    public void getAdjacentInvokedWithNullValueTwoVerticesInGraph() {
+    public void getAdjacentInvokedWithNullValue_TwoVerticesInGraph() {
         T valueToAdd = this.createSampleValue();
         T anotherValueToAdd = this.createDifferentValue();
         GraphAdjList<T> G = new GraphAdjList<>();

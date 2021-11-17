@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Base class for the graph data structure representation.
+ * Is designed for extension.
  *
  * @param <T> type of data that is stored in a graph's vertex.
  */
@@ -79,6 +80,14 @@ public abstract class BaseGraph<T> {
      */
 
     public int E() { return E; }
+
+    /**
+     * Method that ensures the parameter vertex
+     * is present in a graph.
+     *
+     * @return true if it is present, otherwise -
+     *         false.
+     */
 
     public boolean hasVertex(T v) {
         return indexedVertices.contains(v);

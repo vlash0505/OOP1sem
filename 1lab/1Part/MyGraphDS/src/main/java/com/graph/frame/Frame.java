@@ -28,8 +28,8 @@ public class Frame extends JFrame {
         this.grid = new GridPanel();
         this.controlPanel = new JPanel(new BorderLayout());
 
+        tileTypeComboBoxInit();
         startButtonInit();
-        comboBoxInit();
         resetButtonInit();
 
         //width is the same as grid panel's width
@@ -75,8 +75,8 @@ public class Frame extends JFrame {
      * type of the tile user wants to set on the grid.
      */
 
-    public void comboBoxInit() {
-        String[] tileTypes = {"Spawn", "Destination", "Wall"};
+    public void tileTypeComboBoxInit() {
+        String[] tileTypes = {"Source", "Destination", "Wall"};
         JComboBox<String> tileModes = new JComboBox<>(tileTypes);
         //sets the type of the tile the user wants to put on the grid.
         tileModes.addActionListener(e -> grid.setTileMode(tileModes.getSelectedIndex()));

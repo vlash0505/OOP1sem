@@ -16,6 +16,7 @@ public abstract class GraphAdjListGenericTests<T> {
 
         Assertions.assertNotNull(G);
         Assertions.assertEquals(G.V(), 0);
+        Assertions.assertEquals(G.E(), 0);
     }
 
     @Test
