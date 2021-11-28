@@ -1,4 +1,4 @@
-package mytimeorganizer.logic;
+package mytimeorganizer.view_logic;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

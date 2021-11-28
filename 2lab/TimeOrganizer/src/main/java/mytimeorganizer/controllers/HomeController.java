@@ -1,19 +1,33 @@
 package mytimeorganizer.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.VBox;
-import mytimeorganizer.logic.View;
-import mytimeorganizer.logic.ViewSwitcher;
+import javafx.scene.layout.AnchorPane;
+import mytimeorganizer.view_logic.TestSwitcher;
+import mytimeorganizer.view_logic.View;
 
 public class HomeController {
     @FXML
-    VBox taskList;
+    AnchorPane contentArea;
 
-    public void onSignOut() {
-        ViewSwitcher.switchTo(View.LOGIN);
+    @FXML
+    public void initialize() {
+        TestSwitcher.setPane(contentArea);
+        TestSwitcher.switchTo(View.START);
+    }
+
+    public void onHomeButton() {
+        TestSwitcher.switchTo(View.START);
+    }
+
+    public void onPlanButton() {
+        TestSwitcher.switchTo(View.PLAN);
+    }
+
+    public void onGoalsButton() {
+        TestSwitcher.switchTo(View.GOALS);
     }
 
     public void onJournalingButton() {
-        ViewSwitcher.switchTo(View.JOURNAL);
+        TestSwitcher.switchTo(View.JOURNAL);
     }
 }

@@ -1,96 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #aeb2b5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytimeorganizer.controllers.HomeController">
    <children>
-      <VBox maxWidth="190.0" minWidth="190.0" prefWidth="190.0" style="-fx-background-color: #91a7ab;" StackPane.alignment="TOP_LEFT">
-         <children>
-            <JFXButton onAction="#onJournalingButton" prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: #3ca6e8;" text="Home" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <JFXButton prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: #3ca6e8;" text="Long-term tasks" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <JFXButton prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: #3ca6e8;" text="Short-term tasks" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <JFXButton onAction="#onJournalingButton" prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: #3ca6e8;" text="Journaling" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <JFXButton onAction="#onJournalingButton" prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: #3ca6e8;" text="Chat" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <JFXButton onAction="#onJournalingButton" prefHeight="50.0" prefWidth="190.0" style="-fx-background-color: #3ca6e8;" text="Explore" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-         </children>
+      <VBox maxWidth="150.0" prefHeight="500.0" prefWidth="150.0" style="-fx-background-color: #899ba1;" StackPane.alignment="CENTER_LEFT">
          <StackPane.margin>
-            <Insets right="510.0" />
-         </StackPane.margin>
-      </VBox>
-      <Hyperlink text="Log Out" textFill="WHITE">
-         <StackPane.margin>
-            <Insets right="500.0" top="400.0" />
-         </StackPane.margin>
-      </Hyperlink>
-      <AnchorPane maxWidth="400.0" minHeight="482.0" minWidth="510.0" prefHeight="482.0" prefWidth="510.0">
-         <children>
-            <ImageView fitHeight="44.0" fitWidth="65.0" layoutX="137.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/icons8-task-100.png" />
-               </image>
-            </ImageView>
-            <Text fill="WHITE" layoutX="207.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your tasks for today" AnchorPane.topAnchor="51.892578125">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <VBox layoutX="75.0" layoutY="124.0" prefHeight="355.0" prefWidth="358.0">
-               <children>
-                  <JFXCheckBox prefHeight="50.0" prefWidth="362.0" style="-jfx-checked-color: #3ca6e8; -fx-background-color: #3ca6e8; -fx-opacity: 0.6; -fx-text-fill: #ffffff;" text="Task1" textFill="WHITE">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></JFXCheckBox>
-                  <JFXCheckBox prefHeight="50.0" prefWidth="362.0" style="-jfx-checked-color: #3ca6e8;" text="Task2" textFill="WHITE">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></JFXCheckBox>
-                  <JFXCheckBox prefHeight="50.0" prefWidth="362.0" style="-jfx-checked-color: #3ca6e8;" text="Task3" textFill="WHITE">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></JFXCheckBox>
-               </children>
-            </VBox>
-         </children>
-         <opaqueInsets>
             <Insets />
-         </opaqueInsets>
+         </StackPane.margin>
+         <children>
+            <JFXButton onAction="#onHomeButton" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #3ca6e8;" text="Home" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton onAction="#onPlanButton" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #3ca6e8;" text="Plan" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton onAction="#onGoalsButton" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #3ca6e8;" text="Goals" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton onAction="#onJournalingButton" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #3ca6e8;" text="Journaling" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </VBox>
+      <AnchorPane fx:id="contentArea" maxWidth="550.0" prefHeight="200.0" prefWidth="550.0">
          <StackPane.margin>
-            <Insets left="190.0" />
+            <Insets left="150.0" />
          </StackPane.margin>
       </AnchorPane>
    </children>

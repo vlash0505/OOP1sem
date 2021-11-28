@@ -1,5 +1,4 @@
 package mytimeorganizer.controllers;
 
-public class LongTermTasksController {
-
+public class GoalsController {
 }

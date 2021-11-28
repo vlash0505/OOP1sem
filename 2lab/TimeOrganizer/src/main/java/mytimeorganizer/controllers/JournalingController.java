@@ -3,8 +3,8 @@ package mytimeorganizer.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
-import mytimeorganizer.logic.View;
-import mytimeorganizer.logic.ViewSwitcher;
+import mytimeorganizer.view_logic.View;
+import mytimeorganizer.view_logic.ViewSwitcher;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

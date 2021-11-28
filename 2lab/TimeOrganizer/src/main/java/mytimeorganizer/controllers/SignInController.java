@@ -7,8 +7,8 @@ import java.util.regex.*;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import mytimeorganizer.logic.View;
-import mytimeorganizer.logic.ViewSwitcher;
+import mytimeorganizer.view_logic.View;
+import mytimeorganizer.view_logic.ViewSwitcher;
 
 public class SignInController {
 
