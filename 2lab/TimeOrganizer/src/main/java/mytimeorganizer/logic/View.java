@@ -9,12 +9,12 @@ public enum View {
     SIGNUP("/views/signUpView.fxml"),
     HOME("/views/homeView.fxml"),
     JOURNAL("/views/journalingView.fxml"),
-    TODO("/views/shortTermTasks.fxml");
+    TODO("/views/shortTermTasksView.fxml");
 
     private final String filename;
 
     /**
-     * Sets the initial view mode.
+     * Sets the view mode.
      *
      * @param filename file of a scene
      */

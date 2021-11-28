@@ -14,13 +14,17 @@
    <children>
       <AnchorPane maxHeight="500.0" maxWidth="700.0" minHeight="500.0" minWidth="700.0" prefHeight="500.0" prefWidth="700.0" StackPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="68.0" fitWidth="44.0" layoutX="328.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="68.0" fitWidth="44.0" layoutX="96.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/icons8-bulb-64.png" />
+                  <Image url="@../assets/icons8-pencil-drawing-50.png" />
                </image>
             </ImageView>
-            <DatePicker fx:id = "datePicker" layoutX="262.0" layoutY="153.0" promptText="Pick date" />
-            <TextArea fx:id = "textArea" layoutX="149.0" layoutY="215.0" prefHeight="194.0" prefWidth="402.0" promptText="Take note." />
+            <DatePicker fx:id="datePicker" layoutX="160.0" layoutY="134.0" promptText="Pick date" />
+            <TextArea fx:id="textArea" layoutX="160.0" layoutY="216.0" maxWidth="400.0" minWidth="400.0" prefHeight="200.0" prefWidth="400.0" promptText="Take note." style="-fx-max-width: 400;" />
+            <JFXButton layoutX="437.0" layoutY="134.0" onAction="#updateNotes" style="-fx-background-color: #3ca6e8;" text="Update notes" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
          </children>
          <StackPane.margin>
             <Insets />
@@ -29,7 +33,7 @@
             <Insets />
          </opaqueInsets>
       </AnchorPane>
-      <JFXButton onAction = "#onHomeButton" style="-fx-background-color: #3ca6e8;" text="Home" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
+      <JFXButton onAction="#onHomeButton" style="-fx-background-color: #3ca6e8;" text="Home" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

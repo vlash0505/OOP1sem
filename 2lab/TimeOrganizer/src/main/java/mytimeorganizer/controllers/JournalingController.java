@@ -3,7 +3,6 @@ package mytimeorganizer.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import mytimeorganizer.logic.View;
 import mytimeorganizer.logic.ViewSwitcher;
 
@@ -17,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JournalingController {
+
     @FXML
     DatePicker datePicker;
 
@@ -26,14 +26,14 @@ public class JournalingController {
     private Map<LocalDate, String> data = new HashMap<>();
 
     public void onHomeButton() {
+        save();
         ViewSwitcher.switchTo(View.HOME);
     }
 
     @FXML
     public void initialize() {
-        datePicker.valueProperty().addListener((o, oldDate, date) -> {
-            textArea.setText(data.getOrDefault(date, ""));
-        });
+        load();
+        datePicker.valueProperty().addListener((o, oldDate, date) -> textArea.setText(data.getOrDefault(date, "")));
         datePicker.setValue(LocalDate.now());
     }
 
@@ -42,7 +42,7 @@ public class JournalingController {
     }
 
     private void save() {
-        try(ObjectOutputStream stream = new ObjectOutputStream(Files.newOutputStream(Paths.get("/assets/notes.data")))){
+        try(ObjectOutputStream stream = new ObjectOutputStream(Files.newOutputStream(Paths.get("notes.data")))) {
             stream.writeObject(data);
         } catch(Exception e) {
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class JournalingController {
 
     @SuppressWarnings("unchecked")
     private void load() {
-        Path file = Paths.get("/assets/notes.data");
+        Path file = Paths.get("notes.data");
         try(ObjectInputStream stream = new ObjectInputStream(Files.newInputStream(file))) {
             data = (Map<LocalDate, String>) stream.readObject();
         } catch (Exception e) {

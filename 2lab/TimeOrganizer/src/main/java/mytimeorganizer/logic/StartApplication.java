@@ -15,7 +15,7 @@ public class StartApplication extends Application {
         ViewSwitcher.switchTo(View.LOGIN);
 
         stage.setTitle("Organizer");
-        stage.getIcons().add(new Image("/assets/2910020.png"));
+        stage.getIcons().add(new Image("/assets/logo.png"));
         stage.setMinWidth(550.0);
         stage.setMinHeight(450.0);
         stage.setScene(scene);

@@ -21,9 +21,10 @@ public class ViewSwitcher {
     private static final Map<View, Parent> cache = new HashMap<>();
 
     /**
+     * Setter for scene.
      *
-     *
-     * @param scene
+     * @param scene scene to be set as one to
+     *              which user will be moved.
      */
 
     public static void setScene(Scene scene) {
@@ -32,14 +33,16 @@ public class ViewSwitcher {
 
     /**
      * Method that switches scene to one given as a parameter
-     * so that user now has different view.
+     * so that user now has requested view.
      *
-     * @param view - scene to which we want to switch.
+     * @param view - scene to which user wants to switch.
      */
 
     public static void switchTo(View view) {
         try {
             Parent root;
+            //if we already loaded the fxml file before,
+            //pick it from cache.
             if(cache.containsKey(view)) {
                 root = cache.get(view);
             } else {
