@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -18,11 +18,8 @@
             </opaqueInsets>
          <children>
             <Text layoutX="262.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <VBox layoutX="90.0" layoutY="106.0" prefHeight="262.0" prefWidth="372.0">
-               <children>
-                  <JFXCheckBox prefHeight="53.0" prefWidth="361.0" text="Text" />
-               </children>
-            </VBox>
+            <VBox fx:id="tasks" layoutX="119.0" layoutY="104.0" prefHeight="302.0" prefWidth="338.0" />
+            <JFXButton onAction="#onAddButton" layoutX="26.0" layoutY="104.0" style="-fx-background-color: blue;" text="Add" />
          </children>
         </AnchorPane>
     </children>

@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            prefHeight="500.0" prefWidth="550.0">
 
+<AnchorPane prefHeight="500.0" prefWidth="550.0" style="-fx-background-color: #aeb2b5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="44.0" fitWidth="48.0" layoutX="67.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/icons8-goal-50.png" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" layoutX="191.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your tasks for today :">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+   </children>
 </AnchorPane>

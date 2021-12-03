@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import mytimeorganizer.view_logic.TestSwitcher;
 import mytimeorganizer.view_logic.View;
+import mytimeorganizer.view_logic.ViewSwitcher;
 
 public class HomeController {
     @FXML
@@ -29,5 +30,9 @@ public class HomeController {
 
     public void onJournalingButton() {
         TestSwitcher.switchTo(View.JOURNAL);
+    }
+
+    public void onLogOutHyperlink() {
+        ViewSwitcher.switchTo(View.LOGIN);
     }
 }

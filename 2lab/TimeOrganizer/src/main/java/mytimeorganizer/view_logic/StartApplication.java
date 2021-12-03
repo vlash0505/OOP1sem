@@ -16,8 +16,8 @@ public class StartApplication extends Application {
 
         stage.setTitle("Organizer");
         stage.getIcons().add(new Image("/assets/logo.png"));
-        stage.setMinWidth(550.0);
-        stage.setMinHeight(450.0);
+        stage.setMinWidth(650.0);
+        stage.setMinHeight(550.0);
         stage.setScene(scene);
 
         stage.show();
