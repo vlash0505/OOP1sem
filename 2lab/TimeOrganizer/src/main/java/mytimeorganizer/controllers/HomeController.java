@@ -1,38 +1,50 @@
 package mytimeorganizer.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import mytimeorganizer.view_logic.TestSwitcher;
+import mytimeorganizer.view_logic.PaneViewSwitcher;
 import mytimeorganizer.view_logic.View;
-import mytimeorganizer.view_logic.ViewSwitcher;
+import mytimeorganizer.view_logic.SceneViewSwitcher;
 
 public class HomeController {
     @FXML
     AnchorPane contentArea;
 
     @FXML
+    JFXButton journalingButton;
+
+    @FXML
     public void initialize() {
-        TestSwitcher.setPane(contentArea);
-        TestSwitcher.switchTo(View.START);
+        PaneViewSwitcher.setPane(contentArea);
+        PaneViewSwitcher.switchTo(View.START);
     }
 
     public void onHomeButton() {
-        TestSwitcher.switchTo(View.START);
+        PaneViewSwitcher.switchTo(View.START);
     }
 
     public void onPlanButton() {
-        TestSwitcher.switchTo(View.PLAN);
+        PaneViewSwitcher.switchTo(View.PLAN);
     }
 
     public void onGoalsButton() {
-        TestSwitcher.switchTo(View.GOALS);
+        PaneViewSwitcher.switchTo(View.GOALS);
     }
 
     public void onJournalingButton() {
-        TestSwitcher.switchTo(View.JOURNAL);
+        PaneViewSwitcher.switchTo(View.JOURNAL);
+    }
+
+    public void onAchievementsButton() {
+        PaneViewSwitcher.switchTo(View.ACHIEVEMENTS);
+    }
+
+    public void onTimerButton() {
+        PaneViewSwitcher.switchTo(View.TIMER);
     }
 
     public void onLogOutHyperlink() {
-        ViewSwitcher.switchTo(View.LOGIN);
+        SceneViewSwitcher.switchTo(View.LOGIN);
     }
 }

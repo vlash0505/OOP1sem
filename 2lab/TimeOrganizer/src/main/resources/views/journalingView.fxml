@@ -28,14 +28,14 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></JFXButton>
-            <Text fill="WHITE" layoutX="176.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Take notes every day.">
+            <Text fill="#7b6d6d" layoutX="176.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Take notes every day.">
                <font>
-                  <Font size="18.0" />
+                  <Font size="17.0" />
                </font>
             </Text>
-            <Line endX="321.5999755859375" endY="-7.62939453125E-6" layoutX="174.0" layoutY="87.0" startX="-100.0" stroke="WHITE" />
-            <Line endX="-91.60005187988281" endY="355.8000183105469" layoutX="132.0" layoutY="117.0" startX="-91.60005187988281" startY="-93.00000762939453" stroke="WHITE" />
-            <Line endX="-91.60005187988281" endY="355.8000183105469" layoutX="607.0" layoutY="116.0" startX="-91.60005187988281" startY="-93.00000762939453" stroke="WHITE" />
+            <Line endX="321.5999755859375" endY="-7.62939453125E-6" layoutX="174.0" layoutY="87.0" startX="-100.0" stroke="#7b6d6d" />
+            <Line endX="-91.60005187988281" endY="355.8000183105469" layoutX="132.0" layoutY="117.0" startX="-91.60005187988281" startY="-93.00000762939453" stroke="#7b6d6d" />
+            <Line endX="-91.60005187988281" endY="355.8000183105469" layoutX="607.0" layoutY="116.0" startX="-91.60005187988281" startY="-93.00000762939453" stroke="#7b6d6d" />
          </children>
          <StackPane.margin>
             <Insets />

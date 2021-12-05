@@ -1,18 +1,10 @@
 package mytimeorganizer.view_logic;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-public class TestSwitcher {
-    private static Pane node;
+public class PaneViewSwitcher {
+    private static Pane pane;
 
     /**
      * Setter for pane.
@@ -22,7 +14,7 @@ public class TestSwitcher {
      */
 
     public static void setPane(Pane node) {
-        TestSwitcher.node = node;
+        PaneViewSwitcher.pane = node;
     }
 
     /**
@@ -34,8 +26,8 @@ public class TestSwitcher {
 
     public static void switchTo(View view) {
         Parent root = BaseSwitcher.getRoot(view);
-        if(node.getChildren().contains(root)) return;
-        node.getChildren().clear();
-        node.getChildren().addAll(root);
+        if(pane.getChildren().contains(root)) return;
+        pane.getChildren().clear();
+        pane.getChildren().addAll(root);
     }
 }

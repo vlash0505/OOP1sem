@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -22,9 +23,9 @@
                 <Insets />
             </opaqueInsets>
             <children>
-                <Text fill="WHITE" layoutX="203.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List of your goals :">
+                <Text fill="#7b6d6d" layoutX="203.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List of your goals :">
                <font>
-                  <Font size="18.0" />
+                  <Font size="17.0" />
                </font></Text>
             <ImageView fitHeight="38.0" fitWidth="43.0" layoutX="48.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -41,22 +42,25 @@
                   <Image url="@../assets/icons8-head-profile-64.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="110.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Study ">
+            <Text fill="#7b6d6d" layoutX="123.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Study ">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <Text fill="#7b6d6d" layoutX="123.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Work">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="114.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Work">
+            <Text fill="#7b6d6d" layoutX="123.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="101.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <JFXButton layoutX="123.0" layoutY="146.0" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE" />
+            <JFXButton layoutX="123.0" layoutY="146.0" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
             <Line endX="239.39996337890625" endY="-7.62939453125E-6" layoutX="253.0" layoutY="83.0" startX="-185.40003967285156" startY="-7.62939453125E-6" stroke="WHITE" />
             <ScrollPane layoutX="209.0" layoutY="105.0" prefHeight="108.0" prefWidth="298.0">
                <content>
@@ -73,8 +77,14 @@
                   <VBox fx:id="studyGoalsVBox11" prefHeight="105.0" prefWidth="282.0" />
                </content>
             </ScrollPane>
-            <JFXButton layoutX="123.0" layoutY="264.0" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE" />
-            <JFXButton layoutX="123.0" layoutY="382.0" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE" />
+            <JFXButton layoutX="123.0" layoutY="264.0" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+            <JFXButton layoutX="123.0" layoutY="382.0" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
             </children>
         </AnchorPane>
     </children>

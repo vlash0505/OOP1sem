@@ -15,7 +15,9 @@ public enum View {
     START("/views/startView.fxml"),
     JOURNAL("/views/journalingView.fxml"),
     PLAN("/views/planView.fxml"),
-    GOALS("/views/goalsView.fxml");
+    GOALS("/views/goalsView.fxml"),
+    ACHIEVEMENTS("/views/achievementsView.fxml"),
+    TIMER("/views/timerView.fxml");
 
     private final String filename;
 

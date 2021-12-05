@@ -22,7 +22,7 @@ public class BaseSwitcher {
                 root = cache.get(view);
             } else {
                 root = FXMLLoader.load(
-                        Objects.requireNonNull(ViewSwitcher.class.getResource(view.getFilename()))
+                        Objects.requireNonNull(SceneViewSwitcher.class.getResource(view.getFilename()))
                 );
                 cache.put(view, root);
             }

@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import mytimeorganizer.view_logic.View;
-import mytimeorganizer.view_logic.ViewSwitcher;
+import mytimeorganizer.view_logic.SceneViewSwitcher;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -27,7 +27,7 @@ public class JournalingController {
 
     public void onHomeButton() {
         save();
-        ViewSwitcher.switchTo(View.HOME);
+        SceneViewSwitcher.switchTo(View.HOME);
     }
 
     @FXML

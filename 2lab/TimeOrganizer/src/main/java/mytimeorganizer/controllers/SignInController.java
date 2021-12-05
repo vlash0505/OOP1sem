@@ -8,7 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import mytimeorganizer.view_logic.View;
-import mytimeorganizer.view_logic.ViewSwitcher;
+import mytimeorganizer.view_logic.SceneViewSwitcher;
 
 public class SignInController {
 
@@ -20,12 +20,12 @@ public class SignInController {
 
     public void onSignIn() {
         if (regularExpressionsValidator(signInUsernameField.getText().trim()) && regularExpressionsValidator(signInPasswordField.getText().trim())) {
-            ViewSwitcher.switchTo(View.HOME);
+            SceneViewSwitcher.switchTo(View.HOME);
         }
     }
 
     public void onSignUpHere() {
-        ViewSwitcher.switchTo(View.SIGNUP);
+        SceneViewSwitcher.switchTo(View.SIGNUP);
     }
 
     public boolean regularExpressionsValidator(String toInspect) {

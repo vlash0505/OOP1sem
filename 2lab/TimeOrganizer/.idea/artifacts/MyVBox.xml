@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="MyVBox">
+    <output-path>$PROJECT_DIR$/out/artifacts/MyVBox</output-path>
+    <root id="archive" name="MyVBox.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/target/classes/mytimeorganizer/visual_components/VBoxWithSelectionListener.class" />
+    </root>
+  </artifact>
+</component>

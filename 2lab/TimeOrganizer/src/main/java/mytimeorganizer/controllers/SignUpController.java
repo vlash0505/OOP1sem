@@ -1,12 +1,12 @@
 package mytimeorganizer.controllers;
 
 import mytimeorganizer.view_logic.View;
-import mytimeorganizer.view_logic.ViewSwitcher;
+import mytimeorganizer.view_logic.SceneViewSwitcher;
 
 public class SignUpController {
 
     public void onLogInHyperlink() {
-        ViewSwitcher.switchTo(View.LOGIN);
+        SceneViewSwitcher.switchTo(View.LOGIN);
     }
 
     public void regExEmailValidation() {

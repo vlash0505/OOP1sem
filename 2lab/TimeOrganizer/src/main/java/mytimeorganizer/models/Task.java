@@ -2,11 +2,11 @@ package mytimeorganizer.models;
 
 import java.util.Date;
 
-public class TaskModel {
+public class Task {
     Date creationDate;
     String description;
 
-    public TaskModel(Date creationDate, String description) {
+    public Task(Date creationDate, String description) {
         this.creationDate = creationDate;
         this.description = description;
     }

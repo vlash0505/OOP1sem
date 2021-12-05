@@ -6,13 +6,13 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class StartApplication extends Application {
+public class LoginViewInit extends Application {
 
     @Override
     public void start(Stage stage) {
         Scene scene = new Scene(new Pane());
-        ViewSwitcher.setScene(scene);
-        ViewSwitcher.switchTo(View.LOGIN);
+        SceneViewSwitcher.setScene(scene);
+        SceneViewSwitcher.switchTo(View.LOGIN);
 
         stage.setTitle("Organizer");
         stage.getIcons().add(new Image("/assets/logo.png"));

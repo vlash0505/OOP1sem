@@ -1,13 +1,7 @@
 package mytimeorganizer.view_logic;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * Class that implements scene-switching
@@ -15,7 +9,7 @@ import java.util.Objects;
  * different views.
  */
 
-public class ViewSwitcher {
+public class SceneViewSwitcher {
     private static Scene scene;
 
     /**
@@ -26,7 +20,7 @@ public class ViewSwitcher {
      */
 
     public static void setScene(Scene scene) {
-        ViewSwitcher.scene = scene;
+        SceneViewSwitcher.scene = scene;
     }
 
     /**
