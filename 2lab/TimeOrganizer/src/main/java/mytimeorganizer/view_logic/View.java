@@ -1,17 +1,14 @@
 package mytimeorganizer.view_logic;
 
-import javafx.scene.Node;
-
-import java.util.Collection;
-
 /**
- * ENUM class that
+ * Enumerator for views that are used in the app.
  */
 
 public enum View {
     LOGIN("/views/signInView.fxml"),
     SIGNUP("/views/signUpView.fxml"),
     HOME("/views/homeView.fxml"),
+
     START("/views/startView.fxml"),
     JOURNAL("/views/journalingView.fxml"),
     PLAN("/views/planView.fxml"),
@@ -30,6 +27,12 @@ public enum View {
     View(String filename) {
         this.filename = filename;
     }
+
+    /**
+     * Getter for the filename.
+     *
+     * @return filename as String.
+     */
 
     public String getFilename() {
         return filename;

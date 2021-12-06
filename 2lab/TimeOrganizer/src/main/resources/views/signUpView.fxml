@@ -57,7 +57,8 @@
                        prefWidth="200.0"
                        promptText="E-mail" />
 
-            <PasswordField layoutX="180.0"
+            <PasswordField fx:id="signUpPasswordField"
+                           layoutX="180.0"
                            layoutY="218.0"
                            maxHeight="25.0"
                            maxWidth="200.0"
@@ -89,7 +90,8 @@
                </image>
             </ImageView>
 
-            <JFXButton layoutX="240.0"
+            <JFXButton onAction="#onSignUpButton"
+                       layoutX="240.0"
                        layoutY="300.0"
                        maxHeight="25.0"
                        maxWidth="60.0"
@@ -118,7 +120,8 @@
                        text="here."
                        onAction="#onLogInHyperlink"/>
 
-            <TextField  layoutX="180.0"
+            <TextField  fx:id = "signUpUsernameTextField"
+                        layoutX="180.0"
                         layoutY="176.0"
                         maxHeight="25.0"
                         maxWidth="200.0"
