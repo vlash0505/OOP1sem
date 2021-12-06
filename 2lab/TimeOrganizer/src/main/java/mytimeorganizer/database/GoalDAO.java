@@ -1,14 +1,15 @@
 package mytimeorganizer.database;
 
+import mytimeorganizer.models.Goal;
 import mytimeorganizer.models.Task;
 
 import java.util.List;
 
-public interface GoalDAO {
-    public void insertGoal();
-    public void updateGoal();
-    public void deleteGoal();
+public interface GoalDAO extends DAO {
+    public long insertGoal(Goal goal);
+    public boolean updateGoal(Goal goal);
+    public boolean deleteGoal(Goal goal);
 
-    public List<Task> findGoalByProperty(GoalSearchType searchType, Object value);
-    public List<Task> findAll();
+    public List<Goal> findGoalByProperty(GoalSearchType searchType, Object value);
+    public List<Goal> findAll();
 }
