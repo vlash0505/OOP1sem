@@ -68,7 +68,7 @@ public class SignUpController {
      */
 
     public boolean regExValidation(String toInspect, RegularExpression regularExpression) {
-        Pattern pattern = Pattern.compile(regularExpression.getRegularExpression(), Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile(regularExpression.getRegularExpression());
         Matcher match = pattern.matcher(toInspect);
         return match.matches();
     }

@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DerbyGoalDAO implements GoalDAO {
     private Connection connection;
-    private QueryRunner dbAccess = new QueryRunner();
+    private final QueryRunner dbAccess = new QueryRunner();
 
     /**
      * Method that initializes the database.
@@ -25,10 +25,11 @@ public class DerbyGoalDAO implements GoalDAO {
     public void setup() {
         try {
             connection = DriverManager.getConnection("jdbc:derby:goals.db;create=true");
-
-            dbAccess.update(connection, "CREATE TABLE Goals ("
-                    + "uniqueID BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-                    + "name VARCHAR(30), authors VARCHAR(100), publishedYear INTEGER, available BOOLEAN"
+            dbAccess.update(connection, "CREATE TABLE Goals (" +
+                    "uniqueID BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
+                    "type VARCHAR(30), " +
+                    "description VARCHAR(100), " +
+                    "isCompleted BOOLEAN"
                     + ")"
             );
         } catch(SQLException e) {
@@ -50,14 +51,15 @@ public class DerbyGoalDAO implements GoalDAO {
     }
 
     /**
-     * Method that closes the connection with the database.
+     * Method that disconnects with the database.
      */
 
     @Override
     public void close() {
         try {
             connection.close();
-            DriverManager.getConnection("jdbc:derby:books.db;shutdown=true");
+            DriverManager.getConnection("jdbc:derby:books.db;" +
+                                            "shutdown=true");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -76,10 +78,10 @@ public class DerbyGoalDAO implements GoalDAO {
         try {
             return dbAccess.insert(
                     connection, "INSERT INTO Goals (type, description, isCompleted) " +
-                                    "VALUES (?, ?, ?)",
+                                    "VALUES (?, ?, false)",
                     new ScalarHandler<BigDecimal>(), goal.getType(),
                                                      goal.getDescription(),
-                                                     goal.isDone()
+                                                     false
             ).longValue();
         }
         catch (SQLException e) {
@@ -101,10 +103,10 @@ public class DerbyGoalDAO implements GoalDAO {
     public boolean updateGoal(Goal goal) {
         try {
             dbAccess.update(connection, "UPDATE Goals " +
-                                            "SET type=?, description=?, " +
-                                            "isCompleted=? " +
+                                            "SET type=?, description=?, isCompleted=? " +
                                             "WHERE uniqueID=?",
-                    goal.getType(), goal.getDescription(), goal.isDone(), goal.getUniqueID()
+                    goal.getType(), goal.getDescription(), goal.isDone(),
+                    goal.getUniqueID()
             );
             return true;
         }
@@ -125,10 +127,11 @@ public class DerbyGoalDAO implements GoalDAO {
     @Override
     public boolean deleteGoal(Goal goal) {
         try {
-            dbAccess.update(connection, "DELETE FROM Goals WHERE uniqueID=?", goal.getUniqueID());
+            dbAccess.update(connection, "DELETE FROM Goals " +
+                                            "WHERE uniqueID=?", goal.getUniqueID());
             return true;
         }
-        catch (Exception e) {
+        catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
@@ -147,7 +150,33 @@ public class DerbyGoalDAO implements GoalDAO {
 
     @Override
     public List<Goal> findGoalByProperty(GoalSearchType searchType, Object value) {
-        return null;
+        String whereClause = "";
+        String valueClause = "";
+
+        switch (searchType) {
+            case ID -> {
+                whereClause = "uniqueID = ?";
+                valueClause = value.toString();
+            }
+            case TYPE -> {
+                whereClause = "type = ?";
+                valueClause = "%" + value.toString() + "%";
+            }
+            case IS_COMPLETED -> {
+                whereClause = "isCompleted = ?";
+                valueClause = value.toString();
+            }
+            default -> System.out.println("Unknown search type");
+        }
+
+        try {
+            return dbAccess.query(connection, "SELECT * FROM Goals WHERE " + whereClause,
+                                  new BeanListHandler<>(Goal.class), valueClause);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     /**

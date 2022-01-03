@@ -1,9 +1,8 @@
 package mytimeorganizer.controllers;
 
-import com.jfoenix.controls.JFXCheckBox;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
+import mytimeorganizer.visual_components.PaneWithInput;
 
 /**
  * Class describes the controller for plan
@@ -11,10 +10,22 @@ import javafx.scene.layout.VBox;
  */
 
 public class PlanController {
+    private static final int MAXIMUM_NUMBER_OF_TASKS = 15;
+
     @FXML
     VBox tasks;
 
     public void onAddButton() {
-        tasks.getChildren().add(new JFXCheckBox("Task1"));
+        if(tasks.getChildren().size() > MAXIMUM_NUMBER_OF_TASKS) { return; }
+
+        requestTaskDescription();
+    }
+
+    public void requestTaskDescription() {
+        tasks.getChildren().add(new PaneWithInput());
+    }
+
+    public void addNewTask(String description) {
+
     }
 }

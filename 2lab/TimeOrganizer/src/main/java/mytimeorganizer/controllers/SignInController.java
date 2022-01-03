@@ -28,6 +28,15 @@ public class SignInController {
         SceneViewSwitcher.switchTo(View.SIGNUP);
     }
 
+    /**
+     * Validate user input with regular expression.
+     *
+     * @param toInspect string that will be inspected
+     * @return          true if the string matches regular
+     *                  expression
+     *                  false - otherwise.
+     */
+
     public boolean regularExpressionsValidator(String toInspect) {
         Pattern pattern = Pattern.compile("^[A-Za-z][A-Za-z0-9_]{7,29}$");
         Matcher match = pattern.matcher(toInspect);

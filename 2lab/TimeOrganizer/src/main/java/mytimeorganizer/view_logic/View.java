@@ -5,10 +5,12 @@ package mytimeorganizer.view_logic;
  */
 
 public enum View {
+    //scene views
     LOGIN("/views/signInView.fxml"),
     SIGNUP("/views/signUpView.fxml"),
     HOME("/views/homeView.fxml"),
 
+    //pane views
     START("/views/startView.fxml"),
     JOURNAL("/views/journalingView.fxml"),
     PLAN("/views/planView.fxml"),

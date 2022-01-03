@@ -25,10 +25,18 @@ public class JournalingController {
 
     private Map<LocalDate, String> data = new HashMap<>();
 
+    /**
+     * Switch to home screen on home button press.
+     */
+
     public void onHomeButton() {
         save();
         SceneViewSwitcher.switchTo(View.HOME);
     }
+
+    /**
+     * Initialize pane view and place user on current
+     */
 
     @FXML
     public void initialize() {
@@ -37,9 +45,18 @@ public class JournalingController {
         datePicker.setValue(LocalDate.now());
     }
 
-    public void updateNotes() {
+    /**
+     * Update notes in file on "Update notes" button
+     * press.
+     */
+
+    public void onUpdateNotesButton() {
         data.put(datePicker.getValue(), textArea.getText());
     }
+
+    /**
+     * Update and save notes with serialization.
+     */
 
     private void save() {
         try(ObjectOutputStream stream = new ObjectOutputStream(Files.newOutputStream(Paths.get("notes.data")))) {
@@ -48,6 +65,10 @@ public class JournalingController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Update notes with serialization.
+     */
 
     @SuppressWarnings("unchecked")
     private void load() {

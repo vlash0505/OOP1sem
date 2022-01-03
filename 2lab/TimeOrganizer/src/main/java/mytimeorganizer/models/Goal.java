@@ -6,12 +6,6 @@ public class Goal {
     private String description;
     private boolean isDone;
 
-    public Goal(int uniqueID, String type, String description) {
-        this.uniqueID = uniqueID;
-        this.type = type;
-        this.description = description;
-    }
-
     public boolean isDone() {
         return isDone;
     }
