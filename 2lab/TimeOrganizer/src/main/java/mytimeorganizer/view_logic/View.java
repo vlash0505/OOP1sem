@@ -14,7 +14,9 @@ public enum View {
     START("/views/startView.fxml"),
     JOURNAL("/views/journalingView.fxml"),
     PLAN("/views/planView.fxml"),
-    GOALS("/views/goalsView.fxml"),
+    PERSONAL_GOALS("/views/personalGoalsView.fxml"),
+    WORK_GOALS("/views/workGoalsView.fxml"),
+    STUDY_GOALS("/views/studyGoalsView.fxml"),
     ACHIEVEMENTS("/views/achievementsView.fxml"),
     TIMER("/views/timerView.fxml");
 

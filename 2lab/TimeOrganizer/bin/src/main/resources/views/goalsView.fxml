@@ -57,31 +57,31 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <JFXButton layoutX="123.0" layoutY="146.0" onAction="#onAddStudyGoalButton" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
+            <JFXButton layoutX="123.0" layoutY="146.0" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></JFXButton>
             <Line endX="239.39996337890625" endY="-7.62939453125E-6" layoutX="253.0" layoutY="83.0" startX="-185.40003967285156" startY="-7.62939453125E-6" stroke="WHITE" />
             <ScrollPane layoutX="209.0" layoutY="105.0" prefHeight="108.0" prefWidth="298.0">
                <content>
-                  <VBox fx:id="studyGoalsVBox" prefHeight="106.0" prefWidth="294.0" />
+                  <VBox fx:id="studyGoalsVBox" prefHeight="105.0" prefWidth="282.0" />
                </content>
             </ScrollPane>
             <ScrollPane layoutX="209.0" layoutY="223.0" prefHeight="108.0" prefWidth="298.0">
                <content>
-                  <VBox fx:id="workGoalsVBox" prefHeight="106.0" prefWidth="294.0" />
+                  <VBox fx:id="studyGoalsVBox1" prefHeight="105.0" prefWidth="282.0" />
                </content>
             </ScrollPane>
             <ScrollPane layoutX="209.0" layoutY="341.0" prefHeight="108.0" prefWidth="298.0">
                <content>
-                  <VBox fx:id="personalGoalsVBox" prefHeight="106.0" prefWidth="293.0" />
+                  <VBox fx:id="studyGoalsVBox11" prefHeight="105.0" prefWidth="282.0" />
                </content>
             </ScrollPane>
-            <JFXButton layoutX="123.0" layoutY="264.0" onAction="#onAddWorkGoalButton" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
+            <JFXButton layoutX="123.0" layoutY="264.0" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></JFXButton>
-            <JFXButton layoutX="123.0" layoutY="382.0" onAction="#onAddPersonalGoalButton" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
+            <JFXButton layoutX="123.0" layoutY="382.0" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></JFXButton>

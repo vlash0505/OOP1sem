@@ -12,9 +12,6 @@ public class HomeController {
     AnchorPane contentArea;
 
     @FXML
-    JFXButton journalingButton;
-
-    @FXML
     public void initialize() {
         PaneViewSwitcher.setPane(contentArea);
         PaneViewSwitcher.switchTo(View.START);
@@ -29,7 +26,7 @@ public class HomeController {
     }
 
     public void onGoalsButton() {
-        PaneViewSwitcher.switchTo(View.GOALS);
+        PaneViewSwitcher.switchTo(View.PERSONAL_GOALS);
     }
 
     public void onJournalingButton() {

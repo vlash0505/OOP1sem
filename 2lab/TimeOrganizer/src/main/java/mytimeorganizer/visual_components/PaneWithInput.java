@@ -1,21 +1,30 @@
 package mytimeorganizer.visual_components;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import mytimeorganizer.controllers.custom_elements.PaneWithInputController;
+
+import java.io.IOException;
 
 public class PaneWithInput extends AnchorPane {
 
+    PaneWithInputController controller;
+
     public PaneWithInput() {
         super();
-        JFXButton b = new JFXButton("Add");
-        b.setOnAction(e -> onAddButton());
-        this.getChildren().addAll(new TextField(), b);
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(PaneWithInput.class.getResource("/components/TempInputPaneView.fxml"));
+            controller = new PaneWithInputController();
+            fxmlLoader.setController(controller);
+            Node view = fxmlLoader.load();
+            this.getChildren().add(view);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void onAddButton() {
-        this.getChildren().removeAll();
-        this.getChildren().add(new JFXCheckBox());
+    public PaneWithInputController getController() {
+        return controller;
     }
 }
