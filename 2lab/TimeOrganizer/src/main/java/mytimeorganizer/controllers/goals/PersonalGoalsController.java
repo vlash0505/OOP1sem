@@ -7,14 +7,14 @@ import javafx.scene.layout.VBox;
 import mytimeorganizer.view_logic.PaneViewSwitcher;
 import mytimeorganizer.view_logic.View;
 
-public class PersonalGoalsController {
+public class PersonalGoalsController extends GoalsController {
 
     @FXML
-    VBox personalGoalsVBox;
+    private VBox personalGoalsVBox;
 
 
     public void onAddStudyGoalButton(ActionEvent actionEvent) {
-
+        super.onAddGoalButton(personalGoalsVBox);
     }
 
     /**

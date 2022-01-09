@@ -32,14 +32,14 @@
                         <Image url="@../assets/icons8-briefcase-80.png" />
                     </image>
                 </ImageView>
-                <JFXButton layoutX="439.0" layoutY="40.0" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
+                <JFXButton onAction="#onAddWorkGoalButton" layoutX="439.0" layoutY="40.0" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor></JFXButton>
                 <Line endX="239.39996337890625" endY="-7.62939453125E-6" layoutX="253.0" layoutY="83.0" startX="-185.40003967285156" startY="-7.62939453125E-6" stroke="WHITE" />
                 <ScrollPane layoutX="86.0" layoutY="103.0" prefHeight="374.0" prefWidth="386.0">
                     <content>
-                        <VBox prefHeight="368.0" prefWidth="383.0" />
+                        <VBox fx:id="workGoalsVBox" prefHeight="368.0" prefWidth="383.0" />
                     </content>
                 </ScrollPane>
                 <ImageView fitHeight="53.0" fitWidth="54.0" layoutX="483.0" layoutY="224.0" onMouseClicked="#onSwitchToStudyGoalsImage" opacity="0.5" pickOnBounds="true" preserveRatio="true">

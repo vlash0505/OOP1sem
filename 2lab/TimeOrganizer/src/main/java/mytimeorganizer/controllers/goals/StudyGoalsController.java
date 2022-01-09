@@ -1,18 +1,18 @@
 package mytimeorganizer.controllers.goals;
 
 import com.jfoenix.controls.JFXCheckBox;
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_BLUEPeer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import mytimeorganizer.view_logic.PaneViewSwitcher;
 import mytimeorganizer.view_logic.View;
-import mytimeorganizer.visual_components.PaneWithInput;
 
-public class StudyGoalsController {
+public class StudyGoalsController extends GoalsController {
 
     @FXML
-    VBox studyGoalsVBox;
+    private VBox studyGoalsVBox;
 
     /**
      * Adds study goal.
@@ -21,18 +21,7 @@ public class StudyGoalsController {
      */
 
     public void onAddStudyGoalButton(ActionEvent actionEvent) {
-        PaneWithInput paneWithInput = new PaneWithInput();
-        paneWithInput.getController().getCheckmarkView().setOnMouseClicked(e -> {
-            studyGoalsVBox.getChildren().remove(paneWithInput);
-            addDescription(paneWithInput.getController().getTextField().getText());
-        });
-        studyGoalsVBox.getChildren().add(paneWithInput);
-    }
-
-    public void addDescription(String description) {
-        JFXCheckBox box = new JFXCheckBox(description);
-        box.setMinHeight(50.0);
-        studyGoalsVBox.getChildren().add(box);
+        super.onAddGoalButton(studyGoalsVBox);
     }
 
     /**
