@@ -6,19 +6,25 @@ package mytimeorganizer.view_logic;
 
 public enum View {
     //scene views
-    LOGIN("/views/signInView.fxml"),
-    SIGNUP("/views/signUpView.fxml"),
-    HOME("/views/homeView.fxml"),
+    LOGIN("/views/authorization/signInView.fxml"),
+    SIGNUP("/views/authorization/signUpView.fxml"),
+    HOME("/views/base/homeView.fxml"),
 
     //pane views
     START("/views/startView.fxml"),
-    JOURNAL("/views/journalingView.fxml"),
-    PLAN("/views/planView.fxml"),
-    PERSONAL_GOALS("/views/personalGoalsView.fxml"),
-    WORK_GOALS("/views/workGoalsView.fxml"),
-    STUDY_GOALS("/views/studyGoalsView.fxml"),
-    ACHIEVEMENTS("/views/achievementsView.fxml"),
-    TIMER("/views/timerView.fxml");
+    JOURNAL("/views/journaling/journalingView.fxml"),
+    PLAN("/views/plan/planView.fxml"),
+    TIMER("/views/timer/timerView.fxml"),
+
+    //goals switch views
+    PERSONAL_GOALS("/views/goals/personalGoalsView.fxml"),
+    WORK_GOALS("/views/goals/workGoalsView.fxml"),
+    STUDY_GOALS("/views/goals/studyGoalsView.fxml"),
+
+    //achievements switch views
+    PERSONAL_ACHIEVEMENTS("/views/achievements/personalAchievementsView.fxml"),
+    WORK_ACHIEVEMENTS("/views/achievements/workAchievementsView.fxml"),
+    STUDY_ACHIEVEMENTS("/views/achievements/studyAchievementsView.fxml");
 
     private final String filename;
 

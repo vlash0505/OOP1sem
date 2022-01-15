@@ -9,7 +9,7 @@
    <children>
       <ImageView fitHeight="55.0" fitWidth="45.0" layoutX="57.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../assets/icons8-timer-100.png" />
+            <Image url="@../../assets/icons8-timer-100.png" />
          </image>
       </ImageView>
    </children>

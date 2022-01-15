@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="550.0" style="-fx-background-color: #aeb2b5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytimeorganizer.controllers.plan.PlanController">
+    <children>
+        <AnchorPane maxHeight="500.0" maxWidth="558.0" minHeight="497.0" minWidth="549.0" prefHeight="497.0" prefWidth="549.0" StackPane.alignment="CENTER">
+            <StackPane.margin>
+                <Insets />
+            </StackPane.margin>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+         <children>
+            <Text fill="#7b6d6d" layoutX="185.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your plan for selected date.">
+               <font>
+                  <Font size="17.0" />
+               </font></Text>
+            <VBox fx:id="tasks" layoutX="119.0" layoutY="104.0" prefHeight="302.0" prefWidth="338.0" />
+            <JFXButton layoutX="29.0" layoutY="117.0" onAction="#onAddButton" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE" />
+         </children>
+        </AnchorPane>
+    </children>
+</StackPane>
