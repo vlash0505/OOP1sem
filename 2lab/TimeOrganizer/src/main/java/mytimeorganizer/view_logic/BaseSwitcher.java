@@ -31,4 +31,8 @@ public class BaseSwitcher {
         }
         return root;
     }
+
+    public static void clearCache() {
+        cache.clear();
+    }
 }

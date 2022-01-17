@@ -2,6 +2,7 @@ package mytimeorganizer.controllers.plan;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
+import mytimeorganizer.view_logic.BaseSwitcher;
 import mytimeorganizer.view_logic.PaneViewSwitcher;
 import mytimeorganizer.view_logic.View;
 import mytimeorganizer.view_logic.SceneViewSwitcher;
@@ -42,5 +43,6 @@ public class HomeController {
 
     public void onLogOutHyperlink() {
         SceneViewSwitcher.switchTo(View.LOGIN);
+        BaseSwitcher.clearCache();
     }
 }

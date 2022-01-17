@@ -32,7 +32,7 @@
                         <Image url="@../../assets/icons8-head-profile-64.png" />
                     </image>
                 </ImageView>
-                <JFXButton layoutX="439.0" layoutY="40.0" onAction="#onAddStudyGoalButton" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
+                <JFXButton layoutX="439.0" layoutY="40.0" onAction="#onAddPersonalGoalButton" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor></JFXButton>

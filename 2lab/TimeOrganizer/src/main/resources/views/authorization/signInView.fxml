@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Hyperlink?>
@@ -50,12 +49,6 @@
             <Text layoutX="196.0" layoutY="358.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Not signed up yet? Sign up " wrappingWidth="155" />
 
             <Hyperlink layoutX="339.0" layoutY="342.0" onAction="#onSignUpHere" text="here." />
-
-            <JFXCheckBox checkedColor="#3ca6e8" layoutX="217.0" layoutY="228.0" text="Remember me" textFill="#7b6d6d">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXCheckBox>
             <Text fx:id="signInErrorMessageText" fill="RED" layoutX="150.0" layoutY="322.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="240.0000457763672" />
 
          </children>

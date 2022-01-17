@@ -1,6 +1,7 @@
-package mytimeorganizer.persistance.DAO;
+package mytimeorganizer.persistance.DAO.users;
 
 import mytimeorganizer.models.User;
+import mytimeorganizer.persistance.DAO.DAOException;
 
 public interface UserDAO {
 
@@ -10,5 +11,5 @@ public interface UserDAO {
 
     public void deleteExistingUser(User user) throws DAOException;
 
-    public boolean existsUser(String username, String password) throws DAOException;
+    public Long existsUser(String username, String password) throws DAOException;
 }

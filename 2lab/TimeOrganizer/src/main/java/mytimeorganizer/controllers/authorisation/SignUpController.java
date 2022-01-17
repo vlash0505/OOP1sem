@@ -1,17 +1,14 @@
 package mytimeorganizer.controllers.authorisation;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.text.Text;
 import mytimeorganizer.models.User;
-import mytimeorganizer.persistance.DAO.DriverUserDAO;
+import mytimeorganizer.persistance.DAO.users.DriverUserDAO;
 import mytimeorganizer.persistance.DAO.PropertiesLoader;
-import mytimeorganizer.persistance.DAO.UserDAO;
-import mytimeorganizer.persistance.DAO.UserDAOJDBC;
-import mytimeorganizer.persistance.DBUtils;
+import mytimeorganizer.persistance.DAO.users.UserDAO;
 import mytimeorganizer.view_logic.View;
 import mytimeorganizer.view_logic.SceneViewSwitcher;
 
@@ -89,12 +86,16 @@ public class SignUpController implements Initializable {
     }
 
     public void onSignUpButton(ActionEvent actionEvent) {
-        User user = new User();
-        user.setEmail(signUpEmailTextField.getText());
-        user.setUsername(signUpUsernameTextField.getText());
-        user.setPassword(signUpPasswordField.getText());
-        userDAO.addNewUser(user);
+        if(validateInputFields()) {
+            User user = new User();
+            user.setEmail(signUpEmailTextField.getText());
+            user.setUsername(signUpUsernameTextField.getText());
+            user.setPassword(signUpPasswordField.getText());
+            userDAO.addNewUser(user);
 
-        SceneViewSwitcher.switchTo(View.LOGIN);
+            SceneViewSwitcher.switchTo(View.LOGIN);
+        } else {
+            signUpStatusBar.setText("Invalid data.");
+        }
     }
 }

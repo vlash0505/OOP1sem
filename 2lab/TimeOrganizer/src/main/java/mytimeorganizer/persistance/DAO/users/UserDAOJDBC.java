@@ -1,6 +1,7 @@
-package mytimeorganizer.persistance.DAO;
+package mytimeorganizer.persistance.DAO.users;
 
 import mytimeorganizer.models.User;
+import mytimeorganizer.persistance.DAO.DAOException;
 
 import java.sql.*;
 
@@ -102,22 +103,24 @@ public class UserDAOJDBC implements UserDAO {
     }
 
     @Override
-    public boolean existsUser(String username, String password) throws DAOException {
+    public Long existsUser(String username, String password) throws DAOException {
         Object[] values = {
                 username,
                 password
         };
-        boolean exists = false;
+        Long id = null;
         try (
                 Connection connection = driverUserDAO.getConnection();
                 PreparedStatement statement = prepareStatement(connection, SQL_USER_EXISTS_QUERY, false, values);
                 ResultSet resultSet = statement.executeQuery()
         ) {
-            exists = resultSet.next();
+            if(resultSet.next()) {
+                id = resultSet.getLong("id");
+            }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return exists;
+        return id;
     }
 
     public static void setValues(PreparedStatement statement, Object... values) throws SQLException {

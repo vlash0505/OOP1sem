@@ -8,29 +8,32 @@ import java.util.Objects;
 
 public class Goal {
 
+    public static Long USER_ID;
+
     //properties -------------------------------------------------------------------------------------------------------
 
-    private int uniqueID;
+    private Long id;
     private String type;
     private String description;
-    private boolean isDone;
+    private boolean isCompleted;
+    private Long userId;
 
     //getters and setters ----------------------------------------------------------------------------------------------
 
-    public boolean isDone() {
-        return isDone;
+    public boolean isCompleted() {
+        return isCompleted;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public void setCompleted(boolean done) {
+        isCompleted = done;
     }
 
-    public int getUniqueID() {
-        return uniqueID;
+    public Long getId() {
+        return id;
     }
 
-    public void setUniqueID(int uniqueID) {
-        this.uniqueID = uniqueID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getType() {
@@ -49,6 +52,14 @@ public class Goal {
         this.description = description;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     //Object overrides -------------------------------------------------------------------------------------------------
 
     /**
@@ -65,7 +76,7 @@ public class Goal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Goal goal = (Goal) o;
-        return uniqueID == goal.uniqueID;
+        return Objects.equals(id, goal.id);
     }
 
     /**
@@ -78,7 +89,7 @@ public class Goal {
 
     @Override
     public int hashCode() {
-        return Objects.hash(uniqueID);
+        return Objects.hash(id);
     }
 
     /**
@@ -89,10 +100,10 @@ public class Goal {
     @Override
     public String toString() {
         return "Goal{" +
-                "uniqueID=" + uniqueID +
+                "uniqueID=" + id +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
-                ", isDone=" + isDone +
+                ", isDone=" + isCompleted +
                 '}';
     }
 }

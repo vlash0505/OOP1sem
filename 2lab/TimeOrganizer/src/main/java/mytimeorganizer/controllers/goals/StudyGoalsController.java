@@ -4,15 +4,28 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_BLUEPeer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import mytimeorganizer.models.Goal;
 import mytimeorganizer.view_logic.PaneViewSwitcher;
 import mytimeorganizer.view_logic.View;
 
-public class StudyGoalsController extends GoalsController {
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class StudyGoalsController extends GoalsController implements Initializable {
 
     @FXML
     private VBox studyGoalsVBox;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
+        List<Goal> goals = goalDAO.findByTypeAndUserId(Goal.USER_ID, "study");
+        goals.forEach(e -> studyGoalsVBox.getChildren().add(new JFXCheckBox(e.getDescription())));
+    }
 
     /**
      * Adds study goal.
@@ -21,7 +34,7 @@ public class StudyGoalsController extends GoalsController {
      */
 
     public void onAddStudyGoalButton(ActionEvent actionEvent) {
-        super.onAddGoalButton(studyGoalsVBox);
+        super.onAddGoalButton(studyGoalsVBox, "study");
     }
 
     /**
