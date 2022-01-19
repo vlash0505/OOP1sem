@@ -23,8 +23,8 @@ public class StudyGoalsController extends GoalsController implements Initializab
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        List<Goal> goals = goalDAO.findByTypeAndUserId(Goal.USER_ID, "study");
-        goals.forEach(e -> studyGoalsVBox.getChildren().add(new JFXCheckBox(e.getDescription())));
+        List<Goal> goals = goalDAO.findUncompletedByTypeAndUserId(Goal.USER_ID, "study");
+        goals.forEach(e -> super.addCheckboxWithDescription(e, studyGoalsVBox));
     }
 
     /**

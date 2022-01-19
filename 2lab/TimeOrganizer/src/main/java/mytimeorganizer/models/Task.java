@@ -7,20 +7,32 @@ public class Task {
     public static Long USER_ID;
 
     private Long id;
-    private Date creationDate;
+    private Date date;
     private String description;
+    private boolean isCompleted;
 
-    public Task(Date creationDate, String description) {
-        this.creationDate = creationDate;
-        this.description = description;
+    public static Long getUserId() {
+        return USER_ID;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public static void setUserId(Long userId) {
+        USER_ID = userId;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getDescription() {
@@ -29,5 +41,13 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 }

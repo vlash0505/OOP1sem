@@ -1,13 +1,11 @@
 package mytimeorganizer.controllers.goals;
 
-import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import mytimeorganizer.models.Goal;
-import mytimeorganizer.models.GoalTypes;
 import mytimeorganizer.view_logic.PaneViewSwitcher;
 import mytimeorganizer.view_logic.View;
 
@@ -23,8 +21,8 @@ public class PersonalGoalsController extends GoalsController implements Initiali
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        List<Goal> goals = goalDAO.findByTypeAndUserId(Goal.USER_ID, "personal");
-        goals.forEach(e -> personalGoalsVBox.getChildren().add(new JFXCheckBox(e.getDescription())));
+        List<Goal> goals = goalDAO.findUncompletedByTypeAndUserId(Goal.USER_ID, "personal");
+        goals.forEach(e -> super.addCheckboxWithDescription(e, personalGoalsVBox));
     }
 
 

@@ -12,8 +12,17 @@ public class GoalDAOJDBC implements GoalDAO {
     private static final String SQL_INSERT_GOAL_QUERY =
             "INSERT INTO goals (type, description, is_completed, user_id) VALUES (?, ?, false, ?)";
 
-    private static final String SQL_ORDER_GOALS_BY_ID =
+    private static final String SQL_SELECT_UNCOMPLETED_BY_TYPE_AND_USER_ID_ORDER_BY_ID_QUERY =
             "SELECT * FROM goals WHERE user_id = ? AND type = ? AND is_completed = false ORDER BY id";
+
+    private static final String SQL_SELECT_COMPLETED_BY_TYPE_AND_USER_ID_ORDER_BY_ID_QUERY =
+            "SELECT * FROM goals WHERE user_id = ? AND type = ? AND is_completed = true ORDER BY id";
+
+    private static final String SQL_MAKE_GOAL_COMPLETED_QUERY =
+            "UPDATE goals SET is_completed = true WHERE id = ?";
+
+    private static final String SQL_MAKE_GOAL_UNCOMPLETED_QUERY =
+            "UPDATE goals SET is_completed = false WHERE id = ?";
 
     private final DriverGoalDAO driverGoalDAO;
 
@@ -33,17 +42,31 @@ public class GoalDAOJDBC implements GoalDAO {
     }
 
     @Override
-    public List<Goal> findByTypeAndUserId(Long ID, String type) throws DAOException {
-        List<Goal> goals = new ArrayList<>();
+    public List<Goal> findUncompletedByTypeAndUserId(Long id, String type) throws DAOException {
 
         Object[] values = {
-                ID,
+                id,
                 type
         };
 
+        return findByParams(SQL_SELECT_UNCOMPLETED_BY_TYPE_AND_USER_ID_ORDER_BY_ID_QUERY, values);
+    }
+
+    @Override
+    public List<Goal> findCompletedByTypeAndUserId(Long id, String type) {
+        Object[] values = {
+                id,
+                type
+        };
+
+        return findByParams(SQL_SELECT_COMPLETED_BY_TYPE_AND_USER_ID_ORDER_BY_ID_QUERY, values);
+    }
+
+    public List<Goal> findByParams(String query, Object... values) {
+        List<Goal> goals = new ArrayList<>();
         try (
-                Connection connection = driverGoalDAO.getConnection();
-                PreparedStatement statement = prepareStatement(connection, SQL_ORDER_GOALS_BY_ID, true, values);
+                var connection = driverGoalDAO.getConnection();
+                PreparedStatement statement = prepareStatement(connection, query, true, values);
                 ResultSet resultSet = statement.executeQuery();
         ) {
             while (resultSet.next()) {
@@ -52,20 +75,15 @@ public class GoalDAOJDBC implements GoalDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-
         return goals;
     }
 
     @Override
-    public List<Goal> findNotCompleted() throws DAOException {
-        return null;
-    }
-
-    @Override
-    public void addGoal(Goal goal) throws IllegalArgumentException, DAOException {
+    public Long addGoal(Goal goal) throws IllegalArgumentException, DAOException {
         if (goal.getId() != null) {
             throw new IllegalArgumentException("Goal is already created, the goal ID is not null.");
         }
+        Long id = null;
 
         Object[] values = {
                 goal.getType(),
@@ -84,9 +102,35 @@ public class GoalDAOJDBC implements GoalDAO {
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     goal.setId(generatedKeys.getLong(1));
+                    id = goal.getId();
                 } else {
                     throw new DAOException("Creating goal failed, no generated key obtained.");
                 }
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return id;
+    }
+
+    @Override
+    public void makeGoalCompleted(Long id) {
+        alterGoal(id, SQL_MAKE_GOAL_COMPLETED_QUERY);
+    }
+
+    @Override
+    public void makeGoalUncompleted(Long id) {
+        alterGoal(id, SQL_MAKE_GOAL_UNCOMPLETED_QUERY);
+    }
+
+    public void alterGoal(Long id, String query) {
+        try (
+                Connection connection = driverGoalDAO.getConnection();
+                PreparedStatement statement = prepareStatement(connection, query, true, id);
+        ) {
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new DAOException("Changing goal failed, no rows affected.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);

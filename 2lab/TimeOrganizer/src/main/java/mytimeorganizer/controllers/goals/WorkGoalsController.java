@@ -22,8 +22,8 @@ public class WorkGoalsController extends GoalsController implements Initializabl
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        List<Goal> goals = goalDAO.findByTypeAndUserId(Goal.USER_ID, "work");
-        goals.forEach(e -> workGoalsVBox.getChildren().add(new JFXCheckBox(e.getDescription())));
+        List<Goal> goals = goalDAO.findUncompletedByTypeAndUserId(Goal.USER_ID, "work");
+        goals.forEach(e -> super.addCheckboxWithDescription(e, workGoalsVBox));
     }
 
     public void onAddWorkGoalButton(ActionEvent actionEvent) {
