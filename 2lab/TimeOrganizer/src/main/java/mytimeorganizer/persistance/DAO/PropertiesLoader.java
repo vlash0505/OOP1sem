@@ -1,6 +1,7 @@
 package mytimeorganizer.persistance.DAO;
 
 import mytimeorganizer.persistance.DAO.goals.DriverGoalDAO;
+import mytimeorganizer.persistance.DAO.notes.DriverNoteDAO;
 import mytimeorganizer.persistance.DAO.tasks.DriverTaskDAO;
 import mytimeorganizer.persistance.DAO.users.DriverUserDAO;
 
@@ -43,6 +44,15 @@ public class PropertiesLoader {
     public static DriverTaskDAO getDriverTaskDAOInstance() {
         DAOProperties properties = new DAOProperties("javabase.jdbc");
         return new DriverTaskDAO(
+                getUrlProperty(properties),
+                getUsernameProperty(properties),
+                getPasswordProperty(properties)
+        );
+    }
+
+    public static DriverNoteDAO getDriverNoteDAOInstance() {
+        DAOProperties properties = new DAOProperties("javabase.jdbc");
+        return new DriverNoteDAO(
                 getUrlProperty(properties),
                 getUsernameProperty(properties),
                 getPasswordProperty(properties)

@@ -48,7 +48,7 @@ public class TaskDAOJDBC implements TaskDAO {
     @Override
     public void addNewTask(Task task) throws IllegalArgumentException, DAOException {
         if (task.getId() != null) {
-            throw new IllegalArgumentException("Goal is already created, the goal ID is not null.");
+            throw new IllegalArgumentException("Task is already created, the task ID is not null.");
         }
 
         Object[] values = {
@@ -111,6 +111,4 @@ public class TaskDAOJDBC implements TaskDAO {
         task.setDescription(resultSet.getString("description"));
         return task;
     }
-
-
 }

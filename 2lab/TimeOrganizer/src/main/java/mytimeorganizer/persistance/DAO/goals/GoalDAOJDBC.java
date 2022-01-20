@@ -2,6 +2,7 @@ package mytimeorganizer.persistance.DAO.goals;
 
 import mytimeorganizer.models.Goal;
 import mytimeorganizer.persistance.DAO.DAOException;
+import mytimeorganizer.persistance.DAO.DAOUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class GoalDAOJDBC implements GoalDAO {
         List<Goal> goals = new ArrayList<>();
         try (
                 var connection = driverGoalDAO.getConnection();
-                PreparedStatement statement = prepareStatement(connection, query, true, values);
+                PreparedStatement statement = DAOUtils.prepareStatement(connection, query, true, values);
                 ResultSet resultSet = statement.executeQuery();
         ) {
             while (resultSet.next()) {
@@ -93,7 +94,7 @@ public class GoalDAOJDBC implements GoalDAO {
 
         try (
                 Connection connection = driverGoalDAO.getConnection();
-                PreparedStatement statement = prepareStatement(connection, SQL_INSERT_GOAL_QUERY, true, values)
+                PreparedStatement statement = DAOUtils.prepareStatement(connection, SQL_INSERT_GOAL_QUERY, true, values)
         ) {
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -126,7 +127,7 @@ public class GoalDAOJDBC implements GoalDAO {
     public void alterGoal(Long id, String query) {
         try (
                 Connection connection = driverGoalDAO.getConnection();
-                PreparedStatement statement = prepareStatement(connection, query, true, id);
+                PreparedStatement statement = DAOUtils.prepareStatement(connection, query, true, id);
         ) {
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -145,21 +146,6 @@ public class GoalDAOJDBC implements GoalDAO {
     @Override
     public void editGoal(Long id) throws DAOException {
 
-    }
-
-    public static void setValues(PreparedStatement statement, Object... values) throws SQLException {
-        for (int i = 0; i < values.length; i++) {
-            statement.setObject(i + 1, values[i]);
-        }
-    }
-
-    public static PreparedStatement prepareStatement
-            (Connection connection, String sql, boolean returnGeneratedKeys, Object... values)
-            throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(sql,
-                returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
-        setValues(statement, values);
-        return statement;
     }
 
     private static Goal map(ResultSet resultSet) throws SQLException {
