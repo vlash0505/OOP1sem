@@ -5,20 +5,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.VBox;
-import mytimeorganizer.models.Goal;
 import mytimeorganizer.models.Task;
 import mytimeorganizer.persistance.DAO.PropertiesLoader;
-import mytimeorganizer.persistance.DAO.goals.DriverGoalDAO;
-import mytimeorganizer.persistance.DAO.goals.GoalDAO;
 import mytimeorganizer.persistance.DAO.tasks.DriverTaskDAO;
 import mytimeorganizer.persistance.DAO.tasks.TaskDAO;
 import mytimeorganizer.visual_components.PaneWithInput;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -73,7 +68,9 @@ public class PlanController implements Initializable {
     }
 
     public void addCheckboxWithDescription(String description) {
-        tasksVBox.getChildren().add(new JFXCheckBox(description));
+        JFXCheckBox jfxCheckBox = new JFXCheckBox(description);
+        jfxCheckBox.setMinHeight(30.0);
+        tasksVBox.getChildren().add(jfxCheckBox);
     }
 
     public List<JFXCheckBox> getTasksByDate(LocalDate localDate) {
