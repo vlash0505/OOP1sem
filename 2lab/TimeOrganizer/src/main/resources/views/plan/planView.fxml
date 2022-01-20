@@ -25,14 +25,14 @@
                <font>
                   <Font size="17.0" />
                </font></Text>
-            <JFXButton layoutX="92.0" layoutY="97.0" onAction="#onAddButton" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
+            <JFXButton layoutX="92.0" layoutY="97.0" onAction="#onAddTaskButton" style="-fx-background-color: #3ca6e8;" text="Add" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></JFXButton>
-            <DatePicker layoutX="303.0" layoutY="97.0" />
+            <DatePicker fx:id="datePicker" layoutX="303.0" layoutY="97.0" />
             <ScrollPane layoutX="92.0" layoutY="159.0" prefHeight="298.0" prefWidth="390.0">
                <content>
-                  <VBox fx:id="tasks" prefHeight="293.0" prefWidth="380.0" />
+                  <VBox fx:id="tasksVBox" prefHeight="293.0" prefWidth="380.0" />
                </content>
             </ScrollPane>
          </children>

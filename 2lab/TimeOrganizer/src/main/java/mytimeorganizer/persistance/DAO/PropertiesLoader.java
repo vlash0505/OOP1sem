@@ -1,6 +1,7 @@
 package mytimeorganizer.persistance.DAO;
 
 import mytimeorganizer.persistance.DAO.goals.DriverGoalDAO;
+import mytimeorganizer.persistance.DAO.tasks.DriverTaskDAO;
 import mytimeorganizer.persistance.DAO.users.DriverUserDAO;
 
 public class PropertiesLoader {
@@ -9,23 +10,42 @@ public class PropertiesLoader {
     private static final String PROPERTY_USERNAME = "username";
     private static final String PROPERTY_PASSWORD = "password";
 
+    public static String getUrlProperty(DAOProperties properties) {
+        return properties.getProperty(PROPERTY_URL, true);
+    }
+
+    public static String getPasswordProperty(DAOProperties properties) {
+        return properties.getProperty(PROPERTY_PASSWORD, true);
+    }
+
+    public static String getUsernameProperty(DAOProperties properties) {
+        return properties.getProperty(PROPERTY_USERNAME, true);
+    }
+
     public static DriverUserDAO getDriverUserDAOInstance() {
         DAOProperties properties = new DAOProperties("javabase.jdbc");
-        String url = properties.getProperty(PROPERTY_URL, true);
-        String driverClassName = properties.getProperty(PROPERTY_DRIVER, false);
-        String password = properties.getProperty(PROPERTY_PASSWORD, false);
-        String username = properties.getProperty(PROPERTY_USERNAME, password != null);
-
-        return new DriverUserDAO(url, username, password);
+        return new DriverUserDAO(
+                getUrlProperty(properties),
+                getUsernameProperty(properties),
+                getPasswordProperty(properties)
+        );
     }
 
     public static DriverGoalDAO getDriverGoalDAOInstance() {
         DAOProperties properties = new DAOProperties("javabase.jdbc");
-        String url = properties.getProperty(PROPERTY_URL, true);
-        String driverClassName = properties.getProperty(PROPERTY_DRIVER, false);
-        String password = properties.getProperty(PROPERTY_PASSWORD, false);
-        String username = properties.getProperty(PROPERTY_USERNAME, password != null);
+        return new DriverGoalDAO(
+                getUrlProperty(properties),
+                getUsernameProperty(properties),
+                getPasswordProperty(properties)
+        );
+    }
 
-        return new DriverGoalDAO(url, username, password);
+    public static DriverTaskDAO getDriverTaskDAOInstance() {
+        DAOProperties properties = new DAOProperties("javabase.jdbc");
+        return new DriverTaskDAO(
+                getUrlProperty(properties),
+                getUsernameProperty(properties),
+                getPasswordProperty(properties)
+        );
     }
 }

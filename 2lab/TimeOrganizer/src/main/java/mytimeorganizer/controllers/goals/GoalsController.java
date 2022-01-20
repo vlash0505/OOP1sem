@@ -24,11 +24,11 @@ public class GoalsController implements Initializable {
     }
 
     public void onAddGoalButton(VBox vBox, String goalType) {
-        PaneWithInput paneWithInput = new PaneWithInput();
-        if(vBox.getChildren().contains(paneWithInput)) {
+        if(vBox.getChildren().stream().anyMatch(e -> e instanceof PaneWithInput)) {
             return;
         }
 
+        PaneWithInput paneWithInput = new PaneWithInput();
         vBox.getChildren().add(paneWithInput);
 
         paneWithInput.getController().getCheckmarkView().setOnMouseClicked(e -> {

@@ -1,4 +1,4 @@
-package mytimeorganizer.controllers.plan;
+package mytimeorganizer.controllers.navigation;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -8,6 +8,7 @@ import mytimeorganizer.view_logic.View;
 import mytimeorganizer.view_logic.SceneViewSwitcher;
 
 public class HomeController {
+
     @FXML
     AnchorPane contentArea;
 
