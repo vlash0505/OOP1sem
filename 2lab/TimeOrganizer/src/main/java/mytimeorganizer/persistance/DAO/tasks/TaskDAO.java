@@ -8,13 +8,12 @@ import java.util.Date;
 import java.util.List;
 
 public interface TaskDAO {
-    public Task findById(Long id) throws DAOException;
 
-    public void addNewTask(Task task) throws IllegalArgumentException, DAOException;
+    public Long addNewTask(Task task) throws IllegalArgumentException, DAOException;
 
-    public List<Task> findAllTasks();
+    public void makeTaskCompleted(Long id);
+
+    public void makeTaskUncompleted(Long id);
 
     public List<Task> findByDateAndUserID(LocalDate date, Long userId);
-
-    public void deleteExistingTask(Task task) throws DAOException;
 }

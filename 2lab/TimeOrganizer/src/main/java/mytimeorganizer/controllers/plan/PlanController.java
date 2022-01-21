@@ -1,19 +1,14 @@
 package mytimeorganizer.controllers.plan;
 
-import com.jfoenix.controls.JFXCheckBox;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.VBox;
 import mytimeorganizer.models.Task;
-import mytimeorganizer.persistance.DAO.PropertiesLoader;
-import mytimeorganizer.persistance.DAO.tasks.DriverTaskDAO;
-import mytimeorganizer.persistance.DAO.tasks.TaskDAO;
 import mytimeorganizer.visual_components.PaneWithInput;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -22,7 +17,7 @@ import java.util.ResourceBundle;
  * section.
  */
 
-public class PlanController implements Initializable {
+public class PlanController extends BasePlanController implements Initializable {
 
     @FXML
     private DatePicker datePicker;
@@ -30,18 +25,16 @@ public class PlanController implements Initializable {
     @FXML
     private VBox tasksVBox;
 
-
-    private TaskDAO taskDAO;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        DriverTaskDAO driverTaskDAO = PropertiesLoader.getDriverTaskDAOInstance();
-        taskDAO = driverTaskDAO.getTaskDAO();
-
+        super.initialize(location, resources);
         datePicker.valueProperty().addListener(
-                (o, oldDate, date) -> tasksVBox.getChildren().addAll(getTasksByDate(date))
+                (o, oldDate, date) -> {
+                    tasksVBox.getChildren().clear();
+                    List<Task> tasks = taskDAO.findByDateAndUserID(date, Task.USER_ID);
+                    tasks.forEach(e -> addCheckboxWithDescription(e, tasksVBox));
+                }
         );
-
         datePicker.setValue(LocalDate.now());
     }
 
@@ -56,29 +49,12 @@ public class PlanController implements Initializable {
             String description = paneWithInput.getController().getTextField().getText();
 
             Task task = new Task();
-            task.setDate(
-                    datePicker.getValue()
-            );
+            task.setDate(datePicker.getValue());
             task.setDescription(description);
 
             tasksVBox.getChildren().remove(paneWithInput);
-            taskDAO.addNewTask(task);
-            addCheckboxWithDescription(description);
+            task.setId(taskDAO.addNewTask(task));
+            super.addCheckboxWithDescription(task, tasksVBox);
         });
-    }
-
-    public void addCheckboxWithDescription(String description) {
-        JFXCheckBox jfxCheckBox = new JFXCheckBox(description);
-        jfxCheckBox.setMinHeight(30.0);
-        tasksVBox.getChildren().add(jfxCheckBox);
-    }
-
-    public List<JFXCheckBox> getTasksByDate(LocalDate localDate) {
-        tasksVBox.getChildren().clear();
-
-        List<Task> tasks = taskDAO.findByDateAndUserID(localDate, Task.USER_ID);
-        List<JFXCheckBox> checkBoxes = new ArrayList<>();
-        tasks.forEach(e -> checkBoxes.add(new JFXCheckBox(e.getDescription())));
-        return checkBoxes;
     }
 }

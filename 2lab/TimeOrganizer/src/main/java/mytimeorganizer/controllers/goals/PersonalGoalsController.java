@@ -18,12 +18,20 @@ public class PersonalGoalsController extends GoalsController implements Initiali
     @FXML
     private VBox personalGoalsVBox;
 
+    //Initializable override.
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         List<Goal> goals = goalDAO.findUncompletedByTypeAndUserId(Goal.USER_ID, "personal");
         goals.forEach(e -> super.addCheckboxWithDescription(e, personalGoalsVBox));
     }
+
+    /**
+     * Adds pane with input when the "Add" button is pressed.
+     *
+     * @param actionEvent press on the "Add" button.
+     */
 
 
     public void onAddPersonalGoalButton(ActionEvent actionEvent) {

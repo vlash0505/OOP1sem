@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface NoteDAO {
 
-    public Note findByID(Long id);
-
     public Note findByDateAndUserID(Long userId, LocalDate date);
 
     public void addNote(Note note);

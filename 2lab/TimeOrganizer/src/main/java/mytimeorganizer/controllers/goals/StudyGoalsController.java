@@ -20,6 +20,8 @@ public class StudyGoalsController extends GoalsController implements Initializab
     @FXML
     private VBox studyGoalsVBox;
 
+    //Initializable Override
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -28,7 +30,7 @@ public class StudyGoalsController extends GoalsController implements Initializab
     }
 
     /**
-     * Adds study goal.
+     * Adds pane with input when the "Add" button is pressed.
      *
      * @param actionEvent "Add" button pressed.
      */

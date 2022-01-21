@@ -7,9 +7,10 @@ import mytimeorganizer.persistance.DAO.DAOUtils;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.List;
 
 public class NoteDAOJDBC implements NoteDAO {
+
+    //constant queries
 
     private static final String SQL_INSERT_NOTE_QUERY =
             "INSERT INTO notes (date, description, user_id) VALUES (?, ?, ?)";
@@ -26,11 +27,6 @@ public class NoteDAOJDBC implements NoteDAO {
 
     public NoteDAOJDBC(DriverNoteDAO driverNoteDAO) {
         this.driverNoteDAO = driverNoteDAO;
-    }
-
-    @Override
-    public Note findByID(Long id) {
-        return null;
     }
 
     @Override

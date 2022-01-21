@@ -10,6 +10,8 @@ import java.util.List;
 
 public class GoalDAOJDBC implements GoalDAO {
 
+    //constant queries
+
     private static final String SQL_INSERT_GOAL_QUERY =
             "INSERT INTO goals (type, description, is_completed, user_id) VALUES (?, ?, false, ?)";
 
@@ -25,22 +27,15 @@ public class GoalDAOJDBC implements GoalDAO {
     private static final String SQL_MAKE_GOAL_UNCOMPLETED_QUERY =
             "UPDATE goals SET is_completed = false WHERE id = ?";
 
+
     private final DriverGoalDAO driverGoalDAO;
+
+
 
     public GoalDAOJDBC(DriverGoalDAO driverGoalDAO) {
         this.driverGoalDAO = driverGoalDAO;
     }
 
-
-    @Override
-    public Goal findByID(Long id) throws DAOException {
-        return null;
-    }
-
-    @Override
-    public List<Goal> findAll() throws DAOException {
-        return new ArrayList<>();
-    }
 
     @Override
     public List<Goal> findUncompletedByTypeAndUserId(Long id, String type) throws DAOException {
@@ -136,16 +131,6 @@ public class GoalDAOJDBC implements GoalDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-    }
-
-    @Override
-    public void deleteGoal(Long id) throws DAOException {
-
-    }
-
-    @Override
-    public void editGoal(Long id) throws DAOException {
-
     }
 
     private static Goal map(ResultSet resultSet) throws SQLException {

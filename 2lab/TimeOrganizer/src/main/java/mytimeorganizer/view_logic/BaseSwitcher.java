@@ -24,7 +24,10 @@ public class BaseSwitcher {
                 root = FXMLLoader.load(
                         Objects.requireNonNull(SceneViewSwitcher.class.getResource(view.getFilename()))
                 );
-                cache.put(view, root);
+                //we want to keep up-to-date plan view with home view
+                if(!view.getFilename().equals("/views/plan/planView.fxml") && !view.getFilename().equals("/views/startView.fxml")) {
+                    cache.put(view, root);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

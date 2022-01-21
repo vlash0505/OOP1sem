@@ -5,14 +5,9 @@ import mytimeorganizer.models.Task;
 import mytimeorganizer.persistance.DAO.DAOException;
 import mytimeorganizer.persistance.DAO.DAOUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 public class TaskDAOJDBC implements TaskDAO {
@@ -41,15 +36,12 @@ public class TaskDAOJDBC implements TaskDAO {
     }
 
     @Override
-    public Task findById(Long id) throws DAOException {
-        return null;
-    }
-
-    @Override
-    public void addNewTask(Task task) throws IllegalArgumentException, DAOException {
+    public Long addNewTask(Task task) throws IllegalArgumentException, DAOException {
         if (task.getId() != null) {
             throw new IllegalArgumentException("Task is already created, the task ID is not null.");
         }
+
+        Long obtainedId = null;
 
         Object[] values = {
                 task.getDate(),
@@ -68,6 +60,7 @@ public class TaskDAOJDBC implements TaskDAO {
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     task.setId(generatedKeys.getLong(1));
+                    obtainedId = task.getId();
                 } else {
                     throw new DAOException("Creating task failed, no generated key obtained.");
                 }
@@ -75,11 +68,7 @@ public class TaskDAOJDBC implements TaskDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-    }
-
-    @Override
-    public List<Task> findAllTasks() {
-        return null;
+        return obtainedId;
     }
 
     @Override
@@ -99,9 +88,29 @@ public class TaskDAOJDBC implements TaskDAO {
         return tasks;
     }
 
-    @Override
-    public void deleteExistingTask(Task task) throws DAOException {
 
+    @Override
+    public void makeTaskCompleted(Long id) {
+        alterTask(id, SQL_MAKE_TASK_COMPLETED_QUERY);
+    }
+
+    @Override
+    public void makeTaskUncompleted(Long id) {
+        alterTask(id, SQL_MAKE_TASK_UNCOMPLETED_QUERY);
+    }
+
+    public void alterTask(Long id, String query) {
+        try (
+                Connection connection = driverTaskDAO.getConnection();
+                PreparedStatement statement = DAOUtils.prepareStatement(connection, query, true, id);
+        ) {
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new DAOException("Changing task failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
     }
 
     private static Task map(ResultSet resultSet) throws SQLException {

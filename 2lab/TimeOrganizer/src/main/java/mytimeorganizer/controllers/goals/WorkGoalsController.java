@@ -1,6 +1,5 @@
 package mytimeorganizer.controllers.goals;
 
-import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,12 +18,20 @@ public class WorkGoalsController extends GoalsController implements Initializabl
     @FXML
     private VBox workGoalsVBox;
 
+    //Initializable override
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         List<Goal> goals = goalDAO.findUncompletedByTypeAndUserId(Goal.USER_ID, "work");
         goals.forEach(e -> super.addCheckboxWithDescription(e, workGoalsVBox));
     }
+
+    /**
+     * Adds pane with input when the "Add" button is pressed.
+     *
+     * @param actionEvent press on the "Add" button.
+     */
 
     public void onAddWorkGoalButton(ActionEvent actionEvent) {
         super.onAddGoalButton(workGoalsVBox, "work");

@@ -86,7 +86,7 @@ public class SignUpController implements Initializable {
     }
 
     public void onSignUpButton(ActionEvent actionEvent) {
-        if(validateInputFields()) {
+        if(validateInputFields() && !userDAO.registrationValidation(signUpEmailTextField.getText(), signUpUsernameTextField.getText())) {
             User user = new User();
             user.setEmail(signUpEmailTextField.getText());
             user.setUsername(signUpUsernameTextField.getText());

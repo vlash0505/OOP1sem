@@ -2,22 +2,23 @@ package mytimeorganizer.persistance.DAO.users;
 
 import mytimeorganizer.models.User;
 import mytimeorganizer.persistance.DAO.DAOException;
+import mytimeorganizer.persistance.DAO.DAOUtils;
 
 import java.sql.*;
 
 public class UserDAOJDBC implements UserDAO {
 
-    private static final String SQL_FIND_USER_BY_ID_QUERY =
-            "SELECT id, email, username FROM users WHERE id = ?";
+    //constant queries
 
     private static final String SQL_INSERT_USER_QUERY =
             "INSERT INTO users (email, username, password) VALUES (?, ?, ?)";
 
-    private static final String SQL_DELETE_USER_QUERY =
-            "DELETE FROM users WHERE id = ?";
-
     private static final String SQL_USER_EXISTS_QUERY =
             "SELECT id FROM users WHERE username = ? AND password = ?";
+
+    private static final String SQL_VALIDATE_REGISTRATION_QUERY =
+            "SELECT * FROM users WHERE email = ? OR username = ?";
+
 
     private final DriverUserDAO driverUserDAO;
 
@@ -25,17 +26,12 @@ public class UserDAOJDBC implements UserDAO {
         this.driverUserDAO = driverUserDAO;
     }
 
-    @Override
-    public User findById(Long id) throws DAOException {
-        return findByProperty(SQL_FIND_USER_BY_ID_QUERY, id);
-    }
-
     private User findByProperty(String sqlQuery, Object... values) throws DAOException {
         User user = null;
 
         try (
                 Connection connection = driverUserDAO.getConnection();
-                PreparedStatement statement = prepareStatement(connection, sqlQuery, false, values);
+                PreparedStatement statement = DAOUtils.prepareStatement(connection, sqlQuery, false, values);
                 ResultSet resultSet = statement.executeQuery()
         ) {
             if (resultSet.next()) {
@@ -62,7 +58,7 @@ public class UserDAOJDBC implements UserDAO {
 
         try (
                 Connection connection = driverUserDAO.getConnection();
-                PreparedStatement statement = prepareStatement(connection, SQL_INSERT_USER_QUERY, true, values)
+                PreparedStatement statement = DAOUtils.prepareStatement(connection, SQL_INSERT_USER_QUERY, true, values)
         ) {
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -81,25 +77,8 @@ public class UserDAOJDBC implements UserDAO {
     }
 
     @Override
-    public void deleteExistingUser(User user) throws DAOException {
-
-        Object[] values = {
-                user.getId()
-        };
-
-        try (
-                Connection connection = driverUserDAO.getConnection();
-                PreparedStatement statement = prepareStatement(connection, SQL_DELETE_USER_QUERY, false, values)
-        ) {
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows == 0) {
-                throw new DAOException("Deleting user failed, no rows affected.");
-            } else {
-                user.setId(null);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
+    public boolean registrationValidation(String email, String username) throws DAOException {
+        return findByProperty(SQL_VALIDATE_REGISTRATION_QUERY, email, username) != null;
     }
 
     @Override
@@ -111,7 +90,7 @@ public class UserDAOJDBC implements UserDAO {
         Long id = null;
         try (
                 Connection connection = driverUserDAO.getConnection();
-                PreparedStatement statement = prepareStatement(connection, SQL_USER_EXISTS_QUERY, false, values);
+                PreparedStatement statement = DAOUtils.prepareStatement(connection, SQL_USER_EXISTS_QUERY, false, values);
                 ResultSet resultSet = statement.executeQuery()
         ) {
             if(resultSet.next()) {
@@ -121,21 +100,6 @@ public class UserDAOJDBC implements UserDAO {
             throw new DAOException(e);
         }
         return id;
-    }
-
-    public static void setValues(PreparedStatement statement, Object... values) throws SQLException {
-        for (int i = 0; i < values.length; i++) {
-            statement.setObject(i + 1, values[i]);
-        }
-    }
-
-    public static PreparedStatement prepareStatement
-            (Connection connection, String sql, boolean returnGeneratedKeys, Object... values)
-            throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(sql,
-                returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
-        setValues(statement, values);
-        return statement;
     }
 
     private static User map(ResultSet resultSet) throws SQLException {

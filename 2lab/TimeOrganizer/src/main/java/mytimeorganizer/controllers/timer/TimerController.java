@@ -19,7 +19,6 @@ public class TimerController implements Initializable {
 
     private Timer timer;
     private DecimalFormat decimalFormat;
-    private Font font;
 
     private int minutes;
     private int seconds;
@@ -30,7 +29,10 @@ public class TimerController implements Initializable {
         decimalFormat = new DecimalFormat("00");
         minutes = 1;
         seconds = 0;
-        font = new Font("Arial", 50);
+        Font font = new Font("Arial", 45);
+        textArea.setFont(font);
+        textArea.setOpacity(0.85);
+        setTimeAsText();
     }
 
     public void setTimeAsText() {
@@ -57,11 +59,16 @@ public class TimerController implements Initializable {
 
     public void onStartTimerButton(javafx.event.ActionEvent actionEvent) {
         timer.start();
-        textArea.setFont(font);
     }
 
     public void onStopTimerButton(javafx.event.ActionEvent actionEvent) {
         timer.stop();
+    }
+
+    public void setMinutes(int selectedMinutes) {
+        minutes = selectedMinutes;
+        seconds = 0;
+        setTimeAsText();
     }
 
     public void onResetTimerButton(javafx.event.ActionEvent actionEvent) {
@@ -71,23 +78,23 @@ public class TimerController implements Initializable {
         setTimeAsText();
     }
 
+    @FXML
     public void setTimerAtOneMinute(ActionEvent actionEvent) {
-        minutes = 1;
-        seconds = 0;
+        setMinutes(1);
     }
 
+    @FXML
     public void setTimerAtFiveMinute(ActionEvent actionEvent) {
-        minutes = 5;
-        seconds = 0;
+        setMinutes(5);
     }
 
+    @FXML
     public void setTimerAtTenMinutes(ActionEvent actionEvent) {
-        minutes = 10;
-        seconds = 0;
+        setMinutes(10);
     }
 
+    @FXML
     public void setTimerAtTwentyFiveMinutes(ActionEvent actionEvent) {
-        minutes = 25;
-        seconds = 0;
+        setMinutes(25);
     }
 }

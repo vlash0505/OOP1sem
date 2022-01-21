@@ -17,11 +17,21 @@ public class GoalsController implements Initializable {
 
     protected GoalDAO goalDAO;
 
+    //Initializable override
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         DriverGoalDAO driverGoalDAO = PropertiesLoader.getDriverGoalDAOInstance();
         goalDAO = driverGoalDAO.getGoalDAO();
     }
+
+
+    /**
+     * Adds input pane when the "Add" button is pressed.
+     *
+     * @param vBox     vbox to which the pane will be added.
+     * @param goalType type of the goal that will be added.
+     */
 
     public void onAddGoalButton(VBox vBox, String goalType) {
         if(vBox.getChildren().stream().anyMatch(e -> e instanceof PaneWithInput)) {
@@ -44,6 +54,13 @@ public class GoalsController implements Initializable {
         });
     }
 
+    /**
+     * Adds checkbox with goal description to the VBox.
+     *
+     * @param goal goal to be added.
+     * @param vbox vbox that goal will be added to.
+     */
+
     public void addCheckboxWithDescription(Goal goal, VBox vbox) {
         String description = goal.getDescription();
         JFXCheckBox box = new JFXCheckBox(description);
@@ -61,6 +78,15 @@ public class GoalsController implements Initializable {
         });
         vbox.getChildren().add(box);
     }
+
+    /**
+     * Adds goal instance to the database.
+     *
+     * @param description description of a goal to be added
+     * @param goalType    type of goal to be added.
+     *
+     * @return            id of the created goal, null otherwise.
+     */
 
     public Long addToDatabase(String description, String goalType) {
         Goal goal = new Goal();
