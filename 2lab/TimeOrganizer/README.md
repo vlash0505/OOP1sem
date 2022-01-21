@@ -2,6 +2,9 @@
 
 App that helps its users to organize their time in one place.
 
+An attempt was made to keep to MVC pattern. 
+DAO pattern is used for persistence mechanism for storing users, goals tasks and notes.
+
 Functionality of the app includes planning, goal setting, journaling, countdown timer and achievements collecting.
 <br>
 <br>
