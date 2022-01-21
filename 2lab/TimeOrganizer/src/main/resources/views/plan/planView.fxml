@@ -35,6 +35,7 @@
                   <VBox fx:id="tasksVBox" prefHeight="293.0" prefWidth="380.0" />
                </content>
             </ScrollPane>
+            <Text fx:id="errorMessageText" fill="RED" layoutX="181.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.2000274658203" />
          </children>
         </AnchorPane>
     </children>

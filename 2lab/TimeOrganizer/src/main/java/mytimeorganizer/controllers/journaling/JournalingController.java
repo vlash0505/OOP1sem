@@ -53,7 +53,9 @@ public class JournalingController {
         );
         note.setDescription(textArea.getText());
         if(noteDAO.hasNoteAtDate(Note.USER_ID, datePicker.getValue())) {
-            noteDAO.updateNoteDescription(note.getDescription(), Note.USER_ID, datePicker.getValue());
+            if(note.getDescription().length() > 0 && note.getDescription().length() < 3000) {
+                noteDAO.updateNoteDescription(note.getDescription(), Note.USER_ID, datePicker.getValue());
+            }
         } else {
             noteDAO.addNote(note);
         }

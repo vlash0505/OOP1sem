@@ -43,14 +43,15 @@ public class GoalsController implements Initializable {
 
         paneWithInput.getController().getCheckmarkView().setOnMouseClicked(e -> {
             String description = paneWithInput.getController().getTextField().getText();
+            if(description.length() < 45 && description.length() > 0) {
+                Goal goal = new Goal();
+                goal.setType(goalType);
+                goal.setDescription(description);
 
-            Goal goal = new Goal();
-            goal.setType(goalType);
-            goal.setDescription(description);
-
-            vBox.getChildren().remove(paneWithInput);
-            goal.setId(addToDatabase(description, goalType));
-            addCheckboxWithDescription(goal, vBox);
+                vBox.getChildren().remove(paneWithInput);
+                goal.setId(addToDatabase(description, goalType));
+                addCheckboxWithDescription(goal, vBox);
+            }
         });
     }
 

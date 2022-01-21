@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import mytimeorganizer.models.Task;
 import mytimeorganizer.visual_components.PaneWithInput;
 
@@ -18,6 +19,9 @@ import java.util.ResourceBundle;
  */
 
 public class PlanController extends BasePlanController implements Initializable {
+
+    @FXML
+    private Text errorMessageText;
 
     @FXML
     private DatePicker datePicker;
@@ -47,14 +51,19 @@ public class PlanController extends BasePlanController implements Initializable 
 
         paneWithInput.getController().getCheckmarkView().setOnMouseClicked(e -> {
             String description = paneWithInput.getController().getTextField().getText();
+            if(description.length() > 0 && description.length() < 45) {
+                errorMessageText.setText("");
 
-            Task task = new Task();
-            task.setDate(datePicker.getValue());
-            task.setDescription(description);
+                Task task = new Task();
+                task.setDate(datePicker.getValue());
+                task.setDescription(description);
 
-            tasksVBox.getChildren().remove(paneWithInput);
-            task.setId(taskDAO.addNewTask(task));
-            super.addCheckboxWithDescription(task, tasksVBox);
+                tasksVBox.getChildren().remove(paneWithInput);
+                task.setId(taskDAO.addNewTask(task));
+                super.addCheckboxWithDescription(task, tasksVBox);
+            } else {
+                errorMessageText.setText("Wrong input data");
+            }
         });
     }
 }

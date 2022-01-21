@@ -95,7 +95,7 @@ public class SignUpController implements Initializable {
 
             SceneViewSwitcher.switchTo(View.LOGIN);
         } else {
-            signUpStatusBar.setText("Invalid data.");
+            signUpStatusBar.setText("User already exists or incorrect input");
         }
     }
 }

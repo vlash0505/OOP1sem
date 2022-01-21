@@ -40,15 +40,15 @@
                </image>
             </ImageView>
 
-            <JFXButton onAction="#onSignUpButton" layoutX="240.0" layoutY="300.0" maxHeight="25.0" maxWidth="60.0" minHeight="25.0" minWidth="60.0" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #3ca6e8;" text="Sign Up" textFill="WHITE">
+            <JFXButton layoutX="240.0" layoutY="300.0" maxHeight="25.0" maxWidth="60.0" minHeight="25.0" minWidth="60.0" onAction="#onSignUpButton" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #3ca6e8;" text="Sign Up" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
 
             </JFXButton>
-            <Text layoutX="196.0" layoutY="358.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Signed up already? Sign in " wrappingWidth="155.3515625" />
+            <Text layoutX="191.0" layoutY="346.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Signed up already? Sign in " wrappingWidth="155.3515625" />
 
-            <Hyperlink layoutX="337.0" layoutY="342.0" onAction="#onLogInHyperlink" text="here." />
+            <Hyperlink layoutX="337.0" layoutY="330.0" onAction="#onLogInHyperlink" text="here." />
 
             <TextField fx:id="signUpUsernameTextField" layoutX="180.0" layoutY="176.0" maxHeight="25.0" maxWidth="200.0" minHeight="25.0" minWidth="200.0" prefHeight="25.0" prefWidth="200.0" promptText="Username" />
 
@@ -57,7 +57,7 @@
                   <Image url="@../../assets/icons8-mail-50.png" />
                </image>
             </ImageView>
-            <Text fx:id="signUpStatusBar" fill="RED" layoutX="259.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Text fx:id="signUpStatusBar" fill="RED" layoutX="170.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="209.60012817382812" />
 
          </children>
          <StackPane.margin>
